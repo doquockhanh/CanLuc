@@ -32,11 +32,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Luôn bay tới trước với tốc độ cố định
-        if (rb != null)
-        {
-            rb.linearVelocity = new Vector2(forwardSpeed, rb.linearVelocity.y);
-        }
         UpdateRotation();
     }
 
