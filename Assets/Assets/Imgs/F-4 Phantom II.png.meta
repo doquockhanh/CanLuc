@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: fb3eaaff4030c8046a675bcddce86822
+guid: f9190d87b9617f9489ca6861f714a803
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4967920404028071297
-    second: AWSD_0
+      213: 8653331646850525366
+    second: F-4 Phantom II_0
+  - first:
+      213: -1476673726499293537
+    second: F-4 Phantom II_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 240
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AWSD_0
+      name: F-4 Phantom II_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 27
-        width: 211
-        height: 202
+        x: 6
+        y: 1601
+        width: 989
+        height: 324
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f72ed75b6b66e0bb0800000000000000
-      internalID: -4967920404028071297
+      spriteID: 6b8eb26194fc61870800000000000000
+      internalID: 8653331646850525366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: F-4 Phantom II_1
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 572
+        width: 989
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f967bdac11dc18be0800000000000000
+      internalID: -1476673726499293537
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: edbadcb830fd12a4ab81f04f5578ee0a
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AWSD_0: -4967920404028071297
+      F-4 Phantom II_0: 8653331646850525366
+      F-4 Phantom II_1: -1476673726499293537
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

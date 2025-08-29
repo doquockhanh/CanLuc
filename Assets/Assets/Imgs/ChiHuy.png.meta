@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ChiHuy_0: -2010758445964890457
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

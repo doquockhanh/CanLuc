@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: fb3eaaff4030c8046a675bcddce86822
+guid: 2e25bd1e7564c2349815171260e27c54
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4967920404028071297
-    second: AWSD_0
+      213: -1483665779731714255
+    second: Bomb_0
+  - first:
+      213: -1902917897002446259
+    second: Bomb_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 240
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AWSD_0
+      name: Bomb_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 27
-        width: 211
-        height: 202
+        x: 342
+        y: 1594
+        width: 209
+        height: 285
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f72ed75b6b66e0bb0800000000000000
-      internalID: -4967920404028071297
+      spriteID: 13f20b985d5f86be0800000000000000
+      internalID: -1483665779731714255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bomb_1
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 565
+        width: 214
+        height: 288
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d429f68314a7795e0800000000000000
+      internalID: -1902917897002446259
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 2215db134c47eaf42a0201a5c9135969
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AWSD_0: -4967920404028071297
+      Bomb_0: -1483665779731714255
+      Bomb_1: -1902917897002446259
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
