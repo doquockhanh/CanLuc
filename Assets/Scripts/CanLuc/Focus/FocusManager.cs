@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using TMPro;
 
 namespace Gameplay.Focus
 {
@@ -14,6 +15,7 @@ namespace Gameplay.Focus
 		[SerializeField] private Camera worldCamera;
 		[SerializeField] private MonoBehaviour focusInfoPanelRef;
 		[SerializeField] private GameObject followHelpPanel;
+		[SerializeField] private TextMeshProUGUI followHelpText;
 
 		[Header("Input")]
 		[SerializeField] private KeyCode accumulateKey = KeyCode.Space;
@@ -59,10 +61,13 @@ namespace Gameplay.Focus
 
 		void LateUpdate()
 		{
+			// WASD luôn hoạt động khi không follow
 			if (!followActive)
 			{
+				UpdateCameraFreeMove();
 				return;
 			}
+			// Khi đang follow: nếu free mode -> WASD, ngược lại -> follow target
 			if (freeCameraMode)
 			{
 				UpdateCameraFreeMove();
@@ -437,6 +442,24 @@ namespace Gameplay.Focus
 			if (followHelpPanel.activeSelf != followActive)
 			{
 				followHelpPanel.SetActive(followActive);
+			}
+			if (!followActive) return;
+			if (followHelpText != null)
+			{
+				string status;
+				if (freeCameraMode)
+				{
+					status = "Free Camera (WASD)";
+				}
+				else
+				{
+					var target = GetCurrentCameraTarget();
+					int total = cameraCycleTargets != null ? cameraCycleTargets.Count : 0;
+					int index = cameraCycleIndex >= 0 ? (cameraCycleIndex + 1) : 0;
+					string targetName = target != null ? target.name : "<none>";
+					status = $"Follow: {targetName} ({index}/{total})";
+				}
+				followHelpText.text = status;
 			}
 		}
 	}
