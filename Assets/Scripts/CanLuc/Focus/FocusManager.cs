@@ -12,6 +12,7 @@ namespace Gameplay.Focus
 	{
 		[Header("References")]
 		[SerializeField] private Camera worldCamera;
+		[SerializeField] private MonoBehaviour focusInfoPanelRef;
 
 		[Header("Input")]
 		[SerializeField] private KeyCode accumulateKey = KeyCode.Space;
@@ -49,7 +50,24 @@ namespace Gameplay.Focus
 				Vector3 mouseWorld = worldCamera.ScreenToWorldPoint(Input.mousePosition);
 				Vector2 point = new Vector2(mouseWorld.x, mouseWorld.y);
 				Collider2D col = Physics2D.OverlapPoint(point);
-				if (col != null) SetFocus(col.gameObject);
+				if (col != null)
+				{
+					SetFocus(col.gameObject);
+				}
+				else
+				{
+					// Click vào vùng trống để unfocus
+					Unfocus();
+				}
+			}
+
+			// Right click để unfocus
+			if (Input.GetMouseButtonDown(1))
+			{
+				// Ignore if clicking on UI
+				if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+				Unfocus();
 			}
 		}
 
@@ -110,11 +128,44 @@ namespace Gameplay.Focus
 					focusedListeners[i].OnFocused(previous);
 				}
 			}
+
+			// Update UI panel
+			UpdateFocusInfoPanel();
+		}
+
+		public void Unfocus()
+		{
+			if (currentFocused == null) return;
+
+			GameObject previous = currentFocused;
+			IFocusable[] previousListeners = focusedListeners;
+
+			// Reset focus state
+			currentFocused = null;
+			focusedAccumulator = null;
+			focusedListeners = null;
+
+			// Notify previous object that it's no longer focused
+			if (previous != null && previousListeners != null)
+			{
+				for (int i = 0; i < previousListeners.Length; i++)
+				{
+					previousListeners[i].OnDefocused(null);
+				}
+			}
+
+			// Update UI panel
+			UpdateFocusInfoPanel();
 		}
 
 		public GameObject GetCurrentFocus() => currentFocused;
 		public float GetCurrentForce() => focusedAccumulator != null ? focusedAccumulator.CurrentForce : 0f;
 		public float ConsumeCurrentForce() => focusedAccumulator != null ? focusedAccumulator.Consume() : 0f;
+
+		/// <summary>
+		/// Public method để unfocus từ bên ngoài (UI button, etc.)
+		/// </summary>
+		public void UnfocusCurrent() => Unfocus();
 
 		public void Register(GameObject obj)
 		{
@@ -168,6 +219,43 @@ namespace Gameplay.Focus
 				if (registeredObjects[i] == null)
 				{
 					registeredObjects.RemoveAt(i);
+				}
+			}
+		}
+
+		private void UpdateFocusInfoPanel()
+		{
+			if (focusInfoPanelRef == null) return;
+
+			if (currentFocused != null)
+			{
+				var focusableInfo = currentFocused.GetComponent("FocusableInfo");
+				if (focusableInfo != null)
+				{
+					// Gọi method ShowPanel qua reflection - vị trí sẽ được cập nhật tự động theo chuột
+					var showPanelMethod = focusInfoPanelRef.GetType().GetMethod("ShowPanel");
+					if (showPanelMethod != null)
+					{
+						showPanelMethod.Invoke(focusInfoPanelRef, new object[] { focusableInfo, Vector3.zero });
+					}
+				}
+				else
+				{
+					// Gọi method HidePanel qua reflection
+					var hidePanelMethod = focusInfoPanelRef.GetType().GetMethod("HidePanel");
+					if (hidePanelMethod != null)
+					{
+						hidePanelMethod.Invoke(focusInfoPanelRef, null);
+					}
+				}
+			}
+			else
+			{
+				// Gọi method HidePanel qua reflection
+				var hidePanelMethod = focusInfoPanelRef.GetType().GetMethod("HidePanel");
+				if (hidePanelMethod != null)
+				{
+					hidePanelMethod.Invoke(focusInfoPanelRef, null);
 				}
 			}
 		}

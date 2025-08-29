@@ -24,6 +24,13 @@ namespace Gameplay.Focus
 			rb = GetComponent<Rigidbody2D>();
 			rb.bodyType = RigidbodyType2D.Kinematic;
 			cachedRenderer = GetComponentInChildren<Renderer>();
+			
+			// Tự động thêm FocusableInfo nếu chưa có
+			if (GetComponent<FocusableInfo>() == null)
+			{
+				var info = gameObject.AddComponent<FocusableInfo>();
+				// Có thể set default values ở đây nếu cần
+			}
 		}
 
 		public void Execute(float force)

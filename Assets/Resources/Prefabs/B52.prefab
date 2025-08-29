@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 6227092606767500579}
   - component: {fileID: 5984546190399106906}
   - component: {fileID: 8277578452529178963}
-  - component: {fileID: 5485357944603100384}
   - component: {fileID: 96021538238769577}
-  - component: {fileID: 4472390963386029188}
   - component: {fileID: 409633753980002759}
   - component: {fileID: 3432889800480476369}
   - component: {fileID: 2962835441315882271}
   - component: {fileID: 6386588346977137218}
+  - component: {fileID: 4472390963386029188}
+  - component: {fileID: 5485357944603100384}
+  - component: {fileID: 1698827224156331649}
   m_Layer: 0
   m_Name: B52
   m_TagString: Untagged
@@ -117,21 +118,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5485357944603100384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6045865751171873079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfaecbc5e015fc245b8c1e3939e5fb35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxForce: 100
-  accumulationPerSecond: 25
-  currentForce: 0
 --- !u!50 &96021538238769577
 Rigidbody2D:
   serializedVersion: 5
@@ -159,22 +145,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4472390963386029188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6045865751171873079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703fc4c7500880a46ac13ce71e4cf88f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardMultiplier: 1
-  upwardMultiplier: 0.2
-  focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!70 &409633753980002759
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -250,7 +220,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 14.84375, y: 7.609375}
+    oldSize: {x: 7.421875, y: 3.8046875}
     newSize: {x: 14.84375, y: 7.609375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -296,7 +266,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 14.84375, y: 7.609375}
+    oldSize: {x: 7.421875, y: 3.8046875}
     newSize: {x: 14.84375, y: 7.609375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -342,7 +312,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 14.84375, y: 7.609375}
+    oldSize: {x: 7.421875, y: 3.8046875}
     newSize: {x: 14.84375, y: 7.609375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -350,3 +320,49 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.8649836, y: 2.3016412}
   m_EdgeRadius: 0
+--- !u!114 &4472390963386029188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045865751171873079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703fc4c7500880a46ac13ce71e4cf88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardMultiplier: 1
+  upwardMultiplier: 0.2
+  focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &5485357944603100384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045865751171873079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfaecbc5e015fc245b8c1e3939e5fb35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxForce: 100
+  accumulationPerSecond: 25
+  currentForce: 0
+--- !u!114 &1698827224156331649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045865751171873079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f4f153ccf78c747a62f81f0f910ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionDescription: "Ph\xF3ng v\u1EC1 ph\xEDa tr\u01B0\u1EDBc. Gi\u1EEF Space \u0111\u1EC3
+    t\xEDch l\u1EF1c."
+  offset: {x: 0, y: 1}
