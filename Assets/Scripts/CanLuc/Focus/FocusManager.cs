@@ -13,9 +13,11 @@ namespace Gameplay.Focus
 		[Header("References")]
 		[SerializeField] private Camera worldCamera;
 		[SerializeField] private MonoBehaviour focusInfoPanelRef;
+		[SerializeField] private GameObject followHelpPanel;
 
 		[Header("Input")]
 		[SerializeField] private KeyCode accumulateKey = KeyCode.Space;
+		[SerializeField] private float freeMoveSpeed = 10f;
 
 		[Header("State (Read-Only)")]
 		[SerializeField] private GameObject currentFocused;
@@ -25,6 +27,12 @@ namespace Gameplay.Focus
 
 		[Header("Registry")]
 		[SerializeField] private List<GameObject> registeredObjects = new List<GameObject>();
+
+		// Camera follow state for execution cycle
+		private List<GameObject> cameraCycleTargets;
+		private int cameraCycleIndex = -1;
+		[SerializeField] private bool followActive = false;
+		[SerializeField] private bool freeCameraMode = false; // true: WASD control; false: follow target
 
 		void Awake()
 		{
@@ -36,8 +44,33 @@ namespace Gameplay.Focus
 
 		void Update()
 		{
+			// Ưu tiên xử lý khi đang ở chế độ follow/cycle
+			if (followActive)
+			{
+				HandleFollowModeInputs();
+				UpdateFollowHelpPanel();
+				return; // Không xử lý focus/accumulate mặc định khi đang follow
+			}
+
 			HandleFocusSelection();
 			HandleAccumulation();
+			UpdateFollowHelpPanel();
+		}
+
+		void LateUpdate()
+		{
+			if (!followActive)
+			{
+				return;
+			}
+			if (freeCameraMode)
+			{
+				UpdateCameraFreeMove();
+			}
+			else
+			{
+				UpdateCameraFollow();
+			}
 		}
 
 		private void HandleFocusSelection()
@@ -69,6 +102,38 @@ namespace Gameplay.Focus
 
 				Unfocus();
 			}
+		}
+
+		private void HandleFollowModeInputs()
+		{
+			// Space: toggle giữa follow target và free camera (WASD)
+			if (Input.GetKeyDown(accumulateKey))
+			{
+				freeCameraMode = !freeCameraMode;
+				return;
+			}
+
+			// ESC: thoát chế độ follow/cycle hoàn toàn
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				ExitFollowMode();
+				return;
+			}
+
+			// Left click: chuyển mục tiêu tiếp theo
+			if (Input.GetMouseButtonDown(0))
+			{
+				if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+				AdvanceCameraCycle();
+			}
+		}
+
+		private void ExitFollowMode()
+		{
+			followActive = false;
+			freeCameraMode = false;
+			cameraCycleTargets = null;
+			cameraCycleIndex = -1;
 		}
 
 		private void HandleAccumulation()
@@ -194,6 +259,8 @@ namespace Gameplay.Focus
 		public void ExecuteAllRegistered()
 		{
 			CleanupRegistry();
+			// Snapshot danh sách để dùng cho camera cycle
+			List<GameObject> snapshot = new List<GameObject>(registeredObjects);
 			for (int i = 0; i < registeredObjects.Count; i++)
 			{
 				GameObject obj = registeredObjects[i];
@@ -210,6 +277,9 @@ namespace Gameplay.Focus
 			}
 			// Optional: clear after execution
 			ClearRegistry();
+
+			// Khởi động camera cycle theo snapshot
+			StartCameraCycle(snapshot);
 		}
 
 		private void CleanupRegistry()
@@ -257,6 +327,116 @@ namespace Gameplay.Focus
 				{
 					hidePanelMethod.Invoke(focusInfoPanelRef, null);
 				}
+			}
+		}
+
+		private void HideFocusInfoPanel()
+		{
+			if (focusInfoPanelRef == null) return;
+			var hidePanelMethod = focusInfoPanelRef.GetType().GetMethod("HidePanel");
+			if (hidePanelMethod != null)
+			{
+				hidePanelMethod.Invoke(focusInfoPanelRef, null);
+			}
+		}
+
+		// ================= Camera Cycle Logic =================
+		private void StartCameraCycle(List<GameObject> targets)
+		{
+			if (targets == null) return;
+			// Lọc null
+			targets.RemoveAll(t => t == null);
+			if (targets.Count == 0)
+			{
+				followActive = false;
+				cameraCycleTargets = null;
+				cameraCycleIndex = -1;
+				freeCameraMode = false;
+				return;
+			}
+
+			cameraCycleTargets = targets;
+			cameraCycleIndex = 0;
+			followActive = true;
+			freeCameraMode = false; // bắt đầu ở chế độ follow
+			// Ẩn FocusInfoPanel khi bắt đầu follow/cycle (CommanderExecuteAction)
+			HideFocusInfoPanel();
+			JumpCameraToCurrentTarget();
+		}
+
+		private void AdvanceCameraCycle()
+		{
+			if (!followActive || cameraCycleTargets == null || cameraCycleTargets.Count == 0) return;
+			cameraCycleIndex = (cameraCycleIndex + 1) % cameraCycleTargets.Count;
+			JumpCameraToCurrentTarget();
+		}
+
+		private GameObject GetCurrentCameraTarget()
+		{
+			if (!followActive || cameraCycleTargets == null || cameraCycleTargets.Count == 0) return null;
+			if (cameraCycleIndex < 0 || cameraCycleIndex >= cameraCycleTargets.Count) return null;
+			// Bỏ qua mục tiêu null và tự động tiến tới mục tiêu hợp lệ tiếp theo
+			int safeguard = 0;
+			while (safeguard < cameraCycleTargets.Count)
+			{
+				var t = cameraCycleTargets[cameraCycleIndex];
+				if (t != null) return t;
+				cameraCycleIndex = (cameraCycleIndex + 1) % cameraCycleTargets.Count;
+				safeguard++;
+			}
+			return null;
+		}
+
+		private void JumpCameraToCurrentTarget()
+		{
+			if (worldCamera == null) return;
+			var target = GetCurrentCameraTarget();
+			if (target == null)
+			{
+				followActive = false;
+				freeCameraMode = false;
+				return;
+			}
+			Vector3 pos = target.transform.position;
+			pos.z = worldCamera.transform.position.z;
+			worldCamera.transform.position = pos;
+		}
+
+		private void UpdateCameraFollow()
+		{
+			if (!followActive || worldCamera == null) return;
+			var target = GetCurrentCameraTarget();
+			if (target == null)
+			{
+				followActive = false;
+				freeCameraMode = false;
+				return;
+			}
+			Vector3 pos = target.transform.position;
+			pos.z = worldCamera.transform.position.z;
+			worldCamera.transform.position = pos;
+		}
+
+		private void UpdateCameraFreeMove()
+		{
+			if (worldCamera == null) return;
+			Vector3 delta = Vector3.zero;
+			if (Input.GetKey(KeyCode.A)) delta.x -= 1f;
+			if (Input.GetKey(KeyCode.D)) delta.x += 1f;
+			if (Input.GetKey(KeyCode.S)) delta.y -= 1f;
+			if (Input.GetKey(KeyCode.W)) delta.y += 1f;
+			delta = delta.normalized * freeMoveSpeed * Time.deltaTime;
+			Vector3 pos = worldCamera.transform.position + delta;
+			pos.z = worldCamera.transform.position.z;
+			worldCamera.transform.position = pos;
+		}
+
+		private void UpdateFollowHelpPanel()
+		{
+			if (followHelpPanel == null) return;
+			if (followHelpPanel.activeSelf != followActive)
+			{
+				followHelpPanel.SetActive(followActive);
 			}
 		}
 	}

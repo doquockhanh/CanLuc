@@ -24,6 +24,7 @@ namespace Gameplay.Focus
 		private CanvasGroup canvasGroup;
 		private Camera worldCamera;
 		private FocusableInfo currentInfo;
+		private Coroutine fadeRoutine;
 		
 		void Awake()
 		{
@@ -51,22 +52,36 @@ namespace Gameplay.Focus
 		public void ShowPanel(FocusableInfo info, Vector3 worldPosition)
 		{
 			if (info == null) return;
-			
 			currentInfo = info;
-				
 			if (descriptionText != null)
 				descriptionText.text = info.ActionDescription;
-			
-			// Hiển thị với animation
+
+			// Dừng fade cũ nếu đang chạy
+			if (fadeRoutine != null)
+			{
+				StopCoroutine(fadeRoutine);
+				fadeRoutine = null;
+			}
+
+			// Kích hoạt và chạy fade in
 			gameObject.SetActive(true);
-			StartCoroutine(FadeIn());
+			fadeRoutine = StartCoroutine(FadeTo(1f, fadeInDuration, deactivateOnEnd: false));
 		}
 		
 		public void HidePanel()
 		{
-			if (!gameObject.activeSelf) return;
-			
-			StartCoroutine(FadeOut());
+			if (!gameObject.activeSelf)
+			{
+				return;
+			}
+			// Dừng fade cũ nếu đang chạy
+			if (fadeRoutine != null)
+			{
+				StopCoroutine(fadeRoutine);
+				fadeRoutine = null;
+			}
+			// Chạy fade out và tắt
+			fadeRoutine = StartCoroutine(FadeTo(0f, fadeOutDuration, deactivateOnEnd: true));
 		}
 		
 		public void UpdatePosition(Vector3 worldPosition)
@@ -99,37 +114,31 @@ namespace Gameplay.Focus
 			panelRect.anchoredPosition = localPoint;
 		}
 		
-
-		
-		private System.Collections.IEnumerator FadeIn()
-		{
-			canvasGroup.alpha = 0f;
-			float elapsed = 0f;
-			
-			while (elapsed < fadeInDuration)
-			{
-				elapsed += Time.deltaTime;
-				canvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeInDuration);
-				yield return null;
-			}
-			
-			canvasGroup.alpha = 1f;
-		}
-		
-		private System.Collections.IEnumerator FadeOut()
+		private System.Collections.IEnumerator FadeTo(float targetAlpha, float duration, bool deactivateOnEnd)
 		{
 			float startAlpha = canvasGroup.alpha;
 			float elapsed = 0f;
-			
-			while (elapsed < fadeOutDuration)
+			if (duration <= 0f)
+			{
+				canvasGroup.alpha = targetAlpha;
+				if (deactivateOnEnd && targetAlpha <= 0f)
+				{
+					gameObject.SetActive(false);
+				}
+				yield break;
+			}
+			while (elapsed < duration)
 			{
 				elapsed += Time.deltaTime;
-				canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / fadeOutDuration);
+				canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
 				yield return null;
 			}
-			
-			canvasGroup.alpha = 0f;
-			gameObject.SetActive(false);
+			canvasGroup.alpha = targetAlpha;
+			if (deactivateOnEnd && targetAlpha <= 0f)
+			{
+				gameObject.SetActive(false);
+			}
+			fadeRoutine = null;
 		}
 	}
 }
