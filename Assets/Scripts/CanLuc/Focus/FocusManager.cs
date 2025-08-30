@@ -202,8 +202,8 @@ namespace Gameplay.Focus
 				}
 			}
 
-			// Update UI panel
-			UpdateFocusInfoPanel();
+			// Không còn cập nhật FocusInfoPanel khi focus/unfocus
+			// UpdateFocusInfoPanel();
 		}
 
 		public void Unfocus()
@@ -227,8 +227,8 @@ namespace Gameplay.Focus
 				}
 			}
 
-			// Update UI panel
-			UpdateFocusInfoPanel();
+			// Không còn cập nhật FocusInfoPanel khi focus/unfocus
+			// UpdateFocusInfoPanel();
 		}
 
 		public GameObject GetCurrentFocus() => currentFocused;
@@ -369,7 +369,15 @@ namespace Gameplay.Focus
 			followActive = true;
 			freeCameraMode = false; // bắt đầu ở chế độ follow
 			// Ẩn FocusInfoPanel khi bắt đầu follow/cycle (CommanderExecuteAction)
-			HideFocusInfoPanel();
+			// Sử dụng HoverManager nếu có, ngược lại dùng method cũ
+			if (HoverManager.Instance != null)
+			{
+				HoverManager.Instance.HideFocusInfoPanel();
+			}
+			else
+			{
+				HideFocusInfoPanel();
+			}
 			JumpCameraToCurrentTarget();
 		}
 

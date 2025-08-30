@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4472390963386029188}
   - component: {fileID: 5485357944603100384}
   - component: {fileID: 1698827224156331649}
+  - component: {fileID: 3898733337259601724}
   m_Layer: 0
   m_Name: B52
   m_TagString: Untagged
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -2510476293373519475, guid: 9f71903aec445c04ab5051a91a2cb1b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -131,9 +132,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 2
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -335,6 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardMultiplier: 1
   upwardMultiplier: 0.2
+  rotationSpeed: 10
   focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &5485357944603100384
@@ -369,6 +371,20 @@ MonoBehaviour:
   actionDescription: "Ph\xF3ng v\u1EC1 ph\xEDa tr\u01B0\u1EDBc. Gi\u1EEF Space \u0111\u1EC3
     t\xEDch l\u1EF1c."
   offset: {x: 0, y: 1}
+--- !u!114 &3898733337259601724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045865751171873079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168d1ea86f41cbc449677a27e8c45fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableHover: 1
+  showFocusInfoPanel: 1
 --- !u!1001 &6410665506783369368
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 422422298921614247}
   - component: {fileID: 1242587748485972686}
   - component: {fileID: 2740553378392293794}
+  - component: {fileID: 6434493319256043408}
   m_Layer: 0
   m_Name: Tenlua
   m_TagString: Untagged
@@ -82,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 3763752930381237044, guid: f965b6a27ef16fd489ccc32669e26b01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -178,7 +179,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -1.3274149, y: -0.00020678912}
-  m_Size: {x: 2.7210147, y: 0.45331585}
+  m_Size: {x: 2.7210147, y: 0.45}
   m_Direction: 1
 --- !u!114 &422422298921614247
 MonoBehaviour:
@@ -194,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardMultiplier: 1
   upwardMultiplier: 0.2
-  rotationSpeed: 10
+  rotationSpeed: 30
   focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1242587748485972686
@@ -229,6 +230,20 @@ MonoBehaviour:
   actionDescription: "Ph\xF3ng v\u1EC1 ph\xEDa tr\u01B0\u1EDBc. Gi\u1EEF Space \u0111\u1EC3
     t\xEDch l\u1EF1c."
   offset: {x: 0, y: 1}
+--- !u!114 &6434493319256043408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6107790657746518000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168d1ea86f41cbc449677a27e8c45fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableHover: 1
+  showFocusInfoPanel: 1
 --- !u!1001 &8325563348041324184
 PrefabInstance:
   m_ObjectHideFlags: 0

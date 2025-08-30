@@ -15,7 +15,7 @@ namespace Gameplay.Focus
 	{
 		[Header("Movement Settings")]
 		[SerializeField] private float moveSpeed = 5f;
-	
+
 		[Header("Rotation Settings")]
 		[SerializeField] private Transform childToRotate;
 		[SerializeField] private float rotationSpeed = 60f; // degrees per second
@@ -29,21 +29,19 @@ namespace Gameplay.Focus
 		[SerializeField] private KeyCode rotateKey = KeyCode.Space;
 		[SerializeField] private KeyCode leftKey = KeyCode.A;
 		[SerializeField] private KeyCode rightKey = KeyCode.D;
+		[SerializeField] private FocusManager focusManager;
 
 		private Rigidbody2D rb;
 		private Renderer cachedRenderer;
 		private bool isFocused = false;
 		private float currentAngle = 0f;
 		private int direction = 1; // 1 = rotate up, -1 = rotate down
-		private FocusManager focusManager;
+
 
 		void Awake()
 		{
 			rb = GetComponent<Rigidbody2D>();
 			cachedRenderer = GetComponentInChildren<Renderer>();
-			
-			// Find FocusManager for camera movement control
-			focusManager = FindObjectOfType<FocusManager>();
 		}
 
 		void Update()
@@ -118,7 +116,7 @@ namespace Gameplay.Focus
 			{
 				cachedRenderer.material.color = focusColor;
 			}
-			
+
 			// Khóa di chuyển camera khi focus vào DirectActionObject
 			if (focusManager != null)
 			{
@@ -135,7 +133,7 @@ namespace Gameplay.Focus
 			{
 				cachedRenderer.material.color = normalColor;
 			}
-			
+
 			// Mở khóa di chuyển camera khi unfocus
 			if (focusManager != null)
 			{

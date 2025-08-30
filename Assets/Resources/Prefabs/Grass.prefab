@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4005624016362634684
+--- !u!1 &6868843732802852349
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 783550273574828862}
-  - component: {fileID: 5935520848232731358}
-  - component: {fileID: -2335743086368737534}
+  - component: {fileID: 6728212160830954490}
+  - component: {fileID: 5483447731251770603}
+  - component: {fileID: 1413319839020552805}
   m_Layer: 0
-  m_Name: Tree
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &783550273574828862
+--- !u!4 &6728212160830954490
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4005624016362634684}
+  m_GameObject: {fileID: 6868843732802852349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.46512073, y: 0.16050023, z: -0.044870198}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.85, y: -1.9, z: 0}
+  m_LocalScale: {x: 0.6091, y: 0.7015, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5935520848232731358
+--- !u!212 &5483447731251770603
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4005624016362634684}
+  m_GameObject: {fileID: 6868843732802852349}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,29 +76,29 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 6853316077166303748, guid: a05ccf3fbe7f4e140b94f0f2eaff750d, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -1347532211411968617, guid: 1d5ffe61fdeaa0b4b8af76ba59eeaa7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.9624834, y: 6.1796875}
+  m_Size: {x: 4.046875, y: 1.53125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &-2335743086368737534
+--- !u!95 &1413319839020552805
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4005624016362634684}
+  m_GameObject: {fileID: 6868843732802852349}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 883887320c0fe1445ba5db74a076081d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1a3a869deba53fa48a0647efc7cd6bb8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
