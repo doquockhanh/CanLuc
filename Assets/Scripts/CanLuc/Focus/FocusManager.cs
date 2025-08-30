@@ -35,6 +35,9 @@ namespace Gameplay.Focus
 		private int cameraCycleIndex = -1;
 		[SerializeField] private bool followActive = false;
 		[SerializeField] private bool freeCameraMode = false; // true: WASD control; false: follow target
+		
+		// Camera movement lock for DirectActionObject
+		private bool cameraMovementLocked = false;
 
 		void Awake()
 		{
@@ -304,14 +307,15 @@ namespace Gameplay.Focus
 
 			if (currentFocused != null)
 			{
-				var focusableInfo = currentFocused.GetComponent("FocusableInfo");
-				if (focusableInfo != null)
+				// Tìm IActionInfo (có thể là FocusableInfo hoặc DirectActionInfo)
+				var actionInfo = currentFocused.GetComponent<IActionInfo>();
+				if (actionInfo != null)
 				{
 					// Gọi method ShowPanel qua reflection - vị trí sẽ được cập nhật tự động theo chuột
 					var showPanelMethod = focusInfoPanelRef.GetType().GetMethod("ShowPanel");
 					if (showPanelMethod != null)
 					{
-						showPanelMethod.Invoke(focusInfoPanelRef, new object[] { focusableInfo, Vector3.zero });
+						showPanelMethod.Invoke(focusInfoPanelRef, new object[] { actionInfo, Vector3.zero });
 					}
 				}
 				else
@@ -424,7 +428,7 @@ namespace Gameplay.Focus
 
 		private void UpdateCameraFreeMove()
 		{
-			if (worldCamera == null) return;
+			if (worldCamera == null || cameraMovementLocked) return;
 			Vector3 delta = Vector3.zero;
 			if (Input.GetKey(KeyCode.A)) delta.x -= 1f;
 			if (Input.GetKey(KeyCode.D)) delta.x += 1f;
@@ -462,6 +466,26 @@ namespace Gameplay.Focus
 				followHelpText.text = status;
 			}
 		}
+
+		#region Camera Movement Lock Methods
+
+		/// <summary>
+		/// Locks camera movement (WASD controls)
+		/// </summary>
+		public void LockCameraMovement()
+		{
+			cameraMovementLocked = true;
+		}
+
+		/// <summary>
+		/// Unlocks camera movement (WASD controls)
+		/// </summary>
+		public void UnlockCameraMovement()
+		{
+			cameraMovementLocked = false;
+		}
+
+		#endregion
 	}
 }
 

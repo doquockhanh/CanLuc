@@ -14,6 +14,7 @@ namespace Gameplay.Focus
 		[SerializeField] private float rotationSpeed = 10f;
 		[SerializeField] private Color focusColor = Color.yellow;
 		[SerializeField] private Color normalColor = Color.white;
+		private bool applyRotateToVelocity = false;
 
 		private Rigidbody2D rb;
 		private Renderer cachedRenderer;
@@ -34,6 +35,7 @@ namespace Gameplay.Focus
 		public void Execute(float force)
 		{
 			if (force <= 0f) return;
+			applyRotateToVelocity = true;
 			Vector2 forward = transform.right * (force * forwardMultiplier);
 			Vector2 upward = transform.up * (force * upwardMultiplier);
 			rb.AddForce(forward + upward, ForceMode2D.Impulse);
@@ -41,6 +43,7 @@ namespace Gameplay.Focus
 
 		void Update()
 		{
+			if (!applyRotateToVelocity) return;
 			if (rb.linearVelocity.sqrMagnitude > 0.01f)
 			{
 				// Góc mục tiêu dựa theo vector velocity

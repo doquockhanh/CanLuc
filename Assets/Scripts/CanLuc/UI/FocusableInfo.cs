@@ -5,7 +5,7 @@ namespace Gameplay.Focus
 	/// <summary>
 	/// Component chứa thông tin hiển thị UI cho Focusable object
 	/// </summary>
-	public class FocusableInfo : MonoBehaviour
+	public class FocusableInfo : MonoBehaviour, IActionInfo
 	{
 		[Header("Thông tin hiển thị")]
 		[SerializeField] private string actionDescription = "This object will move forward when executed";
@@ -15,5 +15,10 @@ namespace Gameplay.Focus
 		
 		public string ActionDescription => actionDescription;
 		public Vector2 Offset => offset;
+		
+		public string GetFullDescription()
+		{
+			return actionDescription;
+		}
 	}
 }

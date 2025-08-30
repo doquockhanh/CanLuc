@@ -23,7 +23,7 @@ namespace Gameplay.Focus
 		
 		private CanvasGroup canvasGroup;
 		private Camera worldCamera;
-		private FocusableInfo currentInfo;
+		private IActionInfo currentInfo;
 		private Coroutine fadeRoutine;
 		
 		void Awake()
@@ -49,12 +49,12 @@ namespace Gameplay.Focus
 			}
 		}
 		
-		public void ShowPanel(FocusableInfo info, Vector3 worldPosition)
+		public void ShowPanel(IActionInfo info, Vector3 worldPosition)
 		{
 			if (info == null) return;
 			currentInfo = info;
 			if (descriptionText != null)
-				descriptionText.text = info.ActionDescription;
+				descriptionText.text = info.GetFullDescription();
 
 			// Dừng fade cũ nếu đang chạy
 			if (fadeRoutine != null)
