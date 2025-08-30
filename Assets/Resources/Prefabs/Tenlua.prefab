@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1242587748485972686}
   - component: {fileID: 2740553378392293794}
   - component: {fileID: 6434493319256043408}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tenlua
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,6 +256,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForceBar
       objectReference: {fileID: 0}
+    - target: {fileID: 1444975470338993148, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2153872602396796748, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -352,6 +356,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5415434526200385148, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5478739037178814889, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2
@@ -364,6 +372,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6839129084422340261, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7366949122667109313, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2
@@ -375,6 +387,10 @@ PrefabInstance:
     - target: {fileID: 7366949122667109313, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047523776036336494, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

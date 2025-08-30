@@ -39,6 +39,9 @@ namespace Gameplay.Focus
 		// Camera movement lock for DirectActionObject
 		private bool cameraMovementLocked = false;
 
+		// Events
+		public System.Action OnExecuteAllRegistered;
+
 		void Awake()
 		{
 			if (worldCamera == null)
@@ -285,6 +288,9 @@ namespace Gameplay.Focus
 			}
 			// Optional: clear after execution
 			ClearRegistry();
+
+			// Thông báo cho GameManager biết rằng tất cả action đã được thực thi
+			OnExecuteAllRegistered?.Invoke();
 
 			// Khởi động camera cycle theo snapshot
 			StartCameraCycle(snapshot);
