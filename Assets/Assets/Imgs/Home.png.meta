@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 7e2fa89332d8b4c4081727d0b0445057
+guid: d2d236b6c932a8f4595e7840075e9f7a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5931842347579807508
-    second: New Piskel-1.png_0
+      213: 1186780027108670212
+    second: Home1 (1)_0
+  - first:
+      213: -8979964050478535052
+    second: Home1 (1)_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: New Piskel-1.png_0
+      name: Home1 (1)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 7
-        width: 247
-        height: 219
+        x: 234
+        y: 1464
+        width: 472
+        height: 422
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4171d17df23225250800000000000000
-      internalID: 5931842347579807508
+      spriteID: 40b3756952a487010800000000000000
+      internalID: 1186780027108670212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Home1 (1)_1
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 441
+        width: 473
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47ee2732642c06380800000000000000
+      internalID: -8979964050478535052
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      New Piskel-1.png_0: 5931842347579807508
+      Home1 (1)_0: 1186780027108670212
+      Home1 (1)_1: -8979964050478535052
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
