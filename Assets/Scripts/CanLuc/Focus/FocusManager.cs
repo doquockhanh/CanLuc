@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
 
 namespace Gameplay.Focus
 {
@@ -35,7 +36,11 @@ namespace Gameplay.Focus
 		private int cameraCycleIndex = -1;
 		[SerializeField] private bool followActive = false;
 		[SerializeField] private bool freeCameraMode = false; // true: WASD control; false: follow target
-		
+
+		[Header("Audio")]
+		[SerializeField] private AudioSource audioSource;
+		[SerializeField] private AudioClip audioClip;
+
 		// Camera movement lock for DirectActionObject
 		private bool cameraMovementLocked = false;
 
@@ -48,6 +53,8 @@ namespace Gameplay.Focus
 			{
 				worldCamera = Camera.main;
 			}
+
+			audioSource.clip = audioClip;
 		}
 
 		void Update()
@@ -156,8 +163,18 @@ namespace Gameplay.Focus
 				if (currentFocused.GetComponent<ExecuteRegistryOnAccumulate>() != null ||
 					currentFocused.GetComponent("CommanderExecuteAction") != null)
 				{
-					ExecuteAllRegistered();
-					return;
+					if (registeredObjects.Count > 0)
+					{
+						currentFocused.GetComponent<CommanderExecuteAction>().Execute(true);
+						StartCoroutine(ExecuteAllRegistered());
+						return;
+					}
+					else
+					{
+						currentFocused.GetComponent<CommanderExecuteAction>().Execute(false);
+						return;
+					}
+
 				}
 			}
 
@@ -173,6 +190,16 @@ namespace Gameplay.Focus
 			if (Input.GetKey(accumulateKey))
 			{
 				focusedAccumulator.Accumulate(Time.deltaTime);
+			}
+
+			if (Input.GetKeyDown(accumulateKey))
+			{
+				audioSource.Play();
+			}
+
+			if (Input.GetKeyUp(accumulateKey))
+			{
+				audioSource.Stop();
 			}
 		}
 
@@ -267,13 +294,14 @@ namespace Gameplay.Focus
 
 		public int RegisteredCount => registeredObjects.Count;
 
-		public void ExecuteAllRegistered()
+		public IEnumerator ExecuteAllRegistered()
 		{
 			CleanupRegistry();
 			// Snapshot danh sách để dùng cho camera cycle
 			List<GameObject> snapshot = new List<GameObject>(registeredObjects);
 			for (int i = 0; i < registeredObjects.Count; i++)
 			{
+				yield return new WaitForSeconds(1f);
 				GameObject obj = registeredObjects[i];
 				if (obj == null) continue;
 				var acc = obj.GetComponent<ForceAccumulator>();
@@ -374,8 +402,8 @@ namespace Gameplay.Focus
 			cameraCycleIndex = 0;
 			followActive = true;
 			freeCameraMode = false; // bắt đầu ở chế độ follow
-			// Ẩn FocusInfoPanel khi bắt đầu follow/cycle (CommanderExecuteAction)
-			// Sử dụng HoverManager nếu có, ngược lại dùng method cũ
+									// Ẩn FocusInfoPanel khi bắt đầu follow/cycle (CommanderExecuteAction)
+									// Sử dụng HoverManager nếu có, ngược lại dùng method cũ
 			if (HoverManager.Instance != null)
 			{
 				HoverManager.Instance.HideFocusInfoPanel();

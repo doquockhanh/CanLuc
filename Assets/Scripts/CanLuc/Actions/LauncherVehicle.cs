@@ -11,7 +11,7 @@ namespace Gameplay.Focus
 	/// - Hiển thị focusable info
 	/// </summary>
 	[RequireComponent(typeof(Rigidbody2D))]
-	public class DirectActionObject : MonoBehaviour, IFocusable
+	public class LaunchVehicle : MonoBehaviour, IFocusable
 	{
 		[Header("Movement Settings")]
 		[SerializeField] private float moveSpeed = 5f;
@@ -20,6 +20,12 @@ namespace Gameplay.Focus
 		[SerializeField] private Transform childToRotate;
 		[SerializeField] private float rotationSpeed = 60f; // degrees per second
 		[SerializeField] private float maxAngle = 60f; // maximum angle range
+
+		[Header("Audio Settings")]
+		[SerializeField] private AudioSource audioSource;
+		[SerializeField] private AudioClip engineSound;
+		[SerializeField] private AudioSource audioSource2;
+		[SerializeField] private AudioClip launchSound;
 
 		[Header("Visual Settings")]
 		[SerializeField] private Color focusColor = Color.yellow;
@@ -42,6 +48,11 @@ namespace Gameplay.Focus
 		{
 			rb = GetComponent<Rigidbody2D>();
 			cachedRenderer = GetComponentInChildren<Renderer>();
+			audioSource.clip = engineSound;
+			audioSource.loop = true;
+			audioSource.Play();
+			audioSource2.clip = launchSound;
+			audioSource2.loop = true;
 		}
 
 		void Update()
@@ -58,6 +69,16 @@ namespace Gameplay.Focus
 			if (Input.GetKey(rotateKey))
 			{
 				HandleRotation();
+			}
+
+			if (Input.GetKeyDown(rotateKey))
+			{
+				audioSource2.Play();
+			}
+
+			if (Input.GetKeyUp(rotateKey))
+			{
+				audioSource2.Stop();
 			}
 		}
 
@@ -111,10 +132,15 @@ namespace Gameplay.Focus
 		{
 			isFocused = true;
 
-			// Thay đổi màu sắc khi được focus
 			if (cachedRenderer != null)
 			{
 				cachedRenderer.material.color = focusColor;
+				Material mat = GetComponent<SpriteRenderer>().material;
+				if (mat != null)
+				{
+					mat.SetColor("_OutlineColor", Color.red);
+					mat.SetFloat("_OutlineSize", 4f);
+				}
 			}
 
 			// Khóa di chuyển camera khi focus vào DirectActionObject
@@ -129,9 +155,12 @@ namespace Gameplay.Focus
 			isFocused = false;
 
 			// Trở về màu sắc bình thường
-			if (cachedRenderer != null)
+			cachedRenderer.material.color = normalColor;
+			Material mat = GetComponent<SpriteRenderer>().material;
+			if (mat != null)
 			{
-				cachedRenderer.material.color = normalColor;
+				mat.SetColor("_OutlineColor", Color.yellow);
+				mat.SetFloat("_OutlineSize", 2f);
 			}
 
 			// Mở khóa di chuyển camera khi unfocus

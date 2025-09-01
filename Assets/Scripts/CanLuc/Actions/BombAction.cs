@@ -12,8 +12,6 @@ namespace Gameplay.Focus
 		[SerializeField] private float dropHeightMeters = 10f;
 		[SerializeField] private float explodeAfterSecondsPerForce = 0.02f;
 		[SerializeField] private GameObject explosionPrefab;
-		[SerializeField] private Color focusColor = Color.cyan;
-		[SerializeField] private Color normalColor = Color.white;
 
 		private Rigidbody2D rb;
 		private Renderer cachedRenderer;
@@ -24,7 +22,7 @@ namespace Gameplay.Focus
 			rb = GetComponent<Rigidbody2D>();
 			rb.bodyType = RigidbodyType2D.Kinematic;
 			cachedRenderer = GetComponentInChildren<Renderer>();
-			
+
 			// Tự động thêm FocusableInfo nếu chưa có
 			if (GetComponent<FocusableInfo>() == null)
 			{
@@ -63,17 +61,21 @@ namespace Gameplay.Focus
 
 		public void OnFocused(GameObject previous)
 		{
-			if (cachedRenderer != null)
+			Material mat = GetComponent<SpriteRenderer>().material;
+			if (mat != null)
 			{
-				cachedRenderer.material.color = focusColor;
+				mat.SetColor("_OutlineColor", Color.red);
+				mat.SetFloat("_OutlineSize", 4f);
 			}
 		}
 
 		public void OnDefocused(GameObject next)
 		{
-			if (cachedRenderer != null)
+			Material mat = GetComponent<SpriteRenderer>().material;
+			if (mat != null)
 			{
-				cachedRenderer.material.color = normalColor;
+				mat.SetColor("_OutlineColor", Color.yellow);
+				mat.SetFloat("_OutlineSize", 2f);
 			}
 		}
 	}

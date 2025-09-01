@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b02b7f27dc8eda8468779086c5288f29
+guid: b5a1f15495070c24c9053cb99b9f598d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2496409245881586671
-    second: MyWB (1)_0
+      213: 6964163640375239447
+    second: chatbox_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 48
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MyWB (1)_0
+      name: chatbox_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 12
-        width: 42
-        height: 43
-      alignment: 9
-      pivot: {x: 0.4467613, y: 0.4479995}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        x: 24
+        y: 82
+        width: 211
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 44, y: 82, z: 28, w: 33}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe3d5ca8bf605a220800000000000000
-      internalID: 2496409245881586671
+      spriteID: 713e146eeeda5a060800000000000000
+      internalID: 6964163640375239447
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 722d8438a56d27c42bc9af2edda26aa8
+    spriteID: cc0c961f7ac55b544a3c5ccee6a54b94
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MyWB (1)_0: 2496409245881586671
+      chatbox_0: 6964163640375239447
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

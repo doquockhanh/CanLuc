@@ -29,6 +29,10 @@ namespace Gameplay.Enemies
         [Header("Collision Settings")]
         [SerializeField] private LayerMask playerLayerMask = 1 << 8; // Layer "Player" (mặc định layer 8)
         [SerializeField] private bool enableCollisionLogging = true;
+        [Header("Audio Settings")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip engineSound;
+        [SerializeField] private bool turnOnSound = false;
 
         // Trạng thái di chuyển
         private bool isMoving = false;
@@ -38,7 +42,7 @@ namespace Gameplay.Enemies
         {
             // Khởi tạo máu
             currentHealth = maxHealth;
-            
+
             // Chuẩn hóa hướng di chuyển nếu cần
             if (normalizeDirection)
             {
@@ -112,6 +116,11 @@ namespace Gameplay.Enemies
         public void StartMoving()
         {
             isMoving = true;
+            if (turnOnSound) {
+                audioSource.clip = engineSound;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
         }
 
         /// <summary>
@@ -266,13 +275,13 @@ namespace Gameplay.Enemies
             {
                 return true;
             }
-            
+
             // Kiểm tra tag
             if (other.CompareTag("Player"))
             {
                 return true;
             }
-            
+
             return false;
         }
 
@@ -301,7 +310,7 @@ namespace Gameplay.Enemies
             if (isDestroyed) return;
 
             currentHealth -= damage;
-            
+
             if (enableCollisionLogging)
             {
                 Debug.Log($"[{gameObject.name}] Took {damage} damage. Health: {currentHealth}/{maxHealth}");
@@ -322,7 +331,7 @@ namespace Gameplay.Enemies
             if (isDestroyed) return;
 
             isDestroyed = true;
-            
+
             if (enableCollisionLogging)
             {
                 Debug.Log($"[{gameObject.name}] Aircraft destroyed! Awarding {scoreValue} points");
@@ -413,7 +422,7 @@ namespace Gameplay.Enemies
             {
                 Gizmos.color = Color.red; // Màu đỏ cho enemy
                 Gizmos.DrawRay(transform.position, normalizedMoveDirection * 2f);
-                
+
                 // Vẽ mũi tên
                 Vector3 arrowEnd = transform.position + normalizedMoveDirection * 2f;
                 Vector3 arrowRight = Vector3.Cross(normalizedMoveDirection, Vector3.forward).normalized * 0.3f;
@@ -428,7 +437,7 @@ namespace Gameplay.Enemies
                 Vector3 healthBarStart = transform.position + Vector3.up * 1.5f;
                 Vector3 healthBarEnd = healthBarStart + Vector3.right * (currentHealth / (float)maxHealth) * 2f;
                 Gizmos.DrawLine(healthBarStart, healthBarEnd);
-                
+
                 // Vẽ khung health bar
                 Gizmos.color = Color.white;
                 Gizmos.DrawWireCube(transform.position + Vector3.up * 1.5f + Vector3.right, new Vector3(2f, 0.2f, 0.1f));
