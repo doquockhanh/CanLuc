@@ -64,6 +64,8 @@ public class CutsceneCamera : MonoBehaviour
                     yield return null;
                 }
             }
+
+            yield return new WaitForSeconds(1f);
         }
 
         // Nếu skip toàn bộ → nhảy camera tới point cuối
@@ -77,12 +79,6 @@ public class CutsceneCamera : MonoBehaviour
         // Ẩn UI
         yield return new WaitForSeconds(2f);
         uiPanel.SetActive(false);
-
-        // Gọi sang GameManager để bắt đầu game
-        Debug.Log("Cutscene kết thúc hoặc skip → Bắt đầu game...");
-        // TODO: thay bằng lệnh thật, ví dụ:
-        // GameManager.Instance.StartGame();
-        // hoặc SceneManager.LoadScene("GameScene");
     }
 
     IEnumerator MoveToPoint(Transform target)

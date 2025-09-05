@@ -14,7 +14,7 @@ namespace Gameplay.Focus
 		{
 			if (focusManager == null)
 			{
-				focusManager = FindObjectOfType<FocusManager>();
+				focusManager = FindFirstObjectByType<FocusManager>();
 			}
 		}
 

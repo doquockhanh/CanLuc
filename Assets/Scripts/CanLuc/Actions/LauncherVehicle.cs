@@ -135,12 +135,13 @@ namespace Gameplay.Focus
 			if (cachedRenderer != null)
 			{
 				cachedRenderer.material.color = focusColor;
-				Material mat = GetComponent<SpriteRenderer>().material;
-				if (mat != null)
-				{
-					mat.SetColor("_OutlineColor", Color.red);
-					mat.SetFloat("_OutlineSize", 4f);
-				}
+			}
+
+			Material mat = GetComponent<SpriteRenderer>().material;
+			if (mat != null)
+			{
+				mat.SetColor("_GlowColor", Color.red);
+				mat.SetFloat("_GlowSize", 4f);
 			}
 
 			// Khóa di chuyển camera khi focus vào DirectActionObject
@@ -159,8 +160,8 @@ namespace Gameplay.Focus
 			Material mat = GetComponent<SpriteRenderer>().material;
 			if (mat != null)
 			{
-				mat.SetColor("_OutlineColor", Color.yellow);
-				mat.SetFloat("_OutlineSize", 2f);
+				mat.SetColor("_GlowColor", Color.yellow);
+				mat.SetFloat("_GlowSize", 2f);
 			}
 
 			// Mở khóa di chuyển camera khi unfocus

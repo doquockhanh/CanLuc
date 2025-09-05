@@ -34,8 +34,8 @@ namespace Gameplay.Focus
 			Material mat = GetComponent<SpriteRenderer>().material;
 			if (mat != null)
 			{
-				mat.SetColor("_OutlineColor", Color.red);
-				mat.SetFloat("_OutlineSize", 4f);
+				mat.SetColor("_GlowColor", Color.red);
+				mat.SetFloat("_GlowSize", 4f);
 			}
 		}
 
@@ -44,8 +44,8 @@ namespace Gameplay.Focus
 			Material mat = GetComponent<SpriteRenderer>().material;
 			if (mat != null)
 			{
-				mat.SetColor("_OutlineColor", Color.yellow);
-				mat.SetFloat("_OutlineSize", 2f);
+				mat.SetColor("_GlowColor", Color.yellow);
+				mat.SetFloat("_GlowSize", 2f);
 			}
 		}
 	}
