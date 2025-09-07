@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5853700249769497037}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7, y: -0.14, z: 0}
+  m_LocalPosition: {x: -1.63, y: -0.01, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 8bd4a149e100c1348b8eba6c317bf184, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,10 +74,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 1341836997, guid: 5bb65a652bca38949bca9e5024eb18a6, type: 3}
+  m_SortingLayerID: 2134929741
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 8653431922926832778, guid: d099dbdc405c2654fbd054d9cec654b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,21 +126,21 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: -0.4939375, y: 0.29572666}
-  - {x: -0.48245034, y: 0.07517496}
-  - {x: -0.48195294, y: 1.4480293}
-  - {x: -0.41689187, y: 1.453993}
-  - {x: -0.4183631, y: 0.1385482}
-  - {x: -0.09429726, y: 0.14151166}
-  - {x: -0.094155245, y: 1.4517391}
-  - {x: -0.019533884, y: 1.4534547}
-  - {x: -0.041044384, y: 0.10245463}
+  - {x: -0.49507847, y: 0.10043009}
+  - {x: -0.48195294, y: 1.45}
+  - {x: -0.4, y: 1.45}
+  - {x: -0.4, y: 0.10939104}
+  - {x: -0.14, y: 0.10812602}
+  - {x: -0.14, y: 1.4601088}
+  - {x: -0.028, y: 1.4618244}
+  - {x: -0.028, y: 0.10663924}
   - {x: 0.05348382, y: 0.10339987}
   - {x: 0.040741265, y: 1.4708413}
-  - {x: 0.11582038, y: 1.4719446}
-  - {x: 0.12000775, y: 0.13259432}
-  - {x: 0.39250037, y: 0.13382155}
-  - {x: 0.39477158, y: 1.4644787}
-  - {x: 0.47752556, y: 1.456831}
+  - {x: 0.135, y: 1.4719446}
+  - {x: 0.135, y: 0.1081166}
+  - {x: 0.37, y: 0.11372542}
+  - {x: 0.37, y: 1.4644787}
+  - {x: 0.47752556, y: 1.4675993}
   - {x: 0.45944694, y: 0.070191756}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}

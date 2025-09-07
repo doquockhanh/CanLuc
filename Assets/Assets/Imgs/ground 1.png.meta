@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 8eec358b18668bc4bb8655d5a6b642e7
+guid: 2a83d9bceb02891408b6d4dfbe2f00f2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8591141901481381195
-    second: Cloud2_0
-  - first:
-      213: -4911293541655054529
-    second: Cloud2_1
-  - first:
-      213: 7718810039110682391
-    second: Cloud2_2
+      213: -8610559094780854174
+    second: ground 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -81,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cloud2_0
+      name: ground 1_0
       rect:
         serializedVersion: 2
-        x: 174
-        y: 1450
-        width: 638
-        height: 382
+        x: 0
+        y: 0
+        width: 1823
+        height: 882
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b4d85c4aa0ed93770800000000000000
-      internalID: 8591141901481381195
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cloud2_1
-      rect:
-        serializedVersion: 2
-        x: 1198
-        y: 1454
-        width: 637
-        height: 381
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f37faf58b8497dbb0800000000000000
-      internalID: -4911293541655054529
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cloud2_2
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 421
-        width: 638
-        height: 380
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 71749e5a5d8be1b60800000000000000
-      internalID: 7718810039110682391
+      spriteID: 260041ebf16218880800000000000000
+      internalID: -8610559094780854174
       vertices: []
       indices: 
       edges: []
@@ -185,9 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Cloud2_0: 8591141901481381195
-      Cloud2_1: -4911293541655054529
-      Cloud2_2: 7718810039110682391
+      ground 1_0: -8610559094780854174
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

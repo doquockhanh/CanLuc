@@ -319,7 +319,7 @@ MonoBehaviour:
     m_Bits: 8
   enableCollisionLogging: 1
   audioSource: {fileID: 4350161964788968466}
-  engineSound: {fileID: 8300000, guid: 08c83415196269b4c9d5576f1b7d7779, type: 3}
+  engineSound: {fileID: 8300000, guid: 76a681107d44d3246a0efe1fbe41f0ab, type: 3}
   turnOnSound: 1
 --- !u!82 &4350161964788968466
 AudioSource:

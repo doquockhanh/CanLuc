@@ -60,7 +60,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1.4980392, g: 0, b: 0.045640096, a: 1}
+    - _Color: {r: 0.3745098, g: 0, b: 0.011410024, a: 1}
     - _OutlineSize: {r: 1, g: 1, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
