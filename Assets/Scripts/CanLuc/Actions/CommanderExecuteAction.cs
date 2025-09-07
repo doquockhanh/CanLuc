@@ -16,6 +16,15 @@ namespace Gameplay.Focus
 		[SerializeField] private AudioSource audioSource;
 		[SerializeField] private AudioClip shootSound;
 		[SerializeField] private TextMeshProUGUI text;
+		[Header("Visual Settings")]
+		[SerializeField] private Color focusColor = Color.yellow;
+		[SerializeField] private Color normalColor = Color.white;
+		private Renderer cachedRenderer;
+
+		void Awake()
+		{
+			cachedRenderer = GetComponentInChildren<Renderer>();
+		}
 
 		public void Execute(bool success)
 		{
@@ -23,7 +32,9 @@ namespace Gameplay.Focus
 			{
 				audioSource.PlayOneShot(shootSound);
 				text.text = "Bắt đầu!!";
-			}else {
+			}
+			else
+			{
 				text.text = "Đi chuẩn bị đi?";
 			}
 		}
@@ -31,21 +42,17 @@ namespace Gameplay.Focus
 
 		public void OnFocused(GameObject previous)
 		{
-			Material mat = GetComponent<SpriteRenderer>().material;
-			if (mat != null)
+			if (cachedRenderer != null)
 			{
-				mat.SetColor("_GlowColor", Color.red);
-				mat.SetFloat("_GlowSize", 4f);
+				cachedRenderer.material.color = focusColor;
 			}
 		}
 
 		public void OnDefocused(GameObject next)
 		{
-			Material mat = GetComponent<SpriteRenderer>().material;
-			if (mat != null)
+			if (cachedRenderer != null)
 			{
-				mat.SetColor("_GlowColor", Color.yellow);
-				mat.SetFloat("_GlowSize", 2f);
+				cachedRenderer.material.color = normalColor;
 			}
 		}
 	}

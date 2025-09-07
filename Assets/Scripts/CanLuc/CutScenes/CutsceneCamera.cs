@@ -71,7 +71,8 @@ public class CutsceneCamera : MonoBehaviour
         // Nếu skip toàn bộ → nhảy camera tới point cuối
         if (skipCutscene && points.Length > 0)
         {
-            transform.position = points[^1].position;
+            Vector3 finalPosition = new Vector3(points[^1].position.x, points[^1].position.y, transform.position.z);
+            transform.position = finalPosition;
             audioSource.Stop();
             yield return StartCoroutine(TypeText(texts[points.Length - 1], false));
         }
@@ -83,9 +84,10 @@ public class CutsceneCamera : MonoBehaviour
 
     IEnumerator MoveToPoint(Transform target)
     {
-        while (Vector3.Distance(transform.position, target.position) > 0.05f && !skipCutscene)
+        Vector3 targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
+        while (Vector3.Distance(transform.position, targetPosition) > 0.05f && !skipCutscene)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
     }

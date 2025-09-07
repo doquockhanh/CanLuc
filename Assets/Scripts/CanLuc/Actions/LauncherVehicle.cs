@@ -137,13 +137,6 @@ namespace Gameplay.Focus
 				cachedRenderer.material.color = focusColor;
 			}
 
-			Material mat = GetComponent<SpriteRenderer>().material;
-			if (mat != null)
-			{
-				mat.SetColor("_GlowColor", Color.red);
-				mat.SetFloat("_GlowSize", 4f);
-			}
-
 			// Khóa di chuyển camera khi focus vào DirectActionObject
 			if (focusManager != null)
 			{
@@ -155,13 +148,9 @@ namespace Gameplay.Focus
 		{
 			isFocused = false;
 
-			// Trở về màu sắc bình thường
-			cachedRenderer.material.color = normalColor;
-			Material mat = GetComponent<SpriteRenderer>().material;
-			if (mat != null)
+			if (cachedRenderer != null)
 			{
-				mat.SetColor("_GlowColor", Color.yellow);
-				mat.SetFloat("_GlowSize", 2f);
+				cachedRenderer.material.color = normalColor;
 			}
 
 			// Mở khóa di chuyển camera khi unfocus

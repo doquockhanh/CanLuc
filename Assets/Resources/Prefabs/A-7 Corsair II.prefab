@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a3c1cbe0ad098d4f8cb895310291c56, type: 2}
+  - {fileID: 2100000, guid: 38808558e53d7f643b9084ade01bcdbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,6 +138,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   enableCollisionLogging: 1
+  audioSource: {fileID: 0}
+  engineSound: {fileID: 0}
+  turnOnSound: 0
 --- !u!61 &2103501954043932612
 BoxCollider2D:
   m_ObjectHideFlags: 0

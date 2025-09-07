@@ -64,7 +64,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9e868d3bb4165e74bad9cce4036bba66, type: 2}
+  - {fileID: 2100000, guid: 36db2029ea7c6f54382807f6a3b66f0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &374454856754361856
 Animator:
   serializedVersion: 7
@@ -199,6 +199,9 @@ MonoBehaviour:
   rotationSpeed: 30
   focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
+  maxLifetime: 10
+  lowVelocityThreshold: 2
+  lowVelocityDuration: 2
   audioSource: {fileID: 5548329553592132590}
   fireSound: {fileID: 8300000, guid: 901b22d903f1b43409a499944f7fc9fc, type: 3}
   movingSound: {fileID: 8300000, guid: a038ea9e3bbc56746b88d2edec2304d8, type: 3}

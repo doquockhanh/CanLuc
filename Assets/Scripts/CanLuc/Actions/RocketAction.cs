@@ -129,13 +129,6 @@ namespace Gameplay.Focus
 			{
 				cachedRenderer.material.color = focusColor;
 			}
-
-			Material mat = GetComponent<SpriteRenderer>().material;
-			if (mat != null)
-			{
-				mat.SetColor("_GlowColor", Color.red);
-				mat.SetFloat("_GlowSize", 4f);
-			}
 		}
 
 		public void OnDefocused(GameObject next)
@@ -143,12 +136,6 @@ namespace Gameplay.Focus
 			if (cachedRenderer != null)
 			{
 				cachedRenderer.material.color = normalColor;
-			}
-			Material mat = GetComponent<SpriteRenderer>().material;
-			if (mat != null)
-			{
-				mat.SetColor("_GlowColor", Color.yellow);
-				mat.SetFloat("_GlowSize", 2f);
 			}
 		}
 	}
