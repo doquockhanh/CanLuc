@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 1d5ffe61fdeaa0b4b8af76ba59eeaa7d
+guid: df50f7a6964032b40a44b1103f29c144
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1347532211411968617
-    second: Grass_0
-  - first:
-      213: -7645372005702169758
-    second: Grass_1
+      213: 8766956830630241453
+    second: ChiHuy-1.png (1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 240
+  spritePixelsToUnits: 12
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -78,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grass_0
+      name: ChiHuy-1.png (1)_0
       rect:
         serializedVersion: 2
-        x: 106
-        y: 1678
-        width: 518
-        height: 196
+        x: 10
+        y: 6
+        width: 18
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 79d946fd79a9c4de0800000000000000
-      internalID: -1347532211411968617
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_1
-      rect:
-        serializedVersion: 2
-        x: 110
-        y: 647
-        width: 511
-        height: 199
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 26b0860faae26e590800000000000000
-      internalID: -7645372005702169758
+      spriteID: da466e2c9cc7aa970800000000000000
+      internalID: 8766956830630241453
       vertices: []
       indices: 
       edges: []
@@ -150,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3822ef35356228a4d8658be8a928174c
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Grass_0: -1347532211411968617
-      Grass_1: -7645372005702169758
+      ChiHuy-1.png (1)_0: 8766956830630241453
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

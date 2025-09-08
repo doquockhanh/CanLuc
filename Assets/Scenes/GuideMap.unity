@@ -7836,6 +7836,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2992291188072630985, guid: 236d21055d01d54448b299be25417bc4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992291188072630985, guid: 236d21055d01d54448b299be25417bc4, type: 3}
       propertyPath: m_SortingLayerID
       value: 2134929741
       objectReference: {fileID: 0}
@@ -9277,12 +9281,36 @@ PrefabInstance:
       value: Commander
       objectReference: {fileID: 0}
     - target: {fileID: 2610085888983408797, guid: eb9ee219893915e4199217d56044754c, type: 3}
+      propertyPath: m_Size.x
+      value: 1.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610085888983408797, guid: eb9ee219893915e4199217d56044754c, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610085888983408797, guid: eb9ee219893915e4199217d56044754c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8766956830630241453, guid: df50f7a6964032b40a44b1103f29c144, type: 3}
+    - target: {fileID: 2610085888983408797, guid: eb9ee219893915e4199217d56044754c, type: 3}
       propertyPath: m_SortingLayer
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2610085888983408797, guid: eb9ee219893915e4199217d56044754c, type: 3}
       propertyPath: m_SortingLayerID
       value: 2134929741
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610085888983408797, guid: eb9ee219893915e4199217d56044754c, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5344767969977050806, guid: eb9ee219893915e4199217d56044754c, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 5344767969977050806, guid: eb9ee219893915e4199217d56044754c, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.5625
       objectReference: {fileID: 0}
     - target: {fileID: 6377911379578947606, guid: eb9ee219893915e4199217d56044754c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9832,7 +9860,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 11.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10098,7 +10126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_AssetsPPU: 64
+  m_AssetsPPU: 48
   m_RefResolutionX: 1920
   m_RefResolutionY: 1080
   m_CropFrame: 0

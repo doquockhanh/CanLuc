@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -7187046107695100156, guid: 8d02449c71183914180e666ed11d2d11, type: 3}
+  m_Sprite: {fileID: 2644169188596363561, guid: 0044ed6ba95ed614485940ea4824b659, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -179,8 +179,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.0086966, y: -0.0009078097}
-  m_Size: {x: 1.93961, y: 0.32}
+  m_Offset: {x: -0.004118324, y: -0.0009076889}
+  m_Size: {x: 2.0175421, y: 0.32000545}
   m_Direction: 1
 --- !u!114 &422422298921614247
 MonoBehaviour:
@@ -426,11 +426,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2153872602396796748, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.959
+      value: 0.011
       objectReference: {fileID: 0}
     - target: {fileID: 2153872602396796748, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.69
+      value: 0.586
       objectReference: {fileID: 0}
     - target: {fileID: 2153872602396796748, guid: fdd44b1dbddd4174d8be95371913e8c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
