@@ -1,17 +1,8 @@
 using UnityEngine;
-using System.Collections;
 
 namespace Gameplay.Focus
 {
-	/// <summary>
-	/// GameObject có khả năng thực hiện hành động trực tiếp:
-	/// - Click để focus
-	/// - Hold Space để xoay child object theo ping-pong
-	/// - Nhấn A/D để di chuyển trái phải
-	/// - Hiển thị focusable info
-	/// </summary>
-	[RequireComponent(typeof(Rigidbody2D))]
-	public class LaunchVehicle : MonoBehaviour, IFocusable
+	public class LaunchVehicle : FocusableBase
 	{
 		[Header("Movement Settings")]
 		[SerializeField] private float moveSpeed = 5f;
@@ -27,10 +18,6 @@ namespace Gameplay.Focus
 		[SerializeField] private AudioSource audioSource2;
 		[SerializeField] private AudioClip launchSound;
 
-		[Header("Visual Settings")]
-		[SerializeField] private Color focusColor = Color.yellow;
-		[SerializeField] private Color normalColor = Color.white;
-
 		[Header("Input Settings")]
 		[SerializeField] private KeyCode rotateKey = KeyCode.Space;
 		[SerializeField] private KeyCode leftKey = KeyCode.A;
@@ -38,16 +25,14 @@ namespace Gameplay.Focus
 		[SerializeField] private FocusManager focusManager;
 
 		private Rigidbody2D rb;
-		private Renderer cachedRenderer;
 		private bool isFocused = false;
 		private float currentAngle = 0f;
 		private int direction = 1; // 1 = rotate up, -1 = rotate down
 
-
-		void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
 			rb = GetComponent<Rigidbody2D>();
-			cachedRenderer = GetComponentInChildren<Renderer>();
 			audioSource.clip = engineSound;
 			audioSource.loop = true;
 			audioSource.Play();
@@ -126,40 +111,18 @@ namespace Gameplay.Focus
 			childToRotate.localEulerAngles = new Vector3(0, 0, currentAngle);
 		}
 
-		#region IFocusable Implementation
-
-		public void OnFocused(GameObject previous)
+		public override void OnFocused(GameObject previous)
 		{
+			base.OnFocused(previous);
 			isFocused = true;
-
-			if (cachedRenderer != null)
-			{
-				cachedRenderer.material.color = focusColor;
-			}
-
-			// Khóa di chuyển camera khi focus vào DirectActionObject
-			if (focusManager != null)
-			{
-				focusManager.LockCameraMovement();
-			}
+			CameraController.Instance.LockCameraMovement();
 		}
 
-		public void OnDefocused(GameObject next)
+		public override void OnDefocused(GameObject next)
 		{
+			base.OnDefocused(next);
 			isFocused = false;
-
-			if (cachedRenderer != null)
-			{
-				cachedRenderer.material.color = normalColor;
-			}
-
-			// Mở khóa di chuyển camera khi unfocus
-			if (focusManager != null)
-			{
-				focusManager.UnlockCameraMovement();
-			}
+			CameraController.Instance.UnlockCameraMovement();
 		}
-
-		#endregion
 	}
 }

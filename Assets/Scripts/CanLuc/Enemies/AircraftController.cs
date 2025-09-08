@@ -63,24 +63,6 @@ namespace Gameplay.Enemies
             CheckCurrentPhaseAndSetMovement();
         }
 
-        void OnCollisionEnter2D(Collision2D other)
-        {
-            // Kiểm tra va chạm với Player
-            if (IsPlayerCollision(other.gameObject))
-            {
-                HandlePlayerCollision(other.gameObject);
-            }
-        }
-
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            // Kiểm tra va chạm trigger với Player
-            if (IsPlayerCollision(other.gameObject))
-            {
-                HandlePlayerCollision(other.gameObject);
-            }
-        }
-
         private void OnDestroy()
         {
             // Hủy đăng ký khi component bị destroy
@@ -99,20 +81,12 @@ namespace Gameplay.Enemies
             }
         }
 
-        #region Movement Logic
-
-        /// <summary>
-        /// Di chuyển máy bay về phía trước
-        /// </summary>
         private void MoveForward()
         {
             Vector3 movement = normalizedMoveDirection * moveSpeed * Time.deltaTime;
             transform.position += movement;
         }
 
-        /// <summary>
-        /// Bắt đầu di chuyển
-        /// </summary>
         public void StartMoving()
         {
             isMoving = true;
@@ -123,69 +97,9 @@ namespace Gameplay.Enemies
             }
         }
 
-        /// <summary>
-        /// Dừng di chuyển
-        /// </summary>
         public void StopMoving()
         {
             isMoving = false;
-        }
-
-        /// <summary>
-        /// Thiết lập tốc độ di chuyển
-        /// </summary>
-        public void SetMoveSpeed(float newSpeed)
-        {
-            moveSpeed = newSpeed;
-        }
-
-        /// <summary>
-        /// Thiết lập hướng di chuyển
-        /// </summary>
-        public void SetMoveDirection(Vector3 newDirection)
-        {
-            moveDirection = newDirection;
-            if (normalizeDirection)
-            {
-                normalizedMoveDirection = moveDirection.normalized;
-            }
-            else
-            {
-                normalizedMoveDirection = moveDirection;
-            }
-        }
-
-        /// <summary>
-        /// Kiểm tra xem máy bay có đang di chuyển không
-        /// </summary>
-        public bool IsMoving()
-        {
-            return isMoving;
-        }
-
-        /// <summary>
-        /// Lấy tốc độ di chuyển hiện tại
-        /// </summary>
-        public float GetCurrentMoveSpeed()
-        {
-            return moveSpeed;
-        }
-
-        /// <summary>
-        /// Lấy hướng di chuyển hiện tại
-        /// </summary>
-        public Vector3 GetCurrentMoveDirection()
-        {
-            return normalizedMoveDirection;
-        }
-
-        /// <summary>
-        /// Reset máy bay về vị trí ban đầu
-        /// </summary>
-        public void ResetPosition()
-        {
-            // Có thể override trong class con để thiết lập vị trí cụ thể
-            transform.position = Vector3.zero;
         }
 
         #region IGamePhaseAware Implementation
@@ -261,49 +175,6 @@ namespace Gameplay.Enemies
             }
         }
 
-        #endregion
-
-        #region Collision & Combat Logic
-
-        /// <summary>
-        /// Kiểm tra xem object có phải là Player không
-        /// </summary>
-        private bool IsPlayerCollision(GameObject other)
-        {
-            // Kiểm tra layer
-            if (((1 << other.layer) & playerLayerMask) != 0)
-            {
-                return true;
-            }
-
-            // Kiểm tra tag
-            if (other.CompareTag("Player"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Xử lý va chạm với Player
-        /// </summary>
-        private void HandlePlayerCollision(GameObject player)
-        {
-            if (isDestroyed) return; // Đã bị phá hủy
-
-            if (enableCollisionLogging)
-            {
-                Debug.Log($"[{gameObject.name}] Collided with Player: {player.name}");
-            }
-
-            // Giảm máu
-            TakeDamage(1);
-            Destroy(player);
-        }
-
-        /// <summary>
-        /// Nhận sát thương
         /// </summary>
         public void TakeDamage(int damage)
         {
@@ -366,84 +237,5 @@ namespace Gameplay.Enemies
                 Debug.LogWarning($"[{gameObject.name}] ScoreManager not found! Cannot award {scoreValue} points");
             }
         }
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Lấy máu hiện tại
-        /// </summary>
-        public int GetCurrentHealth()
-        {
-            return currentHealth;
-        }
-
-        /// <summary>
-        /// Lấy máu tối đa
-        /// </summary>
-        public int GetMaxHealth()
-        {
-            return maxHealth;
-        }
-
-        /// <summary>
-        /// Kiểm tra xem máy bay có bị phá hủy không
-        /// </summary>
-        public bool IsDestroyed()
-        {
-            return isDestroyed;
-        }
-
-        /// <summary>
-        /// Thiết lập điểm số khi bị phá hủy
-        /// </summary>
-        public void SetScoreValue(int newScoreValue)
-        {
-            scoreValue = newScoreValue;
-        }
-
-        /// <summary>
-        /// Lấy điểm số khi bị phá hủy
-        /// </summary>
-        public int GetScoreValue()
-        {
-            return scoreValue;
-        }
-
-        #endregion
-
-        #region Editor Gizmos
-
-        private void OnDrawGizmosSelected()
-        {
-            // Vẽ hướng di chuyển trong editor
-            if (normalizedMoveDirection != Vector3.zero)
-            {
-                Gizmos.color = Color.red; // Màu đỏ cho enemy
-                Gizmos.DrawRay(transform.position, normalizedMoveDirection * 2f);
-
-                // Vẽ mũi tên
-                Vector3 arrowEnd = transform.position + normalizedMoveDirection * 2f;
-                Vector3 arrowRight = Vector3.Cross(normalizedMoveDirection, Vector3.forward).normalized * 0.3f;
-                Gizmos.DrawLine(arrowEnd, arrowEnd - normalizedMoveDirection * 0.5f + arrowRight);
-                Gizmos.DrawLine(arrowEnd, arrowEnd - normalizedMoveDirection * 0.5f - arrowRight);
-            }
-
-            // Vẽ health bar
-            if (Application.isPlaying && currentHealth > 0)
-            {
-                Gizmos.color = Color.green;
-                Vector3 healthBarStart = transform.position + Vector3.up * 1.5f;
-                Vector3 healthBarEnd = healthBarStart + Vector3.right * (currentHealth / (float)maxHealth) * 2f;
-                Gizmos.DrawLine(healthBarStart, healthBarEnd);
-
-                // Vẽ khung health bar
-                Gizmos.color = Color.white;
-                Gizmos.DrawWireCube(transform.position + Vector3.up * 1.5f + Vector3.right, new Vector3(2f, 0.2f, 0.1f));
-            }
-        }
-
-        #endregion
     }
 }

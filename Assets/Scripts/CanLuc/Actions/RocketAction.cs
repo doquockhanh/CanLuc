@@ -2,18 +2,11 @@ using UnityEngine;
 
 namespace Gameplay.Focus
 {
-	/// <summary>
-	/// Example plane behavior: move forward/up using consumed force.
-	/// Requires a Rigidbody.
-	/// </summary>
-	[RequireComponent(typeof(Rigidbody2D))]
-	public class RocketAction : MonoBehaviour, IForceAction, IFocusable
+	public class RocketAction : FocusableBase, IForceAction
 	{
 		[SerializeField] private float forwardMultiplier = 1.0f;
 		[SerializeField] private float upwardMultiplier = 0.2f;
 		[SerializeField] private float rotationSpeed = 10f;
-		[SerializeField] private Color focusColor = Color.yellow;
-		[SerializeField] private Color normalColor = Color.white;
 
 		[Header("Destruction Settings")]
 		[SerializeField] private float maxLifetime = 10f; // Thời gian tối đa tồn tại (giây)
@@ -29,16 +22,15 @@ namespace Gameplay.Focus
 		private bool isExecuted = false; // Đánh dấu đã thực thi Execute
 
 		private Rigidbody2D rb;
-		private Renderer cachedRenderer;
 
 		// Biến theo dõi thời gian và tốc độ
 		private float lifetime = 0f;
 		private float lowVelocityTimer = 0f;
 
-		void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
 			rb = GetComponent<Rigidbody2D>();
-			cachedRenderer = GetComponentInChildren<Renderer>();
 
 			// Tự động thêm FocusableInfo nếu chưa có
 			if (GetComponent<FocusableInfo>() == null)
@@ -95,7 +87,7 @@ namespace Gameplay.Focus
 			// Kiểm tra thời gian tồn tại
 			if (lifetime >= maxLifetime)
 			{
-				DestroyRocket("Thời gian tồn tại vượt quá giới hạn");
+				DestroyRocket();
 				return;
 			}
 
@@ -106,7 +98,7 @@ namespace Gameplay.Focus
 				lowVelocityTimer += Time.deltaTime;
 				if (lowVelocityTimer >= lowVelocityDuration)
 				{
-					DestroyRocket("Duy trì tốc độ thấp quá lâu");
+					DestroyRocket();
 					return;
 				}
 			}
@@ -117,26 +109,18 @@ namespace Gameplay.Focus
 			}
 		}
 
-		private void DestroyRocket(string reason)
+		void OnCollisionEnter2D(Collision2D other)
 		{
-			Debug.Log($"Rocket bị phá hủy: {reason} - Lifetime: {lifetime:F2}s, Low velocity time: {lowVelocityTimer:F2}s");
+			if (other.collider.CompareTag("Player"))
+            {
+                DestroyRocket();
+            }
+		}
+
+		private void DestroyRocket()
+		{
+			ParticleManager.Instance.PlayParticleSystem("basicExplosion", transform.position);
 			Destroy(gameObject);
-		}
-
-		public void OnFocused(GameObject previous)
-		{
-			if (cachedRenderer != null)
-			{
-				cachedRenderer.material.color = focusColor;
-			}
-		}
-
-		public void OnDefocused(GameObject next)
-		{
-			if (cachedRenderer != null)
-			{
-				cachedRenderer.material.color = normalColor;
-			}
 		}
 	}
 }

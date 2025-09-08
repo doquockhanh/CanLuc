@@ -6,10 +6,6 @@ using System.Collections;
 
 namespace Gameplay.Focus
 {
-	/// <summary>
-	/// Central controller that handles click-to-focus and Space-to-accumulate.
-	/// Attach to a singleton GameObject in the scene.
-	/// </summary>
 	public class FocusManager : MonoBehaviour
 	{
 		[Header("References")]
@@ -20,7 +16,6 @@ namespace Gameplay.Focus
 
 		[Header("Input")]
 		[SerializeField] private KeyCode accumulateKey = KeyCode.Space;
-		[SerializeField] private float freeMoveSpeed = 10f;
 
 		[Header("State (Read-Only)")]
 		[SerializeField] private GameObject currentFocused;
@@ -31,128 +26,73 @@ namespace Gameplay.Focus
 		[Header("Registry")]
 		[SerializeField] private List<GameObject> registeredObjects = new List<GameObject>();
 
-		// Camera follow state for execution cycle
-		private List<GameObject> cameraCycleTargets;
-		private int cameraCycleIndex = -1;
-		[SerializeField] private bool followActive = false;
-		[SerializeField] private bool freeCameraMode = false; // true: WASD control; false: follow target
-
 		[Header("Audio")]
 		[SerializeField] private AudioSource audioSource;
 		[SerializeField] private AudioClip audioClip;
 
-		// Camera movement lock for DirectActionObject
-		private bool cameraMovementLocked = false;
+		// Camera controller reference
+		private CameraController cameraController;
 
 		// Events
 		public System.Action OnExecuteAllRegistered;
 
-		void Awake()
+	void Awake()
+	{
+		if (worldCamera == null)
 		{
-			if (worldCamera == null)
-			{
-				worldCamera = Camera.main;
-			}
-
-			audioSource.clip = audioClip;
+			worldCamera = Camera.main;
 		}
 
-		void Update()
-		{
-			// Ưu tiên xử lý khi đang ở chế độ follow/cycle
-			if (followActive)
-			{
-				HandleFollowModeInputs();
-				UpdateFollowHelpPanel();
-				return; // Không xử lý focus/accumulate mặc định khi đang follow
-			}
+		audioSource.clip = audioClip;
 
-			HandleFocusSelection();
-			HandleAccumulation();
-			UpdateFollowHelpPanel();
+		// Subscribe to focus changes to keep internal state (accumulator) in sync
+		FocusableBase.OnFocusChanged += HandleGlobalFocusChanged;
+		
+		// Tìm hoặc tạo CameraController
+		cameraController = FindFirstObjectByType<CameraController>();
+		if (cameraController == null)
+		{
+			// Tạo CameraController nếu chưa có
+			GameObject cameraControllerObj = new GameObject("CameraController");
+			cameraController = cameraControllerObj.AddComponent<CameraController>();
+		}
+		
+		// Thiết lập camera và UI cho CameraController
+		cameraController.SetCamera(worldCamera);
+		cameraController.SetFollowHelpUI(followHelpPanel, followHelpText);
+	}
+
+	private void OnDestroy()
+	{
+		FocusableBase.OnFocusChanged -= HandleGlobalFocusChanged;
+	}
+
+	void Update()
+	{
+		// Ưu tiên xử lý khi đang ở chế độ follow/cycle
+		if (cameraController != null && cameraController.IsFollowActive)
+		{
+			return; // Không xử lý focus/accumulate mặc định khi đang follow
 		}
 
-		void LateUpdate()
-		{
-			// WASD luôn hoạt động khi không follow
-			if (!followActive)
-			{
-				UpdateCameraFreeMove();
-				return;
-			}
-			// Khi đang follow: nếu free mode -> WASD, ngược lại -> follow target
-			if (freeCameraMode)
-			{
-				UpdateCameraFreeMove();
-			}
-			else
-			{
-				UpdateCameraFollow();
-			}
-		}
+		HandleFocusSelection();
+		HandleAccumulation();
+	}
+
+	// LateUpdate đã được chuyển sang CameraController
 
 		private void HandleFocusSelection()
 		{
-			if (Input.GetMouseButtonDown(0))
-			{
-				// Ignore if clicking on UI
-				if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
-
-				Vector3 mouseWorld = worldCamera.ScreenToWorldPoint(Input.mousePosition);
-				Vector2 point = new Vector2(mouseWorld.x, mouseWorld.y);
-				Collider2D col = Physics2D.OverlapPoint(point);
-				if (col != null)
-				{
-					SetFocus(col.gameObject);
-				}
-				else
-				{
-					// Click vào vùng trống để unfocus
-					Unfocus();
-				}
-			}
-
-			// Right click để unfocus
+			// Focus selection is now handled by FocusableBase.OnMouseDown
+			// Only handle unfocus on right click here for convenience
 			if (Input.GetMouseButtonDown(1))
 			{
-				// Ignore if clicking on UI
 				if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
-
-				Unfocus();
+				FocusableBase.ClearFocus();
 			}
 		}
 
-		private void HandleFollowModeInputs()
-		{
-			// Space: toggle giữa follow target và free camera (WASD)
-			if (Input.GetKeyDown(accumulateKey))
-			{
-				freeCameraMode = !freeCameraMode;
-				return;
-			}
-
-			// ESC: thoát chế độ follow/cycle hoàn toàn
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				ExitFollowMode();
-				return;
-			}
-
-			// Left click: chuyển mục tiêu tiếp theo
-			if (Input.GetMouseButtonDown(0))
-			{
-				if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
-				AdvanceCameraCycle();
-			}
-		}
-
-		private void ExitFollowMode()
-		{
-			followActive = false;
-			freeCameraMode = false;
-			cameraCycleTargets = null;
-			cameraCycleIndex = -1;
-		}
+	// Camera input handling đã được chuyển sang CameraController
 
 		private void HandleAccumulation()
 		{
@@ -205,65 +145,24 @@ namespace Gameplay.Focus
 
 		public void SetFocus(GameObject target)
 		{
-			if (target == currentFocused) return;
-
-			GameObject previous = currentFocused;
-			IFocusable[] previousListeners = focusedListeners;
-
-			currentFocused = target;
-			focusedAccumulator = currentFocused != null ? currentFocused.GetComponent<ForceAccumulator>() : null;
-			focusedListeners = currentFocused != null ? currentFocused.GetComponentsInChildren<IFocusable>(true) : null;
-
-			// Notify previous
-			if (previous != null && previousListeners != null)
-			{
-				for (int i = 0; i < previousListeners.Length; i++)
-				{
-					previousListeners[i].OnDefocused(currentFocused);
-				}
-			}
-
-			// Notify new
-			if (currentFocused != null && focusedListeners != null)
-			{
-				for (int i = 0; i < focusedListeners.Length; i++)
-				{
-					focusedListeners[i].OnFocused(previous);
-				}
-			}
-
-			// Không còn cập nhật FocusInfoPanel khi focus/unfocus
-			// UpdateFocusInfoPanel();
+			FocusableBase.SetFocus(target);
 		}
 
 		public void Unfocus()
 		{
-			if (currentFocused == null) return;
-
-			GameObject previous = currentFocused;
-			IFocusable[] previousListeners = focusedListeners;
-
-			// Reset focus state
-			currentFocused = null;
-			focusedAccumulator = null;
-			focusedListeners = null;
-
-			// Notify previous object that it's no longer focused
-			if (previous != null && previousListeners != null)
-			{
-				for (int i = 0; i < previousListeners.Length; i++)
-				{
-					previousListeners[i].OnDefocused(null);
-				}
-			}
-
-			// Không còn cập nhật FocusInfoPanel khi focus/unfocus
-			// UpdateFocusInfoPanel();
+			FocusableBase.ClearFocus();
 		}
 
-		public GameObject GetCurrentFocus() => currentFocused;
+		public GameObject GetCurrentFocus() => FocusableBase.CurrentGameObject;
 		public float GetCurrentForce() => focusedAccumulator != null ? focusedAccumulator.CurrentForce : 0f;
 		public float ConsumeCurrentForce() => focusedAccumulator != null ? focusedAccumulator.Consume() : 0f;
+
+		private void HandleGlobalFocusChanged(FocusableBase previous, FocusableBase current)
+		{
+			currentFocused = current != null ? current.gameObject : null;
+			focusedAccumulator = currentFocused != null ? currentFocused.GetComponent<ForceAccumulator>() : null;
+			focusedListeners = currentFocused != null ? currentFocused.GetComponentsInChildren<IFocusable>(true) : null;
+		}
 
 		/// <summary>
 		/// Public method để unfocus từ bên ngoài (UI button, etc.)
@@ -320,8 +219,22 @@ namespace Gameplay.Focus
 			// Thông báo cho GameManager biết rằng tất cả action đã được thực thi
 			OnExecuteAllRegistered?.Invoke();
 
+			// Ẩn FocusInfoPanel khi bắt đầu follow/cycle (CommanderExecuteAction)
+			// Sử dụng HoverManager nếu có, ngược lại dùng method cũ
+			if (HoverManager.Instance != null)
+			{
+				HoverManager.Instance.HideFocusInfoPanel();
+			}
+			else
+			{
+				HideFocusInfoPanel();
+			}
+			
 			// Khởi động camera cycle theo snapshot
-			StartCameraCycle(snapshot);
+			if (cameraController != null)
+			{
+				cameraController.StartCameraCycle(snapshot);
+			}
 		}
 
 		private void CleanupRegistry()
@@ -335,44 +248,6 @@ namespace Gameplay.Focus
 			}
 		}
 
-		private void UpdateFocusInfoPanel()
-		{
-			if (focusInfoPanelRef == null) return;
-
-			if (currentFocused != null)
-			{
-				// Tìm IActionInfo (có thể là FocusableInfo hoặc DirectActionInfo)
-				var actionInfo = currentFocused.GetComponent<IActionInfo>();
-				if (actionInfo != null)
-				{
-					// Gọi method ShowPanel qua reflection - vị trí sẽ được cập nhật tự động theo chuột
-					var showPanelMethod = focusInfoPanelRef.GetType().GetMethod("ShowPanel");
-					if (showPanelMethod != null)
-					{
-						showPanelMethod.Invoke(focusInfoPanelRef, new object[] { actionInfo, Vector3.zero });
-					}
-				}
-				else
-				{
-					// Gọi method HidePanel qua reflection
-					var hidePanelMethod = focusInfoPanelRef.GetType().GetMethod("HidePanel");
-					if (hidePanelMethod != null)
-					{
-						hidePanelMethod.Invoke(focusInfoPanelRef, null);
-					}
-				}
-			}
-			else
-			{
-				// Gọi method HidePanel qua reflection
-				var hidePanelMethod = focusInfoPanelRef.GetType().GetMethod("HidePanel");
-				if (hidePanelMethod != null)
-				{
-					hidePanelMethod.Invoke(focusInfoPanelRef, null);
-				}
-			}
-		}
-
 		private void HideFocusInfoPanel()
 		{
 			if (focusInfoPanelRef == null) return;
@@ -382,152 +257,6 @@ namespace Gameplay.Focus
 				hidePanelMethod.Invoke(focusInfoPanelRef, null);
 			}
 		}
-
-		// ================= Camera Cycle Logic =================
-		private void StartCameraCycle(List<GameObject> targets)
-		{
-			if (targets == null) return;
-			// Lọc null
-			targets.RemoveAll(t => t == null);
-			if (targets.Count == 0)
-			{
-				followActive = false;
-				cameraCycleTargets = null;
-				cameraCycleIndex = -1;
-				freeCameraMode = false;
-				return;
-			}
-
-			cameraCycleTargets = targets;
-			cameraCycleIndex = 0;
-			followActive = true;
-			freeCameraMode = false; // bắt đầu ở chế độ follow
-									// Ẩn FocusInfoPanel khi bắt đầu follow/cycle (CommanderExecuteAction)
-									// Sử dụng HoverManager nếu có, ngược lại dùng method cũ
-			if (HoverManager.Instance != null)
-			{
-				HoverManager.Instance.HideFocusInfoPanel();
-			}
-			else
-			{
-				HideFocusInfoPanel();
-			}
-			JumpCameraToCurrentTarget();
-		}
-
-		private void AdvanceCameraCycle()
-		{
-			if (!followActive || cameraCycleTargets == null || cameraCycleTargets.Count == 0) return;
-			cameraCycleIndex = (cameraCycleIndex + 1) % cameraCycleTargets.Count;
-			JumpCameraToCurrentTarget();
-		}
-
-		private GameObject GetCurrentCameraTarget()
-		{
-			if (!followActive || cameraCycleTargets == null || cameraCycleTargets.Count == 0) return null;
-			if (cameraCycleIndex < 0 || cameraCycleIndex >= cameraCycleTargets.Count) return null;
-			// Bỏ qua mục tiêu null và tự động tiến tới mục tiêu hợp lệ tiếp theo
-			int safeguard = 0;
-			while (safeguard < cameraCycleTargets.Count)
-			{
-				var t = cameraCycleTargets[cameraCycleIndex];
-				if (t != null) return t;
-				cameraCycleIndex = (cameraCycleIndex + 1) % cameraCycleTargets.Count;
-				safeguard++;
-			}
-			return null;
-		}
-
-		private void JumpCameraToCurrentTarget()
-		{
-			if (worldCamera == null) return;
-			var target = GetCurrentCameraTarget();
-			if (target == null)
-			{
-				followActive = false;
-				freeCameraMode = false;
-				return;
-			}
-			Vector3 pos = target.transform.position;
-			pos.z = worldCamera.transform.position.z;
-			worldCamera.transform.position = pos;
-		}
-
-		private void UpdateCameraFollow()
-		{
-			if (!followActive || worldCamera == null) return;
-			var target = GetCurrentCameraTarget();
-			if (target == null)
-			{
-				followActive = false;
-				freeCameraMode = false;
-				return;
-			}
-			Vector3 pos = target.transform.position;
-			pos.z = worldCamera.transform.position.z;
-			worldCamera.transform.position = pos;
-		}
-
-		private void UpdateCameraFreeMove()
-		{
-			if (worldCamera == null || cameraMovementLocked) return;
-			Vector3 delta = Vector3.zero;
-			if (Input.GetKey(KeyCode.A)) delta.x -= 1f;
-			if (Input.GetKey(KeyCode.D)) delta.x += 1f;
-			if (Input.GetKey(KeyCode.S)) delta.y -= 1f;
-			if (Input.GetKey(KeyCode.W)) delta.y += 1f;
-			delta = delta.normalized * freeMoveSpeed * Time.deltaTime;
-			Vector3 pos = worldCamera.transform.position + delta;
-			pos.z = worldCamera.transform.position.z;
-			worldCamera.transform.position = pos;
-		}
-
-		private void UpdateFollowHelpPanel()
-		{
-			if (followHelpPanel == null) return;
-			if (followHelpPanel.activeSelf != followActive)
-			{
-				followHelpPanel.SetActive(followActive);
-			}
-			if (!followActive) return;
-			if (followHelpText != null)
-			{
-				string status;
-				if (freeCameraMode)
-				{
-					status = "Free Camera (WASD)";
-				}
-				else
-				{
-					var target = GetCurrentCameraTarget();
-					int total = cameraCycleTargets != null ? cameraCycleTargets.Count : 0;
-					int index = cameraCycleIndex >= 0 ? (cameraCycleIndex + 1) : 0;
-					string targetName = target != null ? target.name : "<none>";
-					status = $"Follow: {targetName} ({index}/{total})";
-				}
-				followHelpText.text = status;
-			}
-		}
-
-		#region Camera Movement Lock Methods
-
-		/// <summary>
-		/// Locks camera movement (WASD controls)
-		/// </summary>
-		public void LockCameraMovement()
-		{
-			cameraMovementLocked = true;
-		}
-
-		/// <summary>
-		/// Unlocks camera movement (WASD controls)
-		/// </summary>
-		public void UnlockCameraMovement()
-		{
-			cameraMovementLocked = false;
-		}
-
-		#endregion
 	}
 }
 
