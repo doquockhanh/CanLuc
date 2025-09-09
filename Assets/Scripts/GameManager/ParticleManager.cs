@@ -17,6 +17,11 @@ public class ParticleManager : MonoBehaviour
     public List<ParticleType> particleTypeTypes;
 
     private Dictionary<string, Queue<GameObject>> pools = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<string, GameObject> prefabByKey = new Dictionary<string, GameObject>();
+
+    [Header("Pooling Options")]
+    [Tooltip("If true, pool will instantiate new particles when empty.")]
+    public bool expandPoolIfEmpty = true;
 
     void Awake()
     {
@@ -36,6 +41,7 @@ public class ParticleManager : MonoBehaviour
                 queue.Enqueue(obj);
             }
             pools[type.key] = queue;
+            prefabByKey[type.key] = type.prefab;
         }
     }
 
@@ -50,7 +56,28 @@ public class ParticleManager : MonoBehaviour
             return;
         }
 
-        GameObject obj = pools[key].Dequeue();
+        Queue<GameObject> queue = pools[key];
+        if (queue.Count == 0)
+        {
+            if (!expandPoolIfEmpty)
+            {
+                Debug.LogWarning($"Pool cho key '{key}' đã hết. Bật 'expandPoolIfEmpty' để tự mở rộng.");
+                return;
+            }
+
+            if (!prefabByKey.TryGetValue(key, out GameObject prefab) || prefab == null)
+            {
+                Debug.LogWarning($"Không tìm thấy prefab cho key: {key}");
+                return;
+            }
+
+            GameObject newObj = Instantiate(prefab);
+            newObj.SetActive(false);
+            newObj.transform.SetParent(transform);
+            queue.Enqueue(newObj);
+        }
+
+        GameObject obj = queue.Dequeue();
         obj.transform.position = pos;
         obj.SetActive(true);
 
@@ -65,6 +92,9 @@ public class ParticleManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         obj.SetActive(false);
-        pools[key].Enqueue(obj);
+        if (pools.TryGetValue(key, out Queue<GameObject> queue))
+        {
+            queue.Enqueue(obj);
+        }
     }
 }

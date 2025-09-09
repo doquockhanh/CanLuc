@@ -7,24 +7,25 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GlowMat
-  m_Shader: {fileID: -6465566751694194690, guid: 3e5fa41973746d94f917ca13b5898822, type: 3}
+  m_Name: ColorGlowMat
+  m_Shader: {fileID: -6465566751694194690, guid: 0f6cf8f2215ad044a978f91e1c945331, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -40,12 +41,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Intensive: 100
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0, g: 614.3999, b: 305.47714, a: 1}
+    - _MainColor: {r: 1, g: 0.47108343, b: 0, a: 0.003921569}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &5788746284725258546
+--- !u!114 &8634392635860702463
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

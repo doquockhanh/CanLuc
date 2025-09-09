@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f4f153ccf78c747a62f81f0f910ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: "Ch\u1EC9 Huy"
   actionDescription: "Nh\u1EA5n Space: B\u1EAFt \u0111\u1EA7u!"
   offset: {x: 0, y: 1}
 --- !u!50 &3700633907648766095

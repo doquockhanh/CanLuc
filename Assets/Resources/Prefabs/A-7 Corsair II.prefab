@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8052760295259120495}
   - component: {fileID: 2103501954043932612}
   - component: {fileID: -4529574366322152725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: A-7 Corsair II
   m_TagString: Enemy
   m_Icon: {fileID: 0}

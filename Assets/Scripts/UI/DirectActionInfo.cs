@@ -4,6 +4,7 @@ using UnityEngine;
 public class DirectActionInfo : MonoBehaviour, IActionInfo
 {
 	[Header("Thông tin hiển thị")]
+	[SerializeField] private string objectName = "abc";
 	[SerializeField] private string actionDescription = "Direct Action Object - Hold Space to rotate, A/D to move";
 
 	[Header("UI Settings")]
@@ -24,5 +25,10 @@ public class DirectActionInfo : MonoBehaviour, IActionInfo
 	public string GetFullDescription()
 	{
 		return $"{actionDescription}\n{rotationHint}\n{movementHint}";
+	}
+
+	public string GetName()
+	{
+		return objectName;
 	}
 }

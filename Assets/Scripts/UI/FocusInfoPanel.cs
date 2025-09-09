@@ -6,6 +6,7 @@ public class FocusInfoPanel : MonoBehaviour
 	[Header("UI References")]
 	[SerializeField] private Canvas canvas;
 	[SerializeField] private RectTransform panelRect;
+	[SerializeField] private TextMeshProUGUI nameText;
 	[SerializeField] private TextMeshProUGUI descriptionText;
 
 	[Header("Animation")]
@@ -49,6 +50,9 @@ public class FocusInfoPanel : MonoBehaviour
 		currentInfo = info;
 		if (descriptionText != null)
 			descriptionText.text = info.GetFullDescription();
+
+		if (nameText != null)
+			nameText.text = info.GetName();
 
 		// Dừng fade cũ nếu đang chạy
 		if (fadeRoutine != null)

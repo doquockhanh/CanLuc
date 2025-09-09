@@ -26,7 +26,7 @@ public class LaunchVehicle : FocusableBase
 	private Rigidbody2D rb;
 	private bool isFocused = false;
 	private float currentAngle = 0f;
-	private int direction = 1; // 1 = rotate up, -1 = rotate down
+	private int direction = -1; // 1 = rotate up, -1 = rotate down
 
 	protected override void Awake()
 	{

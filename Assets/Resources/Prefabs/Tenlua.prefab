@@ -200,6 +200,7 @@ MonoBehaviour:
   maxLifetime: 10
   lowVelocityThreshold: 2
   lowVelocityDuration: 2
+  damage: 1
   audioSource: {fileID: 5548329553592132590}
   fireSound: {fileID: 8300000, guid: 901b22d903f1b43409a499944f7fc9fc, type: 3}
   movingSound: {fileID: 8300000, guid: a038ea9e3bbc56746b88d2edec2304d8, type: 3}
@@ -232,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f4f153ccf78c747a62f81f0f910ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: "T\xEAn l\u1EEDa"
   actionDescription: "Ph\xF3ng v\u1EC1 ph\xEDa tr\u01B0\u1EDBc. Gi\u1EEF Space \u0111\u1EC3
     t\xEDch l\u1EF1c."
   offset: {x: 0, y: 1}

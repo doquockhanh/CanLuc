@@ -17,4 +17,6 @@ public interface IActionInfo
 	/// Lấy thông tin đầy đủ để hiển thị
 	/// </summary>
 	string GetFullDescription();
+
+	string GetName();
 }

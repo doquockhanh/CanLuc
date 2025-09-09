@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 191847139869726808}
   - component: {fileID: 1294651066941205685}
   - component: {fileID: 3249890406397303646}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'F-4 Phantom '
   m_TagString: Enemy
   m_Icon: {fileID: 0}

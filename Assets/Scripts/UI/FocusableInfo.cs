@@ -3,6 +3,7 @@ using UnityEngine;
 public class FocusableInfo : MonoBehaviour, IActionInfo
 {
 	[Header("Thông tin hiển thị")]
+	[SerializeField] private string objectName = "abc";
 	[SerializeField] private string actionDescription = "This object will move forward when executed";
 
 	[Header("UI Settings")]
@@ -14,5 +15,10 @@ public class FocusableInfo : MonoBehaviour, IActionInfo
 	public string GetFullDescription()
 	{
 		return actionDescription;
+	}
+
+	public string GetName()
+	{
+		return objectName;
 	}
 }
