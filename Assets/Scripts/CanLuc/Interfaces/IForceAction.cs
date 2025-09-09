@@ -1,19 +1,10 @@
-using UnityEngine;
-
-namespace Gameplay.Focus
+public interface IForceAction
 {
 	/// <summary>
-	/// Implement behavior that executes using accumulated force data.
-
+	/// Execute the action using provided force value.
 	/// </summary>
-	public interface IForceAction
-	{
-		/// <summary>
-		/// Execute the action using provided force value.
-		/// </summary>
-		/// <param name="force">Accumulated force value.</param>
-		void Execute(float force);
-	}
+	/// <param name="force">Accumulated force value.</param>
+	void Execute(float force);
 }
 
 

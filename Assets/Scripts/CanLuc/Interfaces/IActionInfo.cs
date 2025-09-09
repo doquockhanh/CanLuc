@@ -1,25 +1,20 @@
 using UnityEngine;
 
-namespace Gameplay.Focus
+
+public interface IActionInfo
 {
 	/// <summary>
-	/// Interface chung cho các component chứa thông tin hiển thị UI
+	/// Mô tả hành động
 	/// </summary>
-	public interface IActionInfo
-	{
-		/// <summary>
-		/// Mô tả hành động
-		/// </summary>
-		string ActionDescription { get; }
-		
-		/// <summary>
-		/// Offset cho UI panel
-		/// </summary>
-		Vector2 Offset { get; }
-		
-		/// <summary>
-		/// Lấy thông tin đầy đủ để hiển thị
-		/// </summary>
-		string GetFullDescription();
-	}
+	string ActionDescription { get; }
+
+	/// <summary>
+	/// Offset cho UI panel
+	/// </summary>
+	Vector2 Offset { get; }
+
+	/// <summary>
+	/// Lấy thông tin đầy đủ để hiển thị
+	/// </summary>
+	string GetFullDescription();
 }

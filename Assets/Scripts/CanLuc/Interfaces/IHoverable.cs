@@ -1,20 +1,12 @@
-using UnityEngine;
-
-namespace Gameplay.Focus
+public interface IHoverable
 {
 	/// <summary>
-	/// Implement on any component attached to a hoverable GameObject.
+	/// Called when mouse enters this object.
 	/// </summary>
-	public interface IHoverable
-	{
-		/// <summary>
-		/// Called when mouse enters this object.
-		/// </summary>
-		void OnMouseEnter();
+	void OnMouseEnter();
 
-		/// <summary>
-		/// Called when mouse exits this object.
-		/// </summary>
-		void OnMouseExit();
-	}
+	/// <summary>
+	/// Called when mouse exits this object.
+	/// </summary>
+	void OnMouseExit();
 }

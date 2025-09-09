@@ -395,7 +395,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.9375, y: 1.8125}
+    oldSize: {x: 5.25, y: 2.4166667}
     newSize: {x: 3.9375, y: 1.8125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -423,8 +423,6 @@ MonoBehaviour:
   engineSound: {fileID: 8300000, guid: e6c6d051bfd4cfa4aaf40edf437bcfbe, type: 3}
   audioSource2: {fileID: 1734129251336426298}
   launchSound: {fileID: 8300000, guid: b5da36fc78422dc41a237da029f614f6, type: 3}
-  focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
   rotateKey: 32
   leftKey: 97
   rightKey: 100
@@ -484,7 +482,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.9375, y: 1.8125}
+    oldSize: {x: 5.25, y: 2.4166667}
     newSize: {x: 3.9375, y: 1.8125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

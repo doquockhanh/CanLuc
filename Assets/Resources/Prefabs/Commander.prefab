@@ -82,15 +82,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2134929741
+  m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 8766956830630241453, guid: df50f7a6964032b40a44b1103f29c144, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.25, y: 3.125}
+  m_Size: {x: 1.125, y: 1.5625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -111,8 +111,6 @@ MonoBehaviour:
   audioSource: {fileID: 387583765100906465}
   shootSound: {fileID: 8300000, guid: 74256d0e14ee2da47b7ddf58a8a751ec, type: 3}
   text: {fileID: 4493201534640235978}
-  focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!61 &5344767969977050806
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -152,7 +150,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.5, y: 2.0833333}
-    newSize: {x: 2.25, y: 3.125}
+    newSize: {x: 1.125, y: 1.5625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

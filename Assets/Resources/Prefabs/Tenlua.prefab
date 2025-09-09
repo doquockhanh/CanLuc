@@ -82,8 +82,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2134929741
+  m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 2644169188596363561, guid: 0044ed6ba95ed614485940ea4824b659, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -197,8 +197,6 @@ MonoBehaviour:
   forwardMultiplier: 1
   upwardMultiplier: 0.2
   rotationSpeed: 90
-  focusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
   maxLifetime: 10
   lowVelocityThreshold: 2
   lowVelocityDuration: 2

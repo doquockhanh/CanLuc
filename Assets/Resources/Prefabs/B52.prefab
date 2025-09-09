@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3613979779224211602}
   - component: {fileID: 4350161964788968466}
   - component: {fileID: 9016162187138624601}
+  - component: {fileID: -7967142322630081774}
   m_Layer: 6
   m_Name: B52
   m_TagString: Enemy
@@ -81,8 +82,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2134929741
+  m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: -2510476293373519475, guid: 9f71903aec445c04ab5051a91a2cb1b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -434,3 +435,20 @@ MonoBehaviour:
   showDebugInfo: 0
   customIndicatorColor: {r: 1, g: 0, b: 0, a: 1}
   customIndicatorScale: 1
+--- !u!114 &-7967142322630081774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748206779802621146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c56aa02e6fdb54989230be66b164d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  currentHealth: 0
+  scoreValue: 100
+  isDestroyed: 0
+  enableDamageLogging: 1

@@ -1,26 +1,23 @@
 using TMPro;
 using UnityEngine;
 
-namespace Gameplay.Focus
+public class CommanderExecuteAction : FocusableBase
 {
-	public class CommanderExecuteAction : FocusableBase
-	{
-		[Header("Audio Settings")]
-		[SerializeField] private AudioSource audioSource;
-		[SerializeField] private AudioClip shootSound;
-		[SerializeField] private TextMeshProUGUI text;
+	[Header("Audio Settings")]
+	[SerializeField] private AudioSource audioSource;
+	[SerializeField] private AudioClip shootSound;
+	[SerializeField] private TextMeshProUGUI text;
 
-		public void Execute(bool success)
+	public void Execute(bool success)
+	{
+		if (success)
 		{
-			if (success)
-			{
-				audioSource.PlayOneShot(shootSound);
-				text.text = "Bắt đầu!!";
-			}
-			else
-			{
-				text.text = "Đi chuẩn bị đi?";
-			}
+			audioSource.PlayOneShot(shootSound);
+			text.text = "Bắt đầu!!";
+		}
+		else
+		{
+			text.text = "Đi chuẩn bị đi?";
 		}
 	}
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2959066672456780832}
   - component: {fileID: 191847139869726808}
   - component: {fileID: 1294651066941205685}
+  - component: {fileID: 3249890406397303646}
   m_Layer: 0
   m_Name: 'F-4 Phantom '
   m_TagString: Enemy
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2134929741
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 8653331646850525366, guid: f9190d87b9617f9489ca6861f714a803, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,17 +128,9 @@ MonoBehaviour:
   moveSpeed: 10
   moveDirection: {x: -1, y: 0, z: 0}
   normalizeDirection: 1
-  maxHealth: 1
-  currentHealth: 0
-  scoreValue: 100
-  isDestroyed: 0
   enablePhaseLogging: 1
   stopInPreparePhase: 1
   moveInBattlePhase: 1
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  enableCollisionLogging: 1
   audioSource: {fileID: 0}
   engineSound: {fileID: 0}
   turnOnSound: 0
@@ -187,3 +180,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.1208334, y: 1.3499999}
   m_EdgeRadius: 0
+--- !u!114 &3249890406397303646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972441532142980159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c56aa02e6fdb54989230be66b164d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  currentHealth: 0
+  scoreValue: 100
+  isDestroyed: 0
+  enableDamageLogging: 1
