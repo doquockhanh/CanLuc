@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
+using System.Collections;
 
-/// <summary>
-/// Quản lý điều khiển camera độc lập, tách biệt khỏi FocusManager
-/// </summary>
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, ICameraController
 {
     [Header("Camera References")]
     [SerializeField] private Camera worldCamera;
@@ -12,6 +11,13 @@ public class CameraController : MonoBehaviour
     [Header("Free Movement")]
     [SerializeField] private float freeMoveSpeed = 10f;
     [SerializeField] private bool cameraMovementLocked = false;
+
+    [Header("Camera Settings")]
+    [SerializeField] private int normalAssetsPPU = 100;
+    [SerializeField] private int zoomOutAssetsPPU = 60; // Giá trị nhỏ hơn = zoom out nhiều hơn
+    private int originalAssetsPPU;
+    private PixelPerfectCamera pixelPerfectCamera;
+    private CameraMode currentCameraMode = CameraMode.FollowProjectiles;
 
     [Header("Follow System")]
     [SerializeField] private bool followActive = false;
@@ -55,14 +61,31 @@ public class CameraController : MonoBehaviour
         {
             worldCamera = Camera.main;
         }
+
+        // Lấy PixelPerfectCamera và lưu PPU gốc
+        if (worldCamera != null)
+        {
+            pixelPerfectCamera = worldCamera.GetComponent<PixelPerfectCamera>();
+            if (pixelPerfectCamera != null)
+            {
+                originalAssetsPPU = pixelPerfectCamera.assetsPPU;
+            }
+        }
     }
 
     void Update()
     {
-        if (followActive)
+        // Chỉ xử lý input và UI khi đang follow VÀ ở chế độ FollowProjectiles
+        if (followActive && currentCameraMode == CameraMode.FollowProjectiles)
         {
             HandleFollowModeInputs();
             UpdateFollowHelpPanel();
+        }
+        else
+        {
+            // Ẩn panel nếu không ở follow mode hợp lệ
+            if (followHelpPanel != null && followHelpPanel.activeSelf)
+                followHelpPanel.SetActive(false);
         }
     }
 
@@ -75,14 +98,23 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        // Khi đang follow: nếu free mode -> WASD, ngược lại -> follow target
-        if (freeCameraMode)
+        // Chỉ follow khi ở chế độ FollowProjectiles
+        if (currentCameraMode == CameraMode.FollowProjectiles)
         {
-            UpdateCameraFreeMove();
+            // Khi đang follow: nếu free mode -> WASD, ngược lại -> follow target
+            if (freeCameraMode)
+            {
+                UpdateCameraFreeMove();
+            }
+            else
+            {
+                UpdateCameraFollow();
+            }
         }
         else
         {
-            UpdateCameraFollow();
+            // Các chế độ khác chỉ cho phép WASD
+            UpdateCameraFreeMove();
         }
     }
 
@@ -134,6 +166,17 @@ public class CameraController : MonoBehaviour
             return;
         }
 
+        // Áp dụng camera settings khi bắt đầu game phase
+        ApplyCurrentCameraSettings();
+
+        // Chỉ kích hoạt follow nếu đang ở chế độ FollowProjectiles
+        if (currentCameraMode != CameraMode.FollowProjectiles)
+        {
+            followActive = false;
+            freeCameraMode = false;
+            return;
+        }
+
         cameraCycleTargets = targets;
         cameraCycleIndex = 0;
         followActive = true;
@@ -141,6 +184,14 @@ public class CameraController : MonoBehaviour
 
         OnFollowModeStarted?.Invoke();
         JumpCameraToCurrentTarget();
+    }
+
+    /// <summary>
+    /// Apply camera settings immediately (for settings changes)
+    /// </summary>
+    public void ApplySettingsImmediately()
+    {
+        ApplyCurrentCameraSettings();
     }
 
     /// <summary>
@@ -169,7 +220,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void AdvanceCameraCycle()
     {
-        if (!followActive || cameraCycleTargets == null || cameraCycleTargets.Count == 0)
+        if (!followActive || currentCameraMode != CameraMode.FollowProjectiles || cameraCycleTargets == null || cameraCycleTargets.Count == 0)
             return;
 
         cameraCycleIndex = (cameraCycleIndex + 1) % cameraCycleTargets.Count;
@@ -282,12 +333,14 @@ public class CameraController : MonoBehaviour
     {
         if (followHelpPanel == null) return;
 
-        if (followHelpPanel.activeSelf != followActive)
+        // Chỉ hiển thị khi đang follow và đúng chế độ
+        bool shouldShow = followActive && currentCameraMode == CameraMode.FollowProjectiles;
+        if (followHelpPanel.activeSelf != shouldShow)
         {
-            followHelpPanel.SetActive(followActive);
+            followHelpPanel.SetActive(shouldShow);
         }
 
-        if (!followActive) return;
+        if (!shouldShow) return;
 
         if (followHelpText != null)
         {
@@ -335,6 +388,92 @@ public class CameraController : MonoBehaviour
     {
         followHelpPanel = panel;
         followHelpText = text;
+    }
+
+    #endregion
+
+    #region ICameraController Implementation
+
+    /// <summary>
+    /// Apply camera settings from GameSettings
+    /// </summary>
+    public void ApplySettings(GameSettings settings)
+    {
+        if (settings == null || worldCamera == null) return;
+
+        switch (settings.CameraMode)
+        {
+            case CameraMode.Normal:
+                ApplyNormalCameraMode();
+                break;
+            case CameraMode.FollowProjectiles:
+                ApplyFollowProjectilesMode();
+                break;
+            case CameraMode.ZoomOut:
+                ApplyZoomOutMode();
+                break;
+        }
+    }
+
+    private void ApplyNormalCameraMode()
+    {
+        // Normal mode: camera stays at normal size, no special behavior
+        currentCameraMode = CameraMode.Normal;
+        if (pixelPerfectCamera != null)
+        {
+            StartCoroutine(SmoothZoom(originalAssetsPPU));
+        }
+    }
+
+    private void ApplyFollowProjectilesMode()
+    {
+        // Follow Projectiles mode: current behavior (default)
+        // Camera will follow projectiles when StartCameraCycle is called
+        currentCameraMode = CameraMode.FollowProjectiles;
+        if (pixelPerfectCamera != null)
+        {
+            StartCoroutine(SmoothZoom(originalAssetsPPU));
+        }
+    }
+
+    private void ApplyZoomOutMode()
+    {
+        // Zoom Out mode: increase camera size for better overview
+        currentCameraMode = CameraMode.ZoomOut;
+        if (pixelPerfectCamera != null)
+        {
+            StartCoroutine(SmoothZoom(zoomOutAssetsPPU));
+        }
+    }
+
+    private IEnumerator SmoothZoom(int zoomLevel)
+    {
+        int currentZoom = pixelPerfectCamera.assetsPPU;
+        while (currentZoom != zoomLevel)
+        {
+            if (currentZoom < zoomLevel)
+            {
+                currentZoom++;
+            }
+            else
+            {
+                currentZoom--;
+            }
+            pixelPerfectCamera.assetsPPU = currentZoom;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+    /// <summary>
+    /// Apply current camera settings from GameSettings
+    /// </summary>
+    private void ApplyCurrentCameraSettings()
+    {
+        var settingsManager = SettingsManager.Instance;
+        if (settingsManager?.Settings != null)
+        {
+            ApplySettings(settingsManager.Settings);
+        }
     }
 
     #endregion

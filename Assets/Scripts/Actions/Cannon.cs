@@ -63,8 +63,6 @@ public class Cannon : FocusableBase, IForceAction
         // Tính thời gian delay dựa trên force
         float delayTime = CalculateDelayTime(force);
 
-        Debug.Log($"[{gameObject.name}] Cannon charging for {delayTime:F2} seconds (force: {force})");
-
         // Bắt đầu charging phase
         yield return StartCoroutine(ChargingPhase(delayTime));
 
@@ -123,7 +121,5 @@ public class Cannon : FocusableBase, IForceAction
         {
             bulletRb.AddForce(childToRotate.right * randomForce, ForceMode2D.Impulse);
         }
-
-        Debug.Log($"[{gameObject.name}] Fired bullet with velocity: {bulletRb?.linearVelocity}");
     }
 }

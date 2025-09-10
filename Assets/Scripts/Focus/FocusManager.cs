@@ -193,9 +193,16 @@ public class FocusManager : MonoBehaviour
 
 	public IEnumerator ExecuteAllRegistered()
 	{
+
 		CleanupRegistry();
 		// Snapshot danh sách để dùng cho camera cycle
 		List<GameObject> snapshot = new List<GameObject>(registeredObjects);
+		// Khởi động camera cycle theo snapshot
+		if (cameraController != null)
+		{
+			cameraController.StartCameraCycle(snapshot);
+		}
+
 		for (int i = 0; i < registeredObjects.Count; i++)
 		{
 			yield return new WaitForSeconds(1f);
@@ -226,12 +233,6 @@ public class FocusManager : MonoBehaviour
 		else
 		{
 			HideFocusInfoPanel();
-		}
-
-		// Khởi động camera cycle theo snapshot
-		if (cameraController != null)
-		{
-			cameraController.StartCameraCycle(snapshot);
 		}
 	}
 

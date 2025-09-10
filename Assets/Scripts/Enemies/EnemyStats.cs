@@ -9,7 +9,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField] protected bool isDestroyed = false;
 
     [Header("Debug Settings")]
-    [SerializeField] protected bool enableDamageLogging = true;
+    [SerializeField] protected bool enableLogging = false;
 
     // Events
     public System.Action<int, GameObject> OnDamageTaken { get; set; }
@@ -34,11 +34,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         isDestroyed = false;
-
-        if (enableDamageLogging)
-        {
-            Debug.Log($"[{gameObject.name}] EnemyStats initialized - Health: {currentHealth}/{maxHealth}");
-        }
     }
 
     /// <summary>
@@ -52,7 +47,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         currentHealth -= damage;
 
-        if (enableDamageLogging)
+        if (enableLogging)
         {
             string sourceName = damageSource != null ? damageSource.name : "Unknown";
             Debug.Log($"[{gameObject.name}] Took {damage} damage from {sourceName}. Health: {currentHealth}/{maxHealth}");
@@ -78,7 +73,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         isDestroyed = true;
 
-        if (enableDamageLogging)
+        if (enableLogging)
         {
             string destroyerName = destroyer != null ? destroyer.name : "Unknown";
             Debug.Log($"[{gameObject.name}] Enemy destroyed by {destroyerName}! Awarding {scoreValue} points");
@@ -148,7 +143,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         int oldHealth = currentHealth;
         currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
 
-        if (enableDamageLogging && currentHealth != oldHealth)
+        if (enableLogging && currentHealth != oldHealth)
         {
             Debug.Log($"[{gameObject.name}] Healed for {currentHealth - oldHealth}. Health: {currentHealth}/{maxHealth}");
         }
@@ -164,7 +159,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
 
-        if (enableDamageLogging)
+        if (enableLogging)
         {
             Debug.Log($"[{gameObject.name}] Health set to {currentHealth}/{maxHealth}");
         }
@@ -188,7 +183,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         maxHealth = newMaxHealth;
         currentHealth = Mathf.RoundToInt(maxHealth * healthPercentage);
 
-        if (enableDamageLogging)
+        if (enableLogging)
         {
             Debug.Log($"[{gameObject.name}] Max health set to {maxHealth}, current health: {currentHealth}");
         }
@@ -202,7 +197,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         scoreValue = Mathf.Max(0, newScoreValue);
 
-        if (enableDamageLogging)
+        if (enableLogging)
         {
             Debug.Log($"[{gameObject.name}] Score value set to {scoreValue}");
         }

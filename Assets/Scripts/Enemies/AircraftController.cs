@@ -8,7 +8,6 @@ public class AircraftController : MonoBehaviour, IGamePhaseAware
     [SerializeField] private bool normalizeDirection = true;
 
     [Header("Phase Control")]
-    [SerializeField] private bool enablePhaseLogging = true;
     [SerializeField] private bool stopInPreparePhase = true;
     [SerializeField] private bool moveInBattlePhase = true;
 
@@ -88,10 +87,6 @@ public class AircraftController : MonoBehaviour, IGamePhaseAware
 
     public virtual void OnPreparePhaseStarted()
     {
-        if (enablePhaseLogging)
-        {
-            Debug.Log($"[{gameObject.name}] Aircraft entered Prepare Phase");
-        }
 
         // Dừng di chuyển khi vào prepare phase
         if (stopInPreparePhase)
@@ -102,10 +97,6 @@ public class AircraftController : MonoBehaviour, IGamePhaseAware
 
     public virtual void OnBattlePhaseStarted()
     {
-        if (enablePhaseLogging)
-        {
-            Debug.Log($"[{gameObject.name}] Aircraft entered Battle Phase");
-        }
 
         // Bắt đầu di chuyển khi vào battle phase
         if (moveInBattlePhase)
@@ -116,10 +107,6 @@ public class AircraftController : MonoBehaviour, IGamePhaseAware
 
     public void OnPhaseChanged(GamePhase newPhase)
     {
-        if (enablePhaseLogging)
-        {
-            Debug.Log($"[{gameObject.name}] Aircraft Game Phase Changed to: {newPhase}");
-        }
 
         // Xử lý logic chung khi phase thay đổi
         switch (newPhase)
