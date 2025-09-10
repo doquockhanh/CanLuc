@@ -41,22 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Đăng ký với FocusManager để nhận thông báo khi ExecuteAllRegistered được gọi
-        if (focusManager != null)
-        {
-            focusManager.OnExecuteAllRegistered += OnFocusManagerExecuteAllRegistered;
-        }
-
         // Tìm và đăng ký tất cả component implement IGamePhaseAware
         RegisterAllGamePhaseAwareComponents();
-    }
-
-    private void OnDestroy()
-    {
-        if (focusManager != null)
-        {
-            focusManager.OnExecuteAllRegistered -= OnFocusManagerExecuteAllRegistered;
-        }
     }
 
     /// <summary>

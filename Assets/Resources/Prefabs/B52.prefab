@@ -308,17 +308,8 @@ MonoBehaviour:
   moveSpeed: 10
   moveDirection: {x: -1, y: 0, z: 0}
   normalizeDirection: 1
-  maxHealth: 1
-  currentHealth: 0
-  scoreValue: 1000
-  isDestroyed: 0
-  enablePhaseLogging: 1
   stopInPreparePhase: 1
   moveInBattlePhase: 1
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  enableCollisionLogging: 1
   audioSource: {fileID: 4350161964788968466}
   engineSound: {fileID: 8300000, guid: 76a681107d44d3246a0efe1fbe41f0ab, type: 3}
   turnOnSound: 1
@@ -335,7 +326,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -451,4 +442,4 @@ MonoBehaviour:
   currentHealth: 0
   scoreValue: 100
   isDestroyed: 0
-  enableDamageLogging: 1
+  enableLogging: 0

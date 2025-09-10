@@ -193,7 +193,7 @@ public class FocusManager : MonoBehaviour
 
 	public IEnumerator ExecuteAllRegistered()
 	{
-
+		GameManager.Instance.StartBattlePhase();
 		CleanupRegistry();
 		// Snapshot danh sách để dùng cho camera cycle
 		List<GameObject> snapshot = new List<GameObject>(registeredObjects);

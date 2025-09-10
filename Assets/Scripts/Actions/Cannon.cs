@@ -19,6 +19,10 @@ public class Cannon : FocusableBase, IForceAction
     [SerializeField] private float timeBetweenBullets = 0.2f; // Thời gian giữa các bullet
     [SerializeField] private float bulletSpeed = 10f; // Tốc độ bullet
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootingSound;
+
     // Private variables
     private bool isExecuting = false;
     private bool isCharging = false;
@@ -27,6 +31,7 @@ public class Cannon : FocusableBase, IForceAction
     protected override void Awake()
     {
         base.Awake();
+        audioSource.clip = shootingSound;
         StartCoroutine(StartRotation());
     }
 
@@ -110,6 +115,8 @@ public class Cannon : FocusableBase, IForceAction
     private void FireBullet()
     {
         if (bullet == null) return;
+
+        audioSource.Play();
 
         // Tạo bullet
         GameObject bulletInstance = Instantiate(bullet, firePoint.transform.position, transform.rotation);
