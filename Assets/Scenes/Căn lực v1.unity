@@ -258,7 +258,7 @@ Transform:
   m_GameObject: {fileID: 113782960}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2031466, y: -1.2, z: 1}
+  m_LocalPosition: {x: 1.2031466, y: -3.8, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -315,7 +315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPhase: 0
-  focusManager: {fileID: 985157750}
 --- !u!1 &164348280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1803,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1829,7 +1828,7 @@ Transform:
   m_GameObject: {fileID: 929460704}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.85, y: -0.86, z: -10}
+  m_LocalPosition: {x: -0.9, y: 12.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3176,6 +3175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1714754017}
   panelRect: {fileID: 1565209192}
+  nameText: {fileID: 0}
   descriptionText: {fileID: 1947681255}
   fadeInDuration: 0.2
   fadeOutDuration: 0.1
@@ -5510,17 +5510,11 @@ MonoBehaviour:
   moveSpeed: 5
   moveDirection: {x: -1, y: 0, z: 0}
   normalizeDirection: 1
-  maxHealth: 1
-  currentHealth: 0
-  scoreValue: 1000
-  isDestroyed: 0
-  enablePhaseLogging: 1
   stopInPreparePhase: 1
   moveInBattlePhase: 1
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  enableCollisionLogging: 1
+  audioSource: {fileID: 0}
+  engineSound: {fileID: 0}
+  turnOnSound: 0
 --- !u!1001 &8872014872618469256
 PrefabInstance:
   m_ObjectHideFlags: 0

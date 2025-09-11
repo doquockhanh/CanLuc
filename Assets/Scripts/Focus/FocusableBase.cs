@@ -2,13 +2,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public abstract class FocusableBase : MonoBehaviour, IFocusable
+public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 {
 	[Header("Focus Visuals")]
 	[SerializeField] protected static Color focusColor = new Color(0, 1, 0.92f, 1);
 	[SerializeField] protected static Color normalColor = new Color(0, 0.6f, 0.2f, 1);
 
+	[Header("Input Settings")]
+	[SerializeField] protected KeyCode accumulateKey = KeyCode.Space;
+	[SerializeField] protected bool canAccumulateForce = true;
+
 	protected Renderer cachedRenderer;
+	protected ForceAccumulator forceAccumulator;
+	protected bool isFocused = false;
+	protected bool hasAccumulatedForce = false;
+	protected bool accumulationFinalized = false; // khóa sau lần tích lực đầu tiên
 
 	// Global focus state
 	public static FocusableBase Current { get; private set; }
@@ -18,6 +26,81 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable
 	protected virtual void Awake()
 	{
 		cachedRenderer = GetComponentInChildren<Renderer>();
+		forceAccumulator = GetComponent<ForceAccumulator>();
+		
+		// Đăng ký với GameManager để lắng nghe GamePhase changes
+		if (GameManager.Instance != null)
+		{
+			GameManager.Instance.RegisterGamePhaseAwareComponent(this);
+		}
+	}
+
+	protected virtual void OnDestroy()
+	{
+		// Hủy đăng ký khi component bị destroy
+		if (GameManager.Instance != null)
+		{
+			GameManager.Instance.UnregisterGamePhaseAwareComponent(this);
+		}
+	}
+
+	protected virtual void Update()
+	{
+		// Chỉ xử lý input khi đang được focus và ở Prepare phase
+		if (isFocused && GameManager.Instance != null && GameManager.Instance.IsInPreparePhase())
+		{
+			HandleInput();
+		}
+
+		// Unfocus bằng chuột phải khi không click lên UI
+		if (Input.GetMouseButtonDown(1))
+		{
+			if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+			ClearFocus();
+		}
+	}
+
+	protected virtual void HandleInput()
+	{
+		if (!canAccumulateForce || forceAccumulator == null) return;
+		if (accumulationFinalized) return; // chỉ cho phép tích lực 1 lần
+
+		// Xử lý tích lực khi Space được nhấn/giữ
+		if (Input.GetKeyDown(accumulateKey))
+		{
+			OnAccumulateStart();
+		}
+
+		if (Input.GetKey(accumulateKey))
+		{
+			OnAccumulateHold();
+		}
+
+		if (Input.GetKeyUp(accumulateKey))
+		{
+			OnAccumulateEnd();
+		}
+	}
+
+	protected virtual void OnAccumulateStart()
+	{
+		if (accumulationFinalized) return;
+		hasAccumulatedForce = true;
+		// Có thể thêm audio feedback ở đây
+	}
+
+	protected virtual void OnAccumulateHold()
+	{
+		if (forceAccumulator != null && !accumulationFinalized)
+		{
+			forceAccumulator.Accumulate(Time.deltaTime);
+		}
+	}
+
+	protected virtual void OnAccumulateEnd()
+	{
+		// Kết thúc lần tích lực đầu tiên và khóa không cho tích thêm
+		accumulationFinalized = true;
 	}
 
 	void OnMouseDown()
@@ -88,6 +171,7 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable
 
 	public virtual void OnFocused(GameObject previous)
 	{
+		isFocused = true;
 		if (cachedRenderer != null)
 		{
 			cachedRenderer.material.color = focusColor;
@@ -96,9 +180,57 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable
 
 	public virtual void OnDefocused(GameObject next)
 	{
+		isFocused = false;
 		if (cachedRenderer != null)
 		{
 			cachedRenderer.material.color = normalColor;
+		}
+	}
+
+	#region IGamePhaseAware Implementation
+
+	public virtual void OnPreparePhaseStarted()
+	{
+		// Reset trạng thái khi quay về Prepare phase
+		hasAccumulatedForce = false;
+		accumulationFinalized = false;
+		if (forceAccumulator != null)
+		{
+			forceAccumulator.ResetForce();
+		}
+	}
+
+	public virtual void OnBattlePhaseStarted()
+	{
+		// Tự động execute khi chuyển sang Battle phase nếu đã tích lực
+		if (hasAccumulatedForce && forceAccumulator != null)
+		{
+			ExecuteAccumulatedForce();
+		}
+	}
+
+	public virtual void OnPhaseChanged(GamePhase newPhase)
+	{
+		// Có thể thêm logic chung khi phase thay đổi
+	}
+
+	#endregion
+
+	/// <summary>
+	/// Execute accumulated force - override trong derived classes để implement logic cụ thể
+	/// </summary>
+	protected virtual void ExecuteAccumulatedForce()
+	{
+		if (forceAccumulator == null) return;
+
+		float force = forceAccumulator.Consume();
+		if (force <= 0f) return;
+
+		// Tìm và execute tất cả IForceAction components
+		var actions = GetComponentsInChildren<IForceAction>(true);
+		for (int i = 0; i < actions.Length; i++)
+		{
+			actions[i].Execute(force);
 		}
 	}
 }

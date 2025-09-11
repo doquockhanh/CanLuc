@@ -23,6 +23,13 @@ public class BombAction : FocusableBase, IForceAction
 		}
 	}
 
+	public override void OnBattlePhaseStarted()
+	{
+		// BombAction sẽ tự execute khi chuyển sang Battle phase
+		// nếu đã có force được tích lũy
+		base.OnBattlePhaseStarted();
+	}
+
 	public void Execute(float force)
 	{
 		if (armed) return;

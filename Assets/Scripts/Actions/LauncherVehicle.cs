@@ -21,10 +21,8 @@ public class LaunchVehicle : FocusableBase
 	[SerializeField] private KeyCode rotateKey = KeyCode.Space;
 	[SerializeField] private KeyCode leftKey = KeyCode.A;
 	[SerializeField] private KeyCode rightKey = KeyCode.D;
-	[SerializeField] private FocusManager focusManager;
 
 	private Rigidbody2D rb;
-	private bool isFocused = false;
 	private float currentAngle = 0f;
 	private int direction = -1; // 1 = rotate up, -1 = rotate down
 
@@ -39,7 +37,7 @@ public class LaunchVehicle : FocusableBase
 		audioSource2.loop = true;
 	}
 
-	void Update()
+	protected override void Update()
 	{
 		if (!isFocused) return;
 

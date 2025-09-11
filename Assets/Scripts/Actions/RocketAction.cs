@@ -45,6 +45,11 @@ public class RocketAction : FocusableBase, IForceAction
 		audioSource.loop = true;
 	}
 
+	public override void OnBattlePhaseStarted()
+	{
+		base.OnBattlePhaseStarted();
+	}
+
 	public void Execute(float force)
 	{
 		if (force <= 0f) return;
@@ -55,10 +60,12 @@ public class RocketAction : FocusableBase, IForceAction
 		Vector2 upward = transform.up * (force * upwardMultiplier);
 		rb.AddForce(forward + upward, ForceMode2D.Impulse);
 		audioSource.Play();
+		cachedRenderer.material.color = Color.red * 2;
 	}
 
-	void Update()
+	protected override void Update()
 	{
+		base.Update();
 		// Chỉ kiểm tra sau khi đã thực thi Execute
 		if (isExecuted)
 		{
@@ -121,10 +128,6 @@ public class RocketAction : FocusableBase, IForceAction
 		}
 	}
 
-	/// <summary>
-	/// Gây damage cho enemy
-	/// </summary>
-	/// <param name="enemy">Enemy GameObject</param>
 	private void DealDamageToEnemy(GameObject enemy)
 	{
 		// Thử lấy IDamageable component

@@ -9,8 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("Game State")]
     [SerializeField] private GamePhase currentPhase = GamePhase.Prepare;
 
-    [Header("References")]
-    [SerializeField] private FocusManager focusManager;
+    // FocusManager đã được loại bỏ
 
     // Events
     public System.Action<GamePhase> OnPhaseChanged;
@@ -32,11 +31,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Tìm FocusManager nếu chưa được assign
-        if (focusManager == null)
-        {
-            focusManager = FindFirstObjectByType<FocusManager>();
-        }
+        // Không còn phụ thuộc FocusManager
     }
 
     private void Start()
@@ -103,14 +98,6 @@ public class GameManager : MonoBehaviour
         return currentPhase == GamePhase.Battle;
     }
 
-    /// <summary>
-    /// Được gọi khi FocusManager.ExecuteAllRegistered() được thực thi
-    /// </summary>
-    private void OnFocusManagerExecuteAllRegistered()
-    {
-        // Chuyển từ prepare phase sang battle phase
-        StartBattlePhase();
-    }
 
     /// <summary>
     /// Reset game về prepare phase (có thể dùng cho restart level)
