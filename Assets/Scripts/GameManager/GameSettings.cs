@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     [Header("Camera Settings")]
-    [SerializeField] private CameraMode cameraMode = CameraMode.FollowProjectiles;
+    [SerializeField] private CameraMode cameraMode = CameraMode.Normal;
     
     // Camera Properties
     public CameraMode CameraMode
@@ -26,7 +26,7 @@ public class GameSettings : ScriptableObject
     // Method to reset to default values
     public void ResetToDefaults()
     {
-        cameraMode = CameraMode.FollowProjectiles;
+        cameraMode = CameraMode.Normal;
     }
 }
 
@@ -34,7 +34,6 @@ public class GameSettings : ScriptableObject
 public enum CameraMode
 {
     Normal,
-    FollowProjectiles,
     ZoomOut
 }
 

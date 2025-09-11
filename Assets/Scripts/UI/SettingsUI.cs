@@ -43,7 +43,7 @@ public class SettingsUI : MonoBehaviour
             cameraModeDropdown.ClearOptions();
             cameraModeDropdown.AddOptions(new System.Collections.Generic.List<string>
             {
-                "Normal", "Follow Projectiles", "Zoom Out"
+                "Normal", "Zoom Out"
             });
         }
     }
@@ -106,9 +106,6 @@ public class SettingsUI : MonoBehaviour
     {
         settingsManager.SaveSettings();
         settingsManager.SaveSettingsToPlayerPrefs();
-        // Apply settings immediately after saving
-        settingsManager.ApplyCameraSettingsImmediately();
-        Debug.Log("Settings saved and applied!");
     }
     
     private void OnCloseSettingsClicked()

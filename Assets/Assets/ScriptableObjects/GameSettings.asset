@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ddde5cb263de1f438989aff5a9205c0, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  cameraMode: 2
+  cameraMode: 1

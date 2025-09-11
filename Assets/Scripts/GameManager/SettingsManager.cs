@@ -83,21 +83,9 @@ public class SettingsManager : MonoBehaviour
         {
             gameSettings.CameraMode = newMode;
             gameSettings.OnCameraModeChanged?.Invoke(newMode);
-            ApplyCameraSettingsImmediately();
         }
     }
     
-    /// <summary>
-    /// Apply camera settings immediately (for real-time settings changes)
-    /// </summary>
-    public void ApplyCameraSettingsImmediately()
-    {
-        var cameraController = FindFirstObjectByType<CameraController>();
-        if (cameraController != null)
-        {
-            cameraController.ApplySettingsImmediately();
-        }
-    }
     
     // Method to save settings (if you want to persist them)
     public void SaveSettings()

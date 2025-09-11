@@ -28,11 +28,29 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 		cachedRenderer = GetComponentInChildren<Renderer>();
 		forceAccumulator = GetComponent<ForceAccumulator>();
 		
+		// Cấu hình số thanh lực dựa trên các Action đính kèm
+		ConfigureRequiredForceBars();
+		
 		// Đăng ký với GameManager để lắng nghe GamePhase changes
 		if (GameManager.Instance != null)
 		{
 			GameManager.Instance.RegisterGamePhaseAwareComponent(this);
 		}
+	}
+
+	private void ConfigureRequiredForceBars()
+	{
+		if (forceAccumulator == null) return;
+		int bars = 1;
+		var multiActions = GetComponentsInChildren<IMultiForceAction>(true);
+		for (int i = 0; i < multiActions.Length; i++)
+		{
+			if (multiActions[i] != null)
+			{
+				bars = Mathf.Max(bars, Mathf.Max(1, multiActions[i].ForceBarCount));
+			}
+		}
+		forceAccumulator.SetRequiredBars(bars);
 	}
 
 	protected virtual void OnDestroy()
@@ -99,8 +117,13 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 
 	protected virtual void OnAccumulateEnd()
 	{
-		// Kết thúc lần tích lực đầu tiên và khóa không cho tích thêm
-		accumulationFinalized = true;
+		if (forceAccumulator != null)
+		{
+			// Mỗi lần nhả phím sẽ chốt một thanh lực
+			forceAccumulator.FinalizeCurrentBar();
+			// Chỉ khóa khi đã đủ số thanh yêu cầu
+			accumulationFinalized = forceAccumulator.HasCompletedAllBars;
+		}
 	}
 
 	void OnMouseDown()
@@ -223,14 +246,23 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 	{
 		if (forceAccumulator == null) return;
 
-		float force = forceAccumulator.Consume();
-		if (force <= 0f) return;
+		// Lấy cả tổng và mảng thanh để hỗ trợ cả 2 kiểu Action
+		float totalForce = forceAccumulator.CurrentForce;
+		float[] forces = forceAccumulator.ConsumeAllBars();
+		if (totalForce <= 0f) return;
 
-		// Tìm và execute tất cả IForceAction components
+		// Execute các action đa-thanh trước
+		var multiActions = GetComponentsInChildren<IMultiForceAction>(true);
+		for (int i = 0; i < multiActions.Length; i++)
+		{
+			multiActions[i].Execute(forces);
+		}
+
+		// Execute các action đơn-thanh dùng tổng lực
 		var actions = GetComponentsInChildren<IForceAction>(true);
 		for (int i = 0; i < actions.Length; i++)
 		{
-			actions[i].Execute(force);
+			actions[i].Execute(totalForce);
 		}
 	}
 }

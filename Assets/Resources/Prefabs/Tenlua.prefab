@@ -154,7 +154,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f8524d916516e5a42bc2ed2152b1c213, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703fc4c7500880a46ac13ce71e4cf88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accumulateKey: 32
+  canAccumulateForce: 1
   forwardMultiplier: 1
   upwardMultiplier: 0.2
   rotationSpeed: 90
@@ -217,7 +219,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxForce: 100
   accumulationPerSecond: 25
-  currentForce: 0
+  requiredBars: 1
+  barForces:
+  - 0
+  activeBarIndex: 0
+  completedBarsCount: 0
   forceBar: {fileID: 0}
   forceImage: {fileID: 0}
 --- !u!114 &2740553378392293794

@@ -39,30 +39,8 @@ public class CommanderExecuteAction : FocusableBase
 			{
 				GameManager.Instance.StartBattlePhase();
 				Execute(true);
-				StartCameraCycleForAccumulatedObjects();
+				// Camera sẽ tự xử lý theo GamePhase trong CameraController
 			}
-		}
-	}
-
-	private void StartCameraCycleForAccumulatedObjects()
-	{
-		var cameraController = CameraController.Instance != null ? CameraController.Instance : FindFirstObjectByType<CameraController>();
-		if (cameraController == null) return;
-
-		var focusables = FindObjectsByType<FocusableBase>(FindObjectsSortMode.None);
-		var objectsToCycle = new System.Collections.Generic.List<GameObject>();
-		for (int i = 0; i < focusables.Length; i++)
-		{
-			var acc = focusables[i].GetComponent<ForceAccumulator>();
-			if (acc != null && acc.CurrentForce > 0f)
-			{
-				objectsToCycle.Add(focusables[i].gameObject);
-			}
-		}
-
-		if (objectsToCycle.Count > 0)
-		{
-			cameraController.StartCameraCycle(objectsToCycle);
 		}
 	}
 }
