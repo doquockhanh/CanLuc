@@ -204,7 +204,8 @@ MonoBehaviour:
   maxDelayTime: 5
   bulletsPerBurst: 5
   timeBetweenBullets: 0.5
-  bulletSpeed: 30
+  baseBulletSpeed: 10
+  forceToSpeedMultiplier: 0.5
   audioSource: {fileID: 7466037778052580532}
   shootingSound: {fileID: 8300000, guid: 901b22d903f1b43409a499944f7fc9fc, type: 3}
 --- !u!50 &7666235488585736014
@@ -308,7 +309,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: "Ph\xE1o ph\xF2ng kh\xF4ng"
   actionDescription: "\u1EE4 ph\xE1o c\u1ED1 \u0111\u1ECBnh h\u01B0\u1EDBng v\xE0
-    v\u1ECB tr\xED. User timming b\u1EAFn. "
+    v\u1ECB tr\xED. L\u1EF1c (1) b\u1EAFn g\u1EA7n/xa. L\u1EF1c (2) th\u1EDDi gian
+    ch\u1EDD tr\u01B0\u1EDBc khi b\u1EAFn. B\u1EAFn Lo\u1EA1t \u0111\u1EA1n v\xE0o
+    \u0111\u1ED9i h\xECnh k\u1EBB th\xF9. "
   offset: {x: 0, y: 1}
 --- !u!114 &6454548765330158850
 MonoBehaviour:

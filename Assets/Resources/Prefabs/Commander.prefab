@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxForce: 0
   accumulationPerSecond: 0
-  requiredBars: 0
+  requiredBars: 1
   barForces:
   - 0
   activeBarIndex: 0

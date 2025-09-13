@@ -196,15 +196,15 @@ MonoBehaviour:
   accumulateKey: 32
   canAccumulateForce: 1
   forwardMultiplier: 1
-  upwardMultiplier: 0.2
+  upwardMultiplier: 0.25
   rotationSpeed: 90
   maxLifetime: 10
   lowVelocityThreshold: 2
   lowVelocityDuration: 2
-  damage: 1
+  damage: 3
   audioSource: {fileID: 5548329553592132590}
   fireSound: {fileID: 8300000, guid: 901b22d903f1b43409a499944f7fc9fc, type: 3}
-  movingSound: {fileID: 0}
+  movingSound: {fileID: 8300000, guid: a038ea9e3bbc56746b88d2edec2304d8, type: 3}
 --- !u!114 &1242587748485972686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,8 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectName: "T\xEAn l\u1EEDa"
-  actionDescription: "Ph\xF3ng v\u1EC1 ph\xEDa tr\u01B0\u1EDBc. Gi\u1EEF Space \u0111\u1EC3
-    t\xEDch l\u1EF1c."
+  actionDescription: "Ph\xF3ng v\u1EC1 ph\xEDa tr\u01B0\u1EDBc. G\xE2y s\xE1t th\u01B0\u01A1ng "
   offset: {x: 0, y: 1}
 --- !u!114 &6434493319256043408
 MonoBehaviour:
@@ -276,7 +275,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 50
+  MaxDistance: 35
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -311,7 +310,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

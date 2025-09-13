@@ -265,6 +265,34 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 			actions[i].Execute(totalForce);
 		}
 	}
+
+	#region Public API for UI
+
+	/// <summary>
+	/// Public method để UI có thể gọi OnAccumulateStart
+	/// </summary>
+	public void UIAccumulateStart()
+	{
+		OnAccumulateStart();
+	}
+
+	/// <summary>
+	/// Public method để UI có thể gọi OnAccumulateHold
+	/// </summary>
+	public void UIAccumulateHold()
+	{
+		OnAccumulateHold();
+	}
+
+	/// <summary>
+	/// Public method để UI có thể gọi OnAccumulateEnd
+	/// </summary>
+	public void UIAccumulateEnd()
+	{
+		OnAccumulateEnd();
+	}
+
+	#endregion
 }
 
 
