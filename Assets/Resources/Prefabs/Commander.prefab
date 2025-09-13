@@ -108,6 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd86a1cedfe49124faded0c1b1044680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accumulateKey: 32
+  canAccumulateForce: 1
   audioSource: {fileID: 387583765100906465}
   shootSound: {fileID: 8300000, guid: 74256d0e14ee2da47b7ddf58a8a751ec, type: 3}
   text: {fileID: 4493201534640235978}
@@ -169,11 +171,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfaecbc5e015fc245b8c1e3939e5fb35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForce: 100
-  accumulationPerSecond: 25
-  currentForce: 0
-  forceBar: {fileID: 0}
-  forceImage: {fileID: 0}
+  maxForce: 0
+  accumulationPerSecond: 0
+  requiredBars: 0
+  barForces:
+  - 0
+  activeBarIndex: 0
+  completedBarsCount: 0
 --- !u!114 &1930931440589149445
 MonoBehaviour:
   m_ObjectHideFlags: 0

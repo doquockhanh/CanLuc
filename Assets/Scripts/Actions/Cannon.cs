@@ -12,7 +12,6 @@ public class Cannon : FocusableBase, IForceAction
     [Header("Firing Settings")]
     [SerializeField] private static float minDelayTime = 0f; // Thời gian delay tối thiểu
     [SerializeField] private float maxDelayTime = 5f; // Thời gian delay tối đa
-    [SerializeField] private float forceToDelayMultiplier = 0.5f; // Hệ số chuyển đổi force thành delay time
 
     [Header("Bullet Settings")]
     [SerializeField] private int bulletsPerBurst = 5; // Số bullet mỗi loạt
@@ -82,7 +81,7 @@ public class Cannon : FocusableBase, IForceAction
     {
         // Force càng cao thì delay càng lâu
         float maxForce = GetComponent<ForceAccumulator>().MaxForce;
-        float delayTime = force * forceToDelayMultiplier / maxForce;
+        float delayTime = force * maxDelayTime / maxForce;
         return Mathf.Clamp(delayTime, minDelayTime, maxDelayTime);
     }
 

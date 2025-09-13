@@ -254,7 +254,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -327,6 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad75eef1c386c704e818715e814a9839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accumulateKey: 32
+  canAccumulateForce: 1
   moveSpeed: 2
   childToRotate: {fileID: 5810367931080447609}
   rotationSpeed: 30
@@ -338,7 +340,6 @@ MonoBehaviour:
   rotateKey: 32
   leftKey: 97
   rightKey: 100
-  focusManager: {fileID: 0}
 --- !u!114 &327970241952221788
 MonoBehaviour:
   m_ObjectHideFlags: 0
