@@ -11,10 +11,15 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int highScore = 0;
     [SerializeField] private bool enableScoreLogging = true;
 
+    [Header("Kill Tracking")]
+    [SerializeField] private int killCount = 0;
+    [SerializeField] private bool enableKillLogging = true;
+
     // Events
     public Action<int> OnScoreChanged;
     public Action<int> OnHighScoreChanged;
     public Action<int> OnScoreAdded;
+    public Action<int> OnKillCountChanged; // Event khi kill count thay đổi
 
     private void Awake()
     {
@@ -150,6 +155,75 @@ public class ScoreManager : MonoBehaviour
 
     #endregion
 
+    #region Kill Count Management
+
+    /// <summary>
+    /// Tăng kill count và phát kill sound
+    /// </summary>
+    public void AddKill()
+    {
+        killCount++;
+
+        // Gọi event
+        OnKillCountChanged?.Invoke(killCount);
+
+        // Phát kill sound
+        if (KillSoundManager.Instance != null)
+        {
+            KillSoundManager.Instance.PlayKillSound(killCount);
+        }
+        else
+        {
+            Debug.LogWarning("[ScoreManager] KillSoundManager không tìm thấy! Không thể phát kill sound.");
+        }
+    }
+
+    /// <summary>
+    /// Reset kill count về 0
+    /// </summary>
+    public void ResetKillCount()
+    {
+        int oldKillCount = killCount;
+        killCount = 0;
+
+        if (enableKillLogging)
+        {
+            Debug.Log($"[ScoreManager] Kill count reset từ {oldKillCount} về 0");
+        }
+
+        // Gọi event
+        OnKillCountChanged?.Invoke(killCount);
+    }
+
+    /// <summary>
+    /// Lấy kill count hiện tại
+    /// </summary>
+    public int GetKillCount()
+    {
+        return killCount;
+    }
+
+    /// <summary>
+    /// Thiết lập kill count
+    /// </summary>
+    public void SetKillCount(int newKillCount)
+    {
+        if (newKillCount < 0) newKillCount = 0;
+
+        int oldKillCount = killCount;
+        killCount = newKillCount;
+
+        if (enableKillLogging)
+        {
+            Debug.Log($"[ScoreManager] Kill count set từ {oldKillCount} thành {killCount}");
+        }
+
+        // Gọi event
+        OnKillCountChanged?.Invoke(killCount);
+    }
+
+    #endregion
+
     #region Public Methods
 
     /// <summary>
@@ -198,36 +272,6 @@ public class ScoreManager : MonoBehaviour
     public int GetPointsToHighScore()
     {
         return Mathf.Max(0, highScore - currentScore);
-    }
-
-    #endregion
-
-    #region Debug & Testing
-
-    [ContextMenu("Add 100 Points")]
-    private void DebugAdd100Points()
-    {
-        AddScore(100);
-    }
-
-    [ContextMenu("Add 1000 Points")]
-    private void DebugAdd1000Points()
-    {
-        AddScore(1000);
-    }
-
-    [ContextMenu("Reset Score")]
-    private void DebugResetScore()
-    {
-        ResetScore();
-    }
-
-    [ContextMenu("Clear High Score")]
-    private void DebugClearHighScore()
-    {
-        highScore = 0;
-        SaveHighScore();
-        Debug.Log("[ScoreManager] High Score cleared");
     }
 
     #endregion

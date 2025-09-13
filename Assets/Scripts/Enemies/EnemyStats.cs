@@ -82,14 +82,26 @@ public class EnemyStats : MonoBehaviour, IDamageable
         // Trigger destroyed event
         OnDestroyed?.Invoke(gameObject);
 
-        // Cộng điểm cho màn chơi
-        AwardScore();
+        // Cộng điểm cho màn chơi (trừ khi nguồn hủy là NoScoreKillSource)
+        if (ShouldAwardScore(destroyer))
+        {
+            AwardScore();
+            // Tăng kill count và phát kill sound (chỉ khi bị player tiêu diệt)
+            AwardKill();
+        }
 
         // Phát hiệu ứng phá hủy
         PlayDestructionEffects();
 
         // Destroy GameObject sau một khoảng thời gian ngắn
         Destroy(gameObject, 0.1f);
+    }
+
+    private bool ShouldAwardScore(GameObject destroyer)
+    {
+        if (destroyer == null) return true;
+        // Không cộng điểm nếu destroyer là FinishObstacle
+        return destroyer.GetComponent<FinishObstacle>() == null;
     }
 
     /// <summary>
@@ -106,6 +118,23 @@ public class EnemyStats : MonoBehaviour, IDamageable
         {
             // Fallback: log warning nếu không có ScoreManager
             Debug.LogWarning($"[{gameObject.name}] ScoreManager not found! Cannot award {scoreValue} points");
+        }
+    }
+
+    /// <summary>
+    /// Tăng kill count và phát kill sound (chỉ khi bị player tiêu diệt)
+    /// </summary>
+    protected virtual void AwardKill()
+    {
+        // Tìm ScoreManager để tăng kill count
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddKill();
+        }
+        else
+        {
+            // Fallback: log warning nếu không có ScoreManager
+            Debug.LogWarning($"[{gameObject.name}] ScoreManager not found! Cannot award kill");
         }
     }
 

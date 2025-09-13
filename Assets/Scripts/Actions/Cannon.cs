@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Cannon : FocusableBase, IForceAction
+public class Cannon : FocusableBase, IMultiForceAction
 {
     [Header("Rotation Settings")]
     [SerializeField] private Transform childToRotate;
@@ -12,12 +12,12 @@ public class Cannon : FocusableBase, IForceAction
     [Header("Firing Settings")]
     [SerializeField] private static float minDelayTime = 0f; // Thời gian delay tối thiểu
     [SerializeField] private float maxDelayTime = 5f; // Thời gian delay tối đa
-    [SerializeField] private float forceToDelayMultiplier = 0.5f; // Hệ số chuyển đổi force thành delay time
 
     [Header("Bullet Settings")]
     [SerializeField] private int bulletsPerBurst = 5; // Số bullet mỗi loạt
     [SerializeField] private float timeBetweenBullets = 0.2f; // Thời gian giữa các bullet
-    [SerializeField] private float bulletSpeed = 10f; // Tốc độ bullet
+    [SerializeField] private float baseBulletSpeed = 10f; // Tốc độ bullet cơ bản
+    [SerializeField] private float forceToSpeedMultiplier = 0.1f; // Hệ số chuyển đổi từ force sang tốc độ
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSource audioSource;
@@ -27,6 +27,11 @@ public class Cannon : FocusableBase, IForceAction
     private bool isExecuting = false;
     private bool isCharging = false;
     private Coroutine currentExecution;
+    private float bulletForce = 0f; // Lưu trữ lực bắn từ thanh 1
+    private float delayForce = 0f; // Lưu trữ lực delay từ thanh 2
+
+    // IMultiForceAction implementation
+    public int ForceBarCount => 2;
 
     protected override void Awake()
     {
@@ -47,9 +52,14 @@ public class Cannon : FocusableBase, IForceAction
         }
     }
 
-    public void Execute(float force)
+    public void Execute(float[] forces)
     {
-        if (force <= 0f || bullet == null || isExecuting) return;
+        if (forces == null || forces.Length < 2 || bullet == null || isExecuting) return;
+        if (forces[0] <= 0f && forces[1] <= 0f) return;
+
+        // Lưu trữ lực từ 2 thanh
+        bulletForce = forces[0];
+        delayForce = forces[1];
 
         // Dừng execution hiện tại nếu có
         if (currentExecution != null)
@@ -58,20 +68,20 @@ public class Cannon : FocusableBase, IForceAction
         }
 
         // Bắt đầu execution mới
-        currentExecution = StartCoroutine(ExecuteCannon(force));
+        currentExecution = StartCoroutine(ExecuteCannon());
     }
 
-    private IEnumerator ExecuteCannon(float force)
+    private IEnumerator ExecuteCannon()
     {
         isExecuting = true;
 
-        // Tính thời gian delay dựa trên force
-        float delayTime = CalculateDelayTime(force);
+        // Tính thời gian delay dựa trên thanh lực 2
+        float delayTime = CalculateDelayTime(delayForce);
 
         // Bắt đầu charging phase
         yield return StartCoroutine(ChargingPhase(delayTime));
 
-        // Bắt đầu firing phase
+        // Bắt đầu firing phase với lực từ thanh 1
         yield return StartCoroutine(FiringPhase());
 
         isExecuting = false;
@@ -82,7 +92,7 @@ public class Cannon : FocusableBase, IForceAction
     {
         // Force càng cao thì delay càng lâu
         float maxForce = GetComponent<ForceAccumulator>().MaxForce;
-        float delayTime = force * forceToDelayMultiplier / maxForce;
+        float delayTime = force * maxDelayTime / maxForce;
         return Mathf.Clamp(delayTime, minDelayTime, maxDelayTime);
     }
 
@@ -121,11 +131,13 @@ public class Cannon : FocusableBase, IForceAction
         // Tạo bullet
         GameObject bulletInstance = Instantiate(bullet, firePoint.transform.position, transform.rotation);
 
-        // Thiết lập velocity cho bullet
+        // Thiết lập velocity cho bullet dựa trên lực từ thanh 1
         Rigidbody2D bulletRb = bulletInstance.GetComponent<Rigidbody2D>();
-        float randomForce = bulletSpeed + Random.Range(-(bulletSpeed * 10 / 100), bulletSpeed * 10 / 100);
         if (bulletRb != null)
         {
+            // Tính tốc độ dựa trên lực từ thanh 1
+            float calculatedSpeed = baseBulletSpeed + (bulletForce * forceToSpeedMultiplier);
+            float randomForce = calculatedSpeed + Random.Range(-(calculatedSpeed * 10 / 100), calculatedSpeed * 10 / 100);
             bulletRb.AddForce(childToRotate.right * randomForce, ForceMode2D.Impulse);
         }
     }

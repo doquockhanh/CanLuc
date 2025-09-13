@@ -133,7 +133,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 1
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: f8524d916516e5a42bc2ed2152b1c213, type: 2}
+  m_Material: {fileID: 6200000, guid: 79786ef5e1584274399c56b8b43d3c01, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -179,7 +179,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.004118324, y: -0.0009076889}
-  m_Size: {x: 2.0175421, y: 0.31}
+  m_Size: {x: 2.0175421, y: 0.36}
   m_Direction: 1
 --- !u!114 &422422298921614247
 MonoBehaviour:
@@ -224,8 +224,6 @@ MonoBehaviour:
   - 0
   activeBarIndex: 0
   completedBarsCount: 0
-  forceBar: {fileID: 0}
-  forceImage: {fileID: 0}
 --- !u!114 &2740553378392293794
 MonoBehaviour:
   m_ObjectHideFlags: 0

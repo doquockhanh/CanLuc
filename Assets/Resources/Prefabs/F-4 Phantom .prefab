@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 191847139869726808}
   - component: {fileID: 1294651066941205685}
   - component: {fileID: 3249890406397303646}
+  - component: {fileID: -2263568468149296154}
   m_Layer: 6
   m_Name: 'F-4 Phantom '
   m_TagString: Enemy
@@ -125,10 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eee125873d069a4e8d35f5b87c5af92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 15
   moveDirection: {x: -1, y: 0, z: 0}
   normalizeDirection: 1
-  enablePhaseLogging: 1
   stopInPreparePhase: 1
   moveInBattlePhase: 1
   audioSource: {fileID: 0}
@@ -196,4 +196,31 @@ MonoBehaviour:
   currentHealth: 0
   scoreValue: 100
   isDestroyed: 0
-  enableDamageLogging: 1
+  enableLogging: 0
+--- !u!50 &-2263568468149296154
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972441532142980159}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
