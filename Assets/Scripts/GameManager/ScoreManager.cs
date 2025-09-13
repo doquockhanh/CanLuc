@@ -164,11 +164,6 @@ public class ScoreManager : MonoBehaviour
     {
         killCount++;
 
-        if (enableKillLogging)
-        {
-            Debug.Log($"[ScoreManager] Kill count tăng lên: {killCount}");
-        }
-
         // Gọi event
         OnKillCountChanged?.Invoke(killCount);
 
@@ -277,66 +272,6 @@ public class ScoreManager : MonoBehaviour
     public int GetPointsToHighScore()
     {
         return Mathf.Max(0, highScore - currentScore);
-    }
-
-    #endregion
-
-    #region Debug & Testing
-
-    [ContextMenu("Add 100 Points")]
-    private void DebugAdd100Points()
-    {
-        AddScore(100);
-    }
-
-    [ContextMenu("Add 1000 Points")]
-    private void DebugAdd1000Points()
-    {
-        AddScore(1000);
-    }
-
-    [ContextMenu("Reset Score")]
-    private void DebugResetScore()
-    {
-        ResetScore();
-    }
-
-    [ContextMenu("Clear High Score")]
-    private void DebugClearHighScore()
-    {
-        highScore = 0;
-        SaveHighScore();
-        Debug.Log("[ScoreManager] High Score cleared");
-    }
-
-    [ContextMenu("Add Kill")]
-    private void DebugAddKill()
-    {
-        AddKill();
-    }
-
-    [ContextMenu("Reset Kill Count")]
-    private void DebugResetKillCount()
-    {
-        ResetKillCount();
-    }
-
-    [ContextMenu("Set Kill Count to 5")]
-    private void DebugSetKillCount5()
-    {
-        SetKillCount(5);
-    }
-
-    [ContextMenu("Set Kill Count to 12")]
-    private void DebugSetKillCount12()
-    {
-        SetKillCount(12);
-    }
-
-    [ContextMenu("Set Kill Count to 15")]
-    private void DebugSetKillCount15()
-    {
-        SetKillCount(15);
     }
 
     #endregion

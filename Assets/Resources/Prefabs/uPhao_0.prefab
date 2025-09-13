@@ -195,12 +195,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c6b5f2c1615bb4d97e06344c768100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accumulateKey: 32
+  canAccumulateForce: 1
   childToRotate: {fileID: 7146493839871315653}
   firePoint: {fileID: 6095240303442167245}
   fixedAngle: 60
   bullet: {fileID: 1441041449258860593, guid: 0bd148f467b86ad4fb658c90baf553ad, type: 3}
   maxDelayTime: 5
-  forceToDelayMultiplier: 0.5
   bulletsPerBurst: 5
   timeBetweenBullets: 0.5
   bulletSpeed: 30
@@ -323,9 +324,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxForce: 100
   accumulationPerSecond: 25
-  currentForce: 0
-  forceBar: {fileID: 0}
-  forceImage: {fileID: 0}
+  requiredBars: 2
+  barForces:
+  - 0
+  - 0
+  activeBarIndex: 0
+  completedBarsCount: 0
 --- !u!82 &7466037778052580532
 AudioSource:
   m_ObjectHideFlags: 0

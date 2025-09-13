@@ -129,11 +129,6 @@ public class KillSoundManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Xác định index của kill sound dựa trên số kill
-    /// </summary>
-    /// <param name="killCount">Số kill hiện tại</param>
-    /// <returns>Index của sound (0-11)</returns>
     private int GetKillSoundIndex(int killCount)
     {
         // Nếu kill count > 12, sử dụng sound cuối cùng (index 11)
@@ -152,45 +147,8 @@ public class KillSoundManager : MonoBehaviour
         return killCount - 1;
     }
 
-    /// <summary>
-    /// Kiểm tra xem có đang phát nhạc nền chiến thắng không
-    /// </summary>
     public bool IsPlayingVictoryMusic()
     {
         return audioSource != null && audioSource.isPlaying && audioSource.clip == victoryMusic;
     }
-
-    #region Debug & Testing
-
-    [ContextMenu("Test Kill Sound 1")]
-    private void DebugTestKillSound1()
-    {
-        PlayKillSound(1);
-    }
-
-    [ContextMenu("Test Kill Sound 12")]
-    private void DebugTestKillSound12()
-    {
-        PlayKillSound(12);
-    }
-
-    [ContextMenu("Test Kill Sound 15")]
-    private void DebugTestKillSound15()
-    {
-        PlayKillSound(15);
-    }
-
-    [ContextMenu("Test Victory Sounds")]
-    private void DebugTestVictorySounds()
-    {
-        PlayVictorySounds();
-    }
-
-    [ContextMenu("Stop Victory Music")]
-    private void DebugStopVictoryMusic()
-    {
-        StopVictoryMusic();
-    }
-
-    #endregion
 }

@@ -10,7 +10,7 @@ public class HoverableObject : MonoBehaviour, IHoverable
 
 	private bool isHovered = false;
 
-	void Awake()
+	void Start()
 	{
 		// Đăng ký với HoverManager
 		HoverManager.Instance.RegisterHoverable(gameObject, this);

@@ -111,7 +111,7 @@ MonoBehaviour:
   accumulateKey: 32
   canAccumulateForce: 1
   audioSource: {fileID: 387583765100906465}
-  shootSound: {fileID: 8300000, guid: 74256d0e14ee2da47b7ddf58a8a751ec, type: 3}
+  shootSound: {fileID: 0}
   text: {fileID: 4493201534640235978}
 --- !u!61 &5344767969977050806
 BoxCollider2D:
