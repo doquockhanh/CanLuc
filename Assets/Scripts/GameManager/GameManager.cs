@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -12,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private bool gameOverTriggered = false;
     [SerializeField] private GameObject gameOverPanel;
+    [HideInInspector] public GameResult gameResult = GameResult.Pass;
 
     // Events
     public System.Action<GamePhase> OnPhaseChanged;
@@ -132,9 +132,20 @@ public class GameManager : MonoBehaviour
         if (gameOverTriggered) return;
         gameOverTriggered = true;
 
-        Debug.Log($"Game Over -> {result}");
+        // Kiểm tra hệ thống nhiệm vụ: nếu còn nhiệm vụ chưa hoàn thành -> Fail
+        var finalResult = result;
+        if (MissionManager.Instance != null)
+        {
+            if (!MissionManager.Instance.AreAllMissionsDone())
+            {
+                finalResult = GameResult.Fail;
+            }
+        }
+
+        gameResult = finalResult;
+        Debug.Log($"Game Over -> {finalResult}");
         gameOverPanel.SetActive(true);
-        OnGameOver?.Invoke(result);
+        OnGameOver?.Invoke(finalResult);
     }
 
 
