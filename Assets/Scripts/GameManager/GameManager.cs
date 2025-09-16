@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] private bool gameOverTriggered = false;
-
-    // FocusManager đã được loại bỏ
+    [SerializeField] private GameObject gameOverPanel;
 
     // Events
     public System.Action<GamePhase> OnPhaseChanged;
@@ -134,6 +133,7 @@ public class GameManager : MonoBehaviour
         gameOverTriggered = true;
 
         Debug.Log($"Game Over -> {result}");
+        gameOverPanel.SetActive(true);
         OnGameOver?.Invoke(result);
     }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class RocketAction : FocusableBase, IForceAction
+public class RocketAction : ActionBase, IForceAction
 {
 	[SerializeField] private float forwardMultiplier = 1.0f;
 	[SerializeField] private float upwardMultiplier = 0.2f;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BombAction : FocusableBase, IForceAction
+public class BombAction : ActionBase, IForceAction
 {
 	[SerializeField] private float dropHeightMeters = 10f;
 	[SerializeField] private float explodeAfterSecondsPerForce = 0.02f;

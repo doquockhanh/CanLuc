@@ -1,0 +1,953 @@
+fileFormatVersion: 2
+guid: 8b4fd69ecbf5ed444b7b034ba96f4e6d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -920148258239362001
+    second: UIToolKit_0
+  - first:
+      213: 3333396402671605326
+    second: UIToolKit_1
+  - first:
+      213: -4196217278594260527
+    second: UIToolKit_2
+  - first:
+      213: 3743037291446785581
+    second: UIToolKit_3
+  - first:
+      213: 9181770455905395319
+    second: UIToolKit_4
+  - first:
+      213: -5312965297265526361
+    second: UIToolKit_5
+  - first:
+      213: 4419755791124876703
+    second: UIToolKit_6
+  - first:
+      213: -5783620395714755069
+    second: UIToolKit_7
+  - first:
+      213: -5882045695467735664
+    second: UIToolKit_8
+  - first:
+      213: 3090254200598766111
+    second: UIToolKit_9
+  - first:
+      213: -4393032560795174719
+    second: UIToolKit_10
+  - first:
+      213: 4519322022817787917
+    second: UIToolKit_11
+  - first:
+      213: -8094854113807611145
+    second: UIToolKit_12
+  - first:
+      213: 2622307199864899148
+    second: UIToolKit_13
+  - first:
+      213: 7835244078229600234
+    second: UIToolKit_14
+  - first:
+      213: -4554286835214226467
+    second: UIToolKit_15
+  - first:
+      213: 7374760198236137641
+    second: UIToolKit_16
+  - first:
+      213: 3599077727560698892
+    second: UIToolKit_17
+  - first:
+      213: 4064713552706896187
+    second: UIToolKit_18
+  - first:
+      213: -5115175347145184774
+    second: UIToolKit_19
+  - first:
+      213: -32718267190421193
+    second: UIToolKit_20
+  - first:
+      213: -854402051909065151
+    second: UIToolKit_21
+  - first:
+      213: 1429992627040694895
+    second: UIToolKit_22
+  - first:
+      213: -4341519897053617759
+    second: UIToolKit_23
+  - first:
+      213: 3089583065464054918
+    second: UIToolKit_24
+  - first:
+      213: -3634375920901825115
+    second: UIToolKit_25
+  - first:
+      213: -4915928955986925367
+    second: UIToolKit_26
+  - first:
+      213: -433820318892078250
+    second: UIToolKit_27
+  - first:
+      213: 8408260979263762793
+    second: UIToolKit_28
+  - first:
+      213: 4938990702224446188
+    second: UIToolKit_29
+  - first:
+      213: 6775977176690113581
+    second: UIToolKit_30
+  - first:
+      213: 1106501752539820000
+    second: UIToolKit_31
+  - first:
+      213: 4486203490422845075
+    second: UIToolKit_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UIToolKit_0
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 832
+        width: 640
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 77, y: 55, z: 64, w: 37}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2cc2f6c80afa33f0800000000000000
+      internalID: -920148258239362001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_1
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 912
+        width: 268
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 34, z: 30, w: 30}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e465eccfd5a924e20800000000000000
+      internalID: 3333396402671605326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_2
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 657
+        width: 635
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 53, y: 49, z: 57, w: 52}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d1680d1e9a04c5c0800000000000000
+      internalID: -4196217278594260527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 664
+        width: 285
+        height: 226
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 47, y: 50, z: 60, w: 50}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d26d9b9c590f1f330800000000000000
+      internalID: 3743037291446785581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_4
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 544
+        width: 108
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 772ea6125933c6f70800000000000000
+      internalID: 9181770455905395319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_5
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 544
+        width: 107
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a9b280263e8446b0800000000000000
+      internalID: -5312965297265526361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_6
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 536
+        width: 101
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9d49f3a970265d30800000000000000
+      internalID: 4419755791124876703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_7
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 521
+        width: 114
+        height: 115
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 306c7bd94e37cbfa0800000000000000
+      internalID: -5783620395714755069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_8
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 520
+        width: 112
+        height: 117
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 095b709ba96ce5ea0800000000000000
+      internalID: -5882045695467735664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_9
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 520
+        width: 111
+        height: 117
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f12295492d9c2ea20800000000000000
+      internalID: 3090254200598766111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_10
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 520
+        width: 229
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c834174920d803c0800000000000000
+      internalID: -4393032560795174719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_11
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 452
+        width: 311
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0077a37f6bd7be30800000000000000
+      internalID: 4519322022817787917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_13
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 392
+        width: 119
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4685e3318e446420800000000000000
+      internalID: 2622307199864899148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_14
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 385
+        width: 117
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae7bb5be9f06cbc60800000000000000
+      internalID: 7835244078229600234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_15
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 392
+        width: 114
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddb61d5c04cebc0c0800000000000000
+      internalID: -4554286835214226467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_16
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 392
+        width: 118
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8ed8fb359685660800000000000000
+      internalID: 7374760198236137641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_17
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 392
+        width: 149
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c864edf1e72f130800000000000000
+      internalID: 3599077727560698892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_18
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 368
+        width: 313
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b318fceb073c86830800000000000000
+      internalID: 4064713552706896187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_19
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 370
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af963958f1f3309b0800000000000000
+      internalID: -5115175347145184774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_20
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 249
+        width: 125
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 739d27ac8e2cb8ff0800000000000000
+      internalID: -32718267190421193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_21
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 252
+        width: 104
+        height: 124
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14668905cdd8424f0800000000000000
+      internalID: -854402051909065151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_22
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 249
+        width: 104
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f623036c7ba58d310800000000000000
+      internalID: 1429992627040694895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_23
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 248
+        width: 105
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a124dee7a2dfb3c0800000000000000
+      internalID: -4341519897053617759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_24
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 249
+        width: 103
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6842c01cd6760ea20800000000000000
+      internalID: 3089583065464054918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_25
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 109
+        width: 349
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 51, y: 61, z: 63, w: 43}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5add96e0b5a109dc0800000000000000
+      internalID: -3634375920901825115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_26
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 136
+        width: 117
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c8a75509ac17cbb0800000000000000
+      internalID: -4915928955986925367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_27
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 136
+        width: 104
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65b471ce7b2caf9f0800000000000000
+      internalID: -433820318892078250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_28
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 136
+        width: 101
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9617bcfcfc420b470800000000000000
+      internalID: 8408260979263762793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_29
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 128
+        width: 115
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce29b0330e1da8440800000000000000
+      internalID: 4938990702224446188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_30
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 128
+        width: 112
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2cb4ce675b190e50800000000000000
+      internalID: 6775977176690113581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_31
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 0
+        width: 344
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 47, y: 40, z: 52, w: 40}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0efab7f3b751b5f00800000000000000
+      internalID: 1106501752539820000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIToolKit_32
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 0
+        width: 293
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 47, y: 35, z: 40, w: 41}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39e65cc3e42324e30800000000000000
+      internalID: 4486203490422845075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c0e873bcc8f2e7c478c28a5f59c34003
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UIToolKit_0: -920148258239362001
+      UIToolKit_1: 3333396402671605326
+      UIToolKit_10: -4393032560795174719
+      UIToolKit_11: 4519322022817787917
+      UIToolKit_12: -8094854113807611145
+      UIToolKit_13: 2622307199864899148
+      UIToolKit_14: 7835244078229600234
+      UIToolKit_15: -4554286835214226467
+      UIToolKit_16: 7374760198236137641
+      UIToolKit_17: 3599077727560698892
+      UIToolKit_18: 4064713552706896187
+      UIToolKit_19: -5115175347145184774
+      UIToolKit_2: -4196217278594260527
+      UIToolKit_20: -32718267190421193
+      UIToolKit_21: -854402051909065151
+      UIToolKit_22: 1429992627040694895
+      UIToolKit_23: -4341519897053617759
+      UIToolKit_24: 3089583065464054918
+      UIToolKit_25: -3634375920901825115
+      UIToolKit_26: -4915928955986925367
+      UIToolKit_27: -433820318892078250
+      UIToolKit_28: 8408260979263762793
+      UIToolKit_29: 4938990702224446188
+      UIToolKit_3: 3743037291446785581
+      UIToolKit_30: 6775977176690113581
+      UIToolKit_31: 1106501752539820000
+      UIToolKit_32: 4486203490422845075
+      UIToolKit_4: 9181770455905395319
+      UIToolKit_5: -5312965297265526361
+      UIToolKit_6: 4419755791124876703
+      UIToolKit_7: -5783620395714755069
+      UIToolKit_8: -5882045695467735664
+      UIToolKit_9: 3090254200598766111
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

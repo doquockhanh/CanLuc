@@ -202,7 +202,7 @@ MonoBehaviour:
   fixedAngle: 60
   bullet: {fileID: 1441041449258860593, guid: 0bd148f467b86ad4fb658c90baf553ad, type: 3}
   maxDelayTime: 5
-  bulletsPerBurst: 5
+  bulletsPerBurst: 2
   timeBetweenBullets: 0.5
   baseBulletSpeed: 10
   forceToSpeedMultiplier: 0.5

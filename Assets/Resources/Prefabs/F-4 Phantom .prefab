@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eee125873d069a4e8d35f5b87c5af92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 3
   moveSpeed: 15
   moveDirection: {x: -1, y: 0, z: 0}
   normalizeDirection: 1

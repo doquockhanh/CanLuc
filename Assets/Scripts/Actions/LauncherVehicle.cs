@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class LaunchVehicle : FocusableBase
+public class LaunchVehicle : ActionBase
 {
 	[Header("Movement Settings")]
 	[SerializeField] private float moveSpeed = 5f;

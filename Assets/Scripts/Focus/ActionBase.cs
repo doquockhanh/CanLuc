@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
+public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 {
 	[Header("Focus Visuals")]
 	[SerializeField] protected static Color focusColor = new Color(0, 1, 0.92f, 1);
@@ -19,9 +19,9 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 	protected bool accumulationFinalized = false; // khóa sau lần tích lực đầu tiên
 
 	// Global focus state
-	public static FocusableBase Current { get; private set; }
+	public static ActionBase Current { get; private set; }
 	public static GameObject CurrentGameObject => Current != null ? Current.gameObject : null;
-	public static System.Action<FocusableBase, FocusableBase> OnFocusChanged; // (previous, current)
+	public static System.Action<ActionBase, ActionBase> OnFocusChanged; // (previous, current)
 
 	protected virtual void Awake()
 	{
@@ -135,21 +135,21 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 
 	public static void ClearFocus()
 	{
-		SetFocus((FocusableBase)null);
+		SetFocus((ActionBase)null);
 	}
 
 	public static void SetFocus(GameObject target)
 	{
 		if (target == null)
 		{
-			SetFocus((FocusableBase)null);
+			SetFocus((ActionBase)null);
 			return;
 		}
-		var focusable = target.GetComponentInParent<FocusableBase>();
+		var focusable = target.GetComponentInParent<ActionBase>();
 		SetFocus(focusable);
 	}
 
-	private static void SetFocus(FocusableBase target)
+	private static void SetFocus(ActionBase target)
 	{
 		if (ReferenceEquals(Current, target)) return;
 
@@ -294,6 +294,5 @@ public abstract class FocusableBase : MonoBehaviour, IFocusable, IGamePhaseAware
 
 	#endregion
 }
-
 
 

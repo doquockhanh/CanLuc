@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Cannon : FocusableBase, IMultiForceAction
+public class Cannon : ActionBase, IMultiForceAction
 {
     [Header("Rotation Settings")]
     [SerializeField] private Transform childToRotate;

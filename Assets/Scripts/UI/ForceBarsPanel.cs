@@ -19,7 +19,7 @@ public class ForceBarsPanel : MonoBehaviour
 
 	private readonly List<Image> barFills = new List<Image>();
 	private ForceAccumulator observedAccumulator;
-	private FocusableBase currentFocusable;
+	private ActionBase currentFocusable;
 	private bool isButtonPressed = false;
 	private bool isAccumulating = false;
 	private float holdStartTime = 0f;
@@ -42,11 +42,11 @@ public class ForceBarsPanel : MonoBehaviour
 
 	void OnEnable()
 	{
-		FocusableBase.OnFocusChanged += HandleFocusChanged;
+		ActionBase.OnFocusChanged += HandleFocusChanged;
 		// Initialize theo focus hiện tại nếu có
-		if (FocusableBase.Current != null)
+		if (ActionBase.Current != null)
 		{
-			HandleFocusChanged(null, FocusableBase.Current);
+			HandleFocusChanged(null, ActionBase.Current);
 		}
 		else
 		{
@@ -56,11 +56,11 @@ public class ForceBarsPanel : MonoBehaviour
 
 	void OnDisable()
 	{
-		FocusableBase.OnFocusChanged -= HandleFocusChanged;
+		ActionBase.OnFocusChanged -= HandleFocusChanged;
 		BindAccumulator(null);
 	}
 
-	private void HandleFocusChanged(FocusableBase previous, FocusableBase current)
+	private void HandleFocusChanged(ActionBase previous, ActionBase current)
 	{
 		currentFocusable = current;
 		ForceAccumulator accumulator = null;
@@ -261,7 +261,7 @@ public class ForceBarsPanel : MonoBehaviour
 		if (isAccumulating) return;
 		isAccumulating = true;
 		
-		// Gọi phương thức của FocusableBase để đảm bảo logic nhất quán
+		// Gọi phương thức của ActionBase để đảm bảo logic nhất quán
 		if (currentFocusable != null)
 		{
 			currentFocusable.UIAccumulateStart();
@@ -280,7 +280,7 @@ public class ForceBarsPanel : MonoBehaviour
 	{
 		if (!isAccumulating) return;
 		
-		// Gọi phương thức của FocusableBase để đảm bảo logic nhất quán
+		// Gọi phương thức của ActionBase để đảm bảo logic nhất quán
 		if (currentFocusable != null)
 		{
 			currentFocusable.UIAccumulateHold();
@@ -292,7 +292,7 @@ public class ForceBarsPanel : MonoBehaviour
 		if (!isAccumulating) return;
 		isAccumulating = false;
 		
-		// Gọi phương thức của FocusableBase để đảm bảo logic nhất quán
+		// Gọi phương thức của ActionBase để đảm bảo logic nhất quán
 		if (currentFocusable != null)
 		{
 			currentFocusable.UIAccumulateEnd();

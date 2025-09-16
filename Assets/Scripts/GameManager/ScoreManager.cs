@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-
+using System.Collections.Generic;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -21,6 +21,10 @@ public class ScoreManager : MonoBehaviour
     public Action<int> OnScoreAdded;
     public Action<int> OnKillCountChanged; // Event khi kill count thay đổi
 
+    public Dictionary<EnemyType, int> killedEnemies = new();
+    public Dictionary<EnemyType, int> scoredEachEm = new();
+    public int CurrentScore => currentScore;
+
     private void Awake()
     {
         if (Instance == null)
@@ -32,22 +36,35 @@ public class ScoreManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        foreach (EnemyType type in Enum.GetValues(typeof(EnemyType)))
+        {
+            killedEnemies[type] = 0;
+            scoredEachEm[type] = 0;
+        }
+
     }
 
     private void Start()
     {
-        // Load high score từ PlayerPrefs
-        LoadHighScore();
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        if (enableScoreLogging)
+        {
+            Debug.Log($"[ScoreManager] Loaded High Score: {highScore}");
+        }
     }
 
-    #region Score Management
+    public void AddKillAndScore(EnemyType enemyType, int points)
+    {
+        AddKill(enemyType);
+        AddScore(points, enemyType);
+    }
 
-    /// <summary>
-    /// Thêm điểm vào màn chơi
-    /// </summary>
-    public void AddScore(int points)
+    public void AddScore(int points, EnemyType enemyType)
     {
         if (points <= 0) return;
+        scoredEachEm[enemyType] += points;
 
         int oldScore = currentScore;
         currentScore += points;
@@ -65,48 +82,6 @@ public class ScoreManager : MonoBehaviour
         CheckHighScore();
     }
 
-    /// <summary>
-    /// Thiết lập điểm số
-    /// </summary>
-    public void SetScore(int newScore)
-    {
-        if (newScore < 0) newScore = 0;
-
-        int oldScore = currentScore;
-        currentScore = newScore;
-
-        if (enableScoreLogging)
-        {
-            Debug.Log($"[ScoreManager] Score set to {currentScore}");
-        }
-
-        // Gọi events
-        OnScoreChanged?.Invoke(currentScore);
-
-        // Kiểm tra high score
-        CheckHighScore();
-    }
-
-    /// <summary>
-    /// Reset điểm số về 0
-    /// </summary>
-    public void ResetScore()
-    {
-        int oldScore = currentScore;
-        currentScore = 0;
-
-        if (enableScoreLogging)
-        {
-            Debug.Log($"[ScoreManager] Score reset to 0");
-        }
-
-        // Gọi events
-        OnScoreChanged?.Invoke(currentScore);
-    }
-
-    /// <summary>
-    /// Kiểm tra và cập nhật high score
-    /// </summary>
     private void CheckHighScore()
     {
         if (currentScore > highScore)
@@ -127,41 +102,15 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region High Score Persistence
-
-    /// <summary>
-    /// Lưu high score vào PlayerPrefs
-    /// </summary>
     private void SaveHighScore()
     {
         PlayerPrefs.SetInt("HighScore", highScore);
         PlayerPrefs.Save();
     }
 
-    /// <summary>
-    /// Load high score từ PlayerPrefs
-    /// </summary>
-    private void LoadHighScore()
+    public void AddKill(EnemyType enemyType)
     {
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
-
-        if (enableScoreLogging)
-        {
-            Debug.Log($"[ScoreManager] Loaded High Score: {highScore}");
-        }
-    }
-
-    #endregion
-
-    #region Kill Count Management
-
-    /// <summary>
-    /// Tăng kill count và phát kill sound
-    /// </summary>
-    public void AddKill()
-    {
+        killedEnemies[enemyType]++;
         killCount++;
 
         // Gọi event
@@ -178,9 +127,6 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Reset kill count về 0
-    /// </summary>
     public void ResetKillCount()
     {
         int oldKillCount = killCount;
@@ -194,85 +140,4 @@ public class ScoreManager : MonoBehaviour
         // Gọi event
         OnKillCountChanged?.Invoke(killCount);
     }
-
-    /// <summary>
-    /// Lấy kill count hiện tại
-    /// </summary>
-    public int GetKillCount()
-    {
-        return killCount;
-    }
-
-    /// <summary>
-    /// Thiết lập kill count
-    /// </summary>
-    public void SetKillCount(int newKillCount)
-    {
-        if (newKillCount < 0) newKillCount = 0;
-
-        int oldKillCount = killCount;
-        killCount = newKillCount;
-
-        if (enableKillLogging)
-        {
-            Debug.Log($"[ScoreManager] Kill count set từ {oldKillCount} thành {killCount}");
-        }
-
-        // Gọi event
-        OnKillCountChanged?.Invoke(killCount);
-    }
-
-    #endregion
-
-    #region Public Methods
-
-    /// <summary>
-    /// Lấy điểm số hiện tại
-    /// </summary>
-    public int GetCurrentScore()
-    {
-        return currentScore;
-    }
-
-    /// <summary>
-    /// Lấy high score
-    /// </summary>
-    public int GetHighScore()
-    {
-        return highScore;
-    }
-
-    /// <summary>
-    /// Lấy điểm số dưới dạng string với format
-    /// </summary>
-    public string GetScoreString()
-    {
-        return currentScore.ToString("D6"); // 6 chữ số, ví dụ: 000123
-    }
-
-    /// <summary>
-    /// Lấy high score dưới dạng string với format
-    /// </summary>
-    public string GetHighScoreString()
-    {
-        return highScore.ToString("D6"); // 6 chữ số, ví dụ: 000456
-    }
-
-    /// <summary>
-    /// Kiểm tra xem có phải high score mới không
-    /// </summary>
-    public bool IsNewHighScore()
-    {
-        return currentScore >= highScore;
-    }
-
-    /// <summary>
-    /// Lấy điểm còn lại để đạt high score
-    /// </summary>
-    public int GetPointsToHighScore()
-    {
-        return Mathf.Max(0, highScore - currentScore);
-    }
-
-    #endregion
 }

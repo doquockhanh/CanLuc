@@ -7,7 +7,7 @@ using UnityEngine;
 /// - Thanh 2: quy đổi ra thời gian chờ để kích hoạt một GameObject được gắn vào action
 /// Mỗi lần nhấn/nhả Space sẽ chốt một thanh, tối đa 2 thanh.
 /// </summary>
-public class BombaPlantAction : FocusableBase, IMultiForceAction
+public class BombaPlantAction : ActionBase, IMultiForceAction
 {
     [Header("Movement Settings")]
     [SerializeField] private float forwardMultiplier = 1.0f;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AircraftController : MonoBehaviour, IGamePhaseAware
+public class AircraftController : EnemyBase, IGamePhaseAware
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
