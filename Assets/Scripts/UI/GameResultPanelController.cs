@@ -3,6 +3,8 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameResultPanelController : MonoBehaviour
 {
@@ -16,9 +18,13 @@ public class GameResultPanelController : MonoBehaviour
     [Header("Enemy Score Result")]
     [SerializeField] private RectTransform linesParent; // Container để spawn các dòng kill
     [SerializeField] private GameObject enemyLine;
+    [Header("Scene Redirect")]
+    [SerializeField] private string persitanceScene = "PersistentScene";
+    [SerializeField] private string mainMenu = "MainMenu";
     private int finalScore = 999;
     private Sequence mySequence;
     private GameObject activeBtnGroup; // group được chọn
+    private GameResult gameResult;
 
     void Start()
     {
@@ -90,6 +96,7 @@ public class GameResultPanelController : MonoBehaviour
 
     private void HandleGameOver(GameResult result)
     {
+        gameResult = result;
         var tmp = resultText != null ? resultText.GetComponent<TextMeshProUGUI>() : null;
         if (tmp != null)
         {
@@ -115,5 +122,44 @@ public class GameResultPanelController : MonoBehaviour
 
             mySequence.Append(activeBtnGroup.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack));
         }
+    }
+
+    public void OnNextLevel()
+    {
+        if (gameResult == GameResult.Fail) return;
+
+        int currentFloorId = GameProgressManager.Instance.GetCurrentFloorId();
+        int currentLevelId = GameProgressManager.Instance.GetCurrentLevelId();
+
+        WorldData world = GameProgressManager.Instance.CurrentWorld;
+        FloorData currentFloor = world.floors.FirstOrDefault(f => f.floorId == currentFloorId);
+
+        if (currentFloor != null)
+        {
+            LevelData nextLevel = currentFloor.levels
+                .Where(l => l.levelId > currentLevelId && l.isUnlocked)
+                .OrderBy(l => l.levelId)
+                .FirstOrDefault();
+
+            if (nextLevel != null)
+            {
+                GameProgressManager.Instance.LoadLevel(currentFloorId, nextLevel.levelId);
+                return;
+            }
+        }
+
+        GameProgressManager.Instance.LoadLevelSelectScene();
+    }
+
+    public void Replay()
+    {
+        Scene current = SceneManager.GetActiveScene();
+
+        SceneManager.LoadScene(current.name, LoadSceneMode.Single);
+    }
+
+    public void GoMainMenu()
+    {
+        SceneManager.LoadScene(mainMenu, LoadSceneMode.Single);
     }
 }

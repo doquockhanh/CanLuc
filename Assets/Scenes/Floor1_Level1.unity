@@ -2545,7 +2545,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 398996372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1189985952}
+        m_TargetAssemblyTypeName: GameResultPanelController, Assembly-CSharp
+        m_MethodName: GoMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &398996372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5683,7 +5695,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 838424598}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1189985952}
+        m_TargetAssemblyTypeName: GameResultPanelController, Assembly-CSharp
+        m_MethodName: Replay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &838424598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6628,7 +6652,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1040375635}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1189985952}
+        m_TargetAssemblyTypeName: GameResultPanelController, Assembly-CSharp
+        m_MethodName: GoMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1040375635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7234,6 +7270,8 @@ MonoBehaviour:
   winBtnGroup: {fileID: 1768842706}
   linesParent: {fileID: 1600721866}
   enemyLine: {fileID: 6287919391171702634, guid: 1b68dfb7b49264f41a3229fb7dedfe06, type: 3}
+  persitanceScene: PersistentScene
+  mainMenu: MainMenu
 --- !u!114 &1189985953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7863,7 +7901,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1284719763}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1189985952}
+        m_TargetAssemblyTypeName: GameResultPanelController, Assembly-CSharp
+        m_MethodName: Replay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1284719763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12901,7 +12951,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2075128523}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1189985952}
+        m_TargetAssemblyTypeName: GameResultPanelController, Assembly-CSharp
+        m_MethodName: OnNextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2075128523
 MonoBehaviour:
   m_ObjectHideFlags: 0
