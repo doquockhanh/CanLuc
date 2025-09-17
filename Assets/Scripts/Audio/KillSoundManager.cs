@@ -1,10 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-/// <summary>
-/// Quản lý âm thanh kill cho enemy
-/// Hỗ trợ 12 kill sounds tăng dần theo số kill
-/// </summary>
 public class KillSoundManager : MonoBehaviour
 {
     public static KillSoundManager Instance { get; private set; }
@@ -50,10 +45,6 @@ public class KillSoundManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Phát kill sound dựa trên số kill hiện tại
-    /// </summary>
-    /// <param name="killCount">Số kill hiện tại (1-12+)</param>
     public void PlayKillSound(int killCount)
     {
         if (audioSource == null || killSounds == null || killSounds.Length == 0)
@@ -83,9 +74,6 @@ public class KillSoundManager : MonoBehaviour
         OnKillSoundPlayed?.Invoke(killCount);
     }
 
-    /// <summary>
-    /// Phát âm thanh chiến thắng khi tất cả enemy bị tiêu diệt
-    /// </summary>
     public void PlayVictorySounds()
     {
         if (audioSource == null)
@@ -118,9 +106,6 @@ public class KillSoundManager : MonoBehaviour
         OnVictorySoundPlayed?.Invoke();
     }
 
-    /// <summary>
-    /// Dừng nhạc nền chiến thắng
-    /// </summary>
     public void StopVictoryMusic()
     {
         if (audioSource != null && audioSource.isPlaying)

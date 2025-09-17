@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Spawns an arrow indicator above every object implementing IFocusable and keeps it updated.
-/// Accepts a Sprite for the arrow image and applies a gentle up-down bobbing.
-/// </summary>
 public class ArrowIndicatorManager : MonoBehaviour
 {
 	[Header("Indicator Visual")]
@@ -43,15 +39,10 @@ public class ArrowIndicatorManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Finds all objects implementing IFocusable and ensures each has an indicator.
-	/// Removes indicators for objects that no longer exist.
-	/// </summary>
 	public void RefreshIndicators()
 	{
 		RemoveDestroyedEntries();
 
-		// Find all MonoBehaviours that implement IFocusable
 		var allBehaviours = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 		for (int i = 0; i < allBehaviours.Length; i++)
 		{

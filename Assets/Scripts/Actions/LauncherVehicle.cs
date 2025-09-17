@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class LaunchVehicle : ActionBase
 {
 	[Header("Movement Settings")]

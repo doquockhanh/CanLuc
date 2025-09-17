@@ -1,9 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Nhiệm vụ: Đạt điểm tối thiểu.
-/// Hoàn thành khi ScoreManager.CurrentScore >= requiredScore.
-/// </summary>
 public class ScoreThresholdMission : MissionBase
 {
 	[SerializeField] private int requiredScore = 100;

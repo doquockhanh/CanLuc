@@ -272,16 +272,4 @@ public class SimpleBattlePhaseUI : MonoBehaviour
         
         return false;
     }
-    
-    // Public methods để có thể gọi từ bên ngoài
-    public void ShowPhaseUI()
-    {
-        gameObject.SetActive(true);
-        UpdatePhaseDisplay();
-    }
-    
-    public void HidePhaseUI()
-    {
-        gameObject.SetActive(false);
-    }
 }

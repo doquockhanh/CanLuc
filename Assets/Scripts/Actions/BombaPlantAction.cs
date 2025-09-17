@@ -1,12 +1,5 @@
 using UnityEngine;
 
-
-/// <summary>
-/// Action với 2 thanh lực:
-/// - Thanh 1: lực phóng về phía trước (impulse)
-/// - Thanh 2: quy đổi ra thời gian chờ để kích hoạt một GameObject được gắn vào action
-/// Mỗi lần nhấn/nhả Space sẽ chốt một thanh, tối đa 2 thanh.
-/// </summary>
 public class BombaPlantAction : ActionBase, IMultiForceAction
 {
     [Header("Movement Settings")]

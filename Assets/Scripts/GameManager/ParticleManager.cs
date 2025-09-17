@@ -45,9 +45,6 @@ public class ParticleManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Gọi hiệu ứng nổ theo key tại vị trí pos
-    /// </summary>
     public void PlayParticleSystem(string key, Vector3 pos)
     {
         if (!pools.ContainsKey(key))

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 {
 	[Header("Focus Visuals")]
@@ -239,9 +238,6 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 
 	#endregion
 
-	/// <summary>
-	/// Execute accumulated force - override trong derived classes để implement logic cụ thể
-	/// </summary>
 	protected virtual void ExecuteAccumulatedForce()
 	{
 		if (forceAccumulator == null) return;
@@ -268,25 +264,16 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 
 	#region Public API for UI
 
-	/// <summary>
-	/// Public method để UI có thể gọi OnAccumulateStart
-	/// </summary>
 	public void UIAccumulateStart()
 	{
 		OnAccumulateStart();
 	}
 
-	/// <summary>
-	/// Public method để UI có thể gọi OnAccumulateHold
-	/// </summary>
 	public void UIAccumulateHold()
 	{
 		OnAccumulateHold();
 	}
 
-	/// <summary>
-	/// Public method để UI có thể gọi OnAccumulateEnd
-	/// </summary>
 	public void UIAccumulateEnd()
 	{
 		OnAccumulateEnd();

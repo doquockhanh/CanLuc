@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 [RequireComponent(typeof(Collider2D))]
 public class HoverableObject : MonoBehaviour, IHoverable
 {
@@ -25,9 +24,6 @@ public class HoverableObject : MonoBehaviour, IHoverable
 		}
 	}
 
-	/// <summary>
-	/// Unity event - được gọi khi mouse enter vào object
-	/// </summary>
 	public void OnMouseEnter()
 	{
 		if (!enableHover || !showFocusInfoPanel) return;
@@ -36,9 +32,6 @@ public class HoverableObject : MonoBehaviour, IHoverable
 		HoverManager.Instance.OnObjectHoverEnter(gameObject);
 	}
 
-	/// <summary>
-	/// Unity event - được gọi khi mouse exit khỏi object
-	/// </summary>
 	public void OnMouseExit()
 	{
 		if (!enableHover || !showFocusInfoPanel) return;
@@ -47,9 +40,6 @@ public class HoverableObject : MonoBehaviour, IHoverable
 		HoverManager.Instance.OnObjectHoverExit(gameObject);
 	}
 
-	/// <summary>
-	/// Public method để bật/tắt hover functionality
-	/// </summary>
 	public void SetHoverEnabled(bool enabled)
 	{
 		enableHover = enabled;
@@ -60,9 +50,6 @@ public class HoverableObject : MonoBehaviour, IHoverable
 		}
 	}
 
-	/// <summary>
-	/// Public method để bật/tắt hiển thị FocusInfoPanel
-	/// </summary>
 	public void SetShowFocusInfoPanel(bool show)
 	{
 		showFocusInfoPanel = show;
@@ -72,9 +59,6 @@ public class HoverableObject : MonoBehaviour, IHoverable
 		}
 	}
 
-	/// <summary>
-	/// Kiểm tra xem object có đang được hover không
-	/// </summary>
 	public bool IsHovered => isHovered;
 }
 

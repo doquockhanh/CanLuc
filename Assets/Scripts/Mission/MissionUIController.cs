@@ -2,11 +2,6 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-
-/// <summary>
-/// Hiển thị danh sách nhiệm vụ lên UI và cập nhật theo chu kỳ.
-/// Gắn script này lên một GameObject UI (ví dụ: Text hoặc TMP_Text).
-/// </summary>
 public class MissionUIController : MonoBehaviour
 {
 	[SerializeField] private float refreshInterval = 0.5f;

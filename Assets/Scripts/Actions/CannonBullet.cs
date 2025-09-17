@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Script cho bullet được bắn từ Cannon
-/// </summary>
 public class CannonBullet : MonoBehaviour
 {
     [Header("Bullet Settings")]

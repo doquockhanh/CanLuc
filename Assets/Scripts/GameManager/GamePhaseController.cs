@@ -94,32 +94,4 @@ public class GamePhaseController : MonoBehaviour, IGamePhaseAware
     }
 
     #endregion
-
-    #region Public Methods
-
-    /// <summary>
-    /// Kiểm tra xem có đang ở prepare phase không
-    /// </summary>
-    public bool IsInPreparePhase()
-    {
-        return GameManager.Instance != null && GameManager.Instance.IsInPreparePhase();
-    }
-
-    /// <summary>
-    /// Kiểm tra xem có đang ở battle phase không
-    /// </summary>
-    public bool IsInBattlePhase()
-    {
-        return GameManager.Instance != null && GameManager.Instance.IsInBattlePhase();
-    }
-
-    /// <summary>
-    /// Lấy game phase hiện tại
-    /// </summary>
-    public GamePhase GetCurrentGamePhase()
-    {
-        return GameManager.Instance != null ? GameManager.Instance.GetCurrentPhase() : GamePhase.Prepare;
-    }
-
-    #endregion
 }

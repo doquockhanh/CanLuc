@@ -27,20 +27,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
         InitializeHealth();
     }
 
-    /// <summary>
-    /// Khởi tạo health
-    /// </summary>
     protected virtual void InitializeHealth()
     {
         currentHealth = maxHealth;
         isDestroyed = false;
     }
 
-    /// <summary>
-    /// Nhận damage từ nguồn khác
-    /// </summary>
-    /// <param name="damage">Lượng damage nhận được</param>
-    /// <param name="damageSource">Nguồn gây damage (có thể null)</param>
     public virtual void TakeDamage(int damage, GameObject damageSource = null)
     {
         if (isDestroyed || damage <= 0) return;
@@ -63,10 +55,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
     }
 
-    /// <summary>
-    /// Phá hủy enemy
-    /// </summary>
-    /// <param name="destroyer">Object gây ra sự phá hủy (có thể null)</param>
     protected virtual void DestroyEnemy(GameObject destroyer = null)
     {
         if (isDestroyed) return;
@@ -103,10 +91,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
         return destroyer.GetComponent<FinishObstacle>() == null;
     }
 
-
-    /// <summary>
-    /// Phát hiệu ứng phá hủy
-    /// </summary>
     protected virtual void PlayDestructionEffects()
     {
         // Phát particle effect
@@ -119,18 +103,11 @@ public class EnemyStats : MonoBehaviour, IDamageable
         OnPlayDestructionEffects();
     }
 
-    /// <summary>
-    /// Override để thêm các hiệu ứng phá hủy tùy chỉnh
-    /// </summary>
     protected virtual void OnPlayDestructionEffects()
     {
         // Override trong derived classes để thêm hiệu ứng riêng
     }
 
-    /// <summary>
-    /// Heal enemy
-    /// </summary>
-    /// <param name="healAmount">Lượng máu hồi</param>
     public virtual void Heal(int healAmount)
     {
         if (isDestroyed || healAmount <= 0) return;
@@ -144,10 +121,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
     }
 
-    /// <summary>
-    /// Set health về giá trị cụ thể
-    /// </summary>
-    /// <param name="newHealth">Health mới</param>
     public virtual void SetHealth(int newHealth)
     {
         if (isDestroyed) return;
@@ -166,10 +139,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
     }
 
-    /// <summary>
-    /// Set max health và điều chỉnh current health tương ứng
-    /// </summary>
-    /// <param name="newMaxHealth">Max health mới</param>
     public virtual void SetMaxHealth(int newMaxHealth)
     {
         if (newMaxHealth <= 0) return;
@@ -184,10 +153,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
     }
 
-    /// <summary>
-    /// Set score value
-    /// </summary>
-    /// <param name="newScoreValue">Score value mới</param>
     public virtual void SetScoreValue(int newScoreValue)
     {
         scoreValue = Mathf.Max(0, newScoreValue);
@@ -198,19 +163,11 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
     }
 
-    /// <summary>
-    /// Kiểm tra xem có thể nhận damage không
-    /// </summary>
-    /// <returns>True nếu có thể nhận damage</returns>
     public virtual bool CanTakeDamage()
     {
         return !isDestroyed && currentHealth > 0;
     }
 
-    /// <summary>
-    /// Lấy health percentage (0-1)
-    /// </summary>
-    /// <returns>Health percentage</returns>
     public virtual float GetHealthPercentage()
     {
         if (maxHealth <= 0) return 0f;

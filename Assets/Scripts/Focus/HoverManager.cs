@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class HoverManager : MonoBehaviour
 {
 	[Header("References")]
@@ -30,9 +29,6 @@ public class HoverManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Đăng ký một GameObject có thể hover
-	/// </summary>
 	public void RegisterHoverable(GameObject obj, IHoverable hoverable)
 	{
 		if (obj != null && hoverable != null)
@@ -41,9 +37,6 @@ public class HoverManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Hủy đăng ký một GameObject
-	/// </summary>
 	public void UnregisterHoverable(GameObject obj)
 	{
 		if (obj != null)
@@ -52,9 +45,6 @@ public class HoverManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Xử lý khi mouse enter vào một object
-	/// </summary>
 	public void OnObjectHoverEnter(GameObject obj)
 	{
 		if (obj == null) return;
@@ -78,9 +68,6 @@ public class HoverManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Xử lý khi mouse exit khỏi một object
-	/// </summary>
 	public void OnObjectHoverExit(GameObject obj)
 	{
 		if (obj == null) return;
@@ -98,9 +85,6 @@ public class HoverManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Ẩn FocusInfoPanel ngay lập tức
-	/// </summary>
 	public void HideFocusInfoPanel()
 	{
 		if (focusInfoPanel != null)
@@ -110,14 +94,8 @@ public class HoverManager : MonoBehaviour
 		currentHoveredObject = null;
 	}
 
-	/// <summary>
-	/// Lấy object đang được hover
-	/// </summary>
 	public GameObject GetCurrentHoveredObject() => currentHoveredObject;
 
-	/// <summary>
-	/// Kiểm tra xem có object nào đang được hover không
-	/// </summary>
 	public bool IsAnyObjectHovered() => currentHoveredObject != null;
 }
 

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class ButtonHoverSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
@@ -24,7 +23,6 @@ public class ButtonHoverSound : MonoBehaviour, IPointerEnterHandler, IPointerCli
     {
         if (audioSource != null && clickSound != null)
         {
-            Debug.Log("dsad");
             audioSource.PlayOneShot(clickSound);
         }
     }

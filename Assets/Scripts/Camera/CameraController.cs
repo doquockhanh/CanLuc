@@ -97,9 +97,6 @@ public class CameraController : MonoBehaviour, ICameraController, IGamePhaseAwar
 
     #region ICameraController Implementation
 
-    /// <summary>
-    /// Apply camera settings from GameSettings
-    /// </summary>
     public void ApplySettings(GameSettings settings)
     {
         if (settings == null || worldCamera == null) return;

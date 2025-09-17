@@ -88,9 +88,6 @@ public class OffScreenTracker : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Bật/tắt tracking cho object này
-    /// </summary>
     public void SetTrackingEnabled(bool enabled)
     {
         if (enableTracking == enabled) return;
@@ -113,9 +110,7 @@ public class OffScreenTracker : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Cập nhật trạng thái hiển thị của object
-    /// </summary>
+
     public void UpdateVisibility(bool isVisible)
     {
         if (IsVisibleOnScreen != isVisible)
@@ -130,41 +125,26 @@ public class OffScreenTracker : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Thiết lập màu sắc tùy chỉnh cho indicator
-    /// </summary>
     public void SetCustomIndicatorColor(Color color)
     {
         customIndicatorColor = color;
     }
 
-    /// <summary>
-    /// Thiết lập kích thước tùy chỉnh cho indicator
-    /// </summary>
     public void SetCustomIndicatorScale(float scale)
     {
         customIndicatorScale = Mathf.Clamp(scale, 0.1f, 5f);
     }
 
-    /// <summary>
-    /// Lấy màu sắc tùy chỉnh cho indicator
-    /// </summary>
     public Color GetCustomIndicatorColor()
     {
         return customIndicatorColor;
     }
 
-    /// <summary>
-    /// Lấy kích thước tùy chỉnh cho indicator
-    /// </summary>
     public float GetCustomIndicatorScale()
     {
         return customIndicatorScale;
     }
 
-    /// <summary>
-    /// Kiểm tra xem object có nằm ngoài camera không
-    /// </summary>
     public bool IsOffScreen()
     {
         if (Camera.main == null) return false;
@@ -178,9 +158,6 @@ public class OffScreenTracker : MonoBehaviour
                screenPoint.z < 0;
     }
 
-    /// <summary>
-    /// Lấy khoảng cách từ object đến camera
-    /// </summary>
     public float GetDistanceToCamera()
     {
         if (Camera.main == null) return float.MaxValue;

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class SlidePanelController : MonoBehaviour
+public class OptionBox : MonoBehaviour
 {
     public RectTransform panel;      // Panel UI cần trượt
     public Button toggleButton;      // Nút bấm để mở/đóng
