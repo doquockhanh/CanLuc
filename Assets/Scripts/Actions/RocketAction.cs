@@ -45,11 +45,6 @@ public class RocketAction : ActionBase, IForceAction
 		audioSource.loop = true;
 	}
 
-	public override void OnBattlePhaseStarted()
-	{
-		base.OnBattlePhaseStarted();
-	}
-
 	public void Execute(float force)
 	{
 		if (force <= 0f) return;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State")]
     [SerializeField] private GamePhase currentPhase = GamePhase.Prepare;
+    [Description("How many time back to prepare phase. -1 is infinity")]
+    [SerializeField] private int phaseLoopCount = 1;
 
     [Header("Game Over")]
     [SerializeField] private bool gameOverTriggered = false;
@@ -64,7 +67,7 @@ public class GameManager : MonoBehaviour
         OnPhaseChanged?.Invoke(currentPhase);
         OnBattlePhaseStarted?.Invoke();
 
-        ResetKillCount();
+        ScoreManager.Instance.ResetKillCount();
 
         NotifyAllGamePhaseAwareComponents();
 
@@ -226,32 +229,7 @@ public class GameManager : MonoBehaviour
 
         if (trackedEnemies.Count == 0 && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            PlayVictorySounds();
             TriggerGameOver();
-        }
-    }
-
-    private void PlayVictorySounds()
-    {
-        if (KillSoundManager.Instance != null)
-        {
-            KillSoundManager.Instance.PlayVictorySounds();
-        }
-        else
-        {
-            Debug.LogWarning("[GameManager] KillSoundManager không tìm thấy! Không thể phát âm thanh chiến thắng.");
-        }
-    }
-
-    private void ResetKillCount()
-    {
-        if (ScoreManager.Instance != null)
-        {
-            ScoreManager.Instance.ResetKillCount();
-        }
-        else
-        {
-            Debug.LogWarning("[GameManager] ScoreManager không tìm thấy! Không thể reset kill count.");
         }
     }
 

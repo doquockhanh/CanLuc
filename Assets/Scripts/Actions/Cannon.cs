@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Cannon : ActionBase, IMultiForceAction
@@ -29,6 +30,10 @@ public class Cannon : ActionBase, IMultiForceAction
     private Coroutine currentExecution;
     private float bulletForce = 0f; // Lưu trữ lực bắn từ thanh 1
     private float delayForce = 0f; // Lưu trữ lực delay từ thanh 2
+    
+    // Bullet tracking
+    private List<GameObject> activeBullets = new List<GameObject>();
+    private Coroutine bulletTrackingCoroutine;
 
     // IMultiForceAction implementation
     public int ForceBarCount => 2;
