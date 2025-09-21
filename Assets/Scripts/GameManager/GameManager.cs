@@ -71,6 +71,12 @@ public class GameManager : MonoBehaviour
 
         NotifyAllGamePhaseAwareComponents();
 
+        // Start battle phase execution through PhaseManager
+        if (PhaseManager.Instance != null)
+        {
+            PhaseManager.Instance.StartBattlePhaseExecution();
+        }
+
         Debug.Log("Game Phase: Prepare -> Battle");
     }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
+public abstract class ActionBase : MonoBehaviour, IFocusable
 {
 	[Header("Focus Visuals")]
 	[SerializeField] protected static Color focusColor = new Color(0, 1, 0.92f, 1);
@@ -17,6 +17,10 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 	protected bool hasAccumulatedForce = false;
 	protected bool accumulationFinalized = false; // khóa sau lần tích lực đầu tiên
 
+	// Action execution state
+	protected bool isActionExecuting = false;
+	protected bool isActionCompleted = false;
+
 	// Global focus state
 	public static ActionBase Current { get; private set; }
 	public static GameObject CurrentGameObject => Current != null ? Current.gameObject : null;
@@ -26,14 +30,14 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 	{
 		cachedRenderer = GetComponentInChildren<Renderer>();
 		forceAccumulator = GetComponent<ForceAccumulator>();
-		
+
 		// Cấu hình số thanh lực dựa trên các Action đính kèm
 		ConfigureRequiredForceBars();
-		
-		// Đăng ký với GameManager để lắng nghe GamePhase changes
-		if (GameManager.Instance != null)
+
+		// Đăng ký với PhaseManager để quản lý tập trung
+		if (PhaseManager.Instance != null)
 		{
-			GameManager.Instance.RegisterGamePhaseAwareComponent(this);
+			PhaseManager.Instance.RegisterAction(this);
 		}
 	}
 
@@ -55,9 +59,9 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 	protected virtual void OnDestroy()
 	{
 		// Hủy đăng ký khi component bị destroy
-		if (GameManager.Instance != null)
+		if (PhaseManager.Instance != null)
 		{
-			GameManager.Instance.UnregisterGamePhaseAwareComponent(this);
+			PhaseManager.Instance.UnregisterAction(this);
 		}
 	}
 
@@ -209,31 +213,82 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 		}
 	}
 
-	#region IGamePhaseAware Implementation
+	#region Action Execution and Completion
 
-	public virtual void OnPreparePhaseStarted()
+	/// <summary>
+	/// Called by PhaseManager to execute this action
+	/// </summary>
+	public virtual void ExecuteAction()
 	{
-		// Reset trạng thái khi quay về Prepare phase
+		if (isActionExecuting || isActionCompleted)
+		{
+			return;
+		}
+
+		isActionExecuting = true;
+		isActionCompleted = false;
+
+		if (hasAccumulatedForce && forceAccumulator != null)
+		{
+			ExecuteAccumulatedForce();
+		}
+		else
+		{
+			MarkActionCompleted();
+		}
+	}
+
+	protected virtual void MarkActionCompleted()
+	{
+		if (isActionCompleted) return;
+
+		isActionCompleted = true;
+		isActionExecuting = false;
+
+		if (PhaseManager.Instance != null)
+		{
+			PhaseManager.Instance.OnActionCompleted(this);
+		}
+	}
+
+	/// <summary>
+	/// Check if this action is completed
+	/// </summary>
+	public virtual bool IsActionCompleted()
+	{
+		return isActionCompleted;
+	}
+
+	/// <summary>
+	/// Check if this action is currently executing
+	/// </summary>
+	public virtual bool IsActionExecuting()
+	{
+		return isActionExecuting;
+	}
+
+	/// <summary>
+	/// Reset action state for next execution
+	/// </summary>
+	protected virtual void ResetActionState()
+	{
 		hasAccumulatedForce = false;
 		accumulationFinalized = false;
+		isActionExecuting = false;
+		isActionCompleted = false;
+
 		if (forceAccumulator != null)
 		{
 			forceAccumulator.ResetForce();
 		}
 	}
 
-	public virtual void OnBattlePhaseStarted()
+	/// <summary>
+	/// Public method to reset action state when transitioning to Prepare phase
+	/// </summary>
+	public virtual void ResetForNewPhase()
 	{
-		// Tự động execute khi chuyển sang Battle phase nếu đã tích lực
-		if (hasAccumulatedForce && forceAccumulator != null)
-		{
-			ExecuteAccumulatedForce();
-		}
-	}
-
-	public virtual void OnPhaseChanged(GamePhase newPhase)
-	{
-		// Có thể thêm logic chung khi phase thay đổi
+		ResetActionState();
 	}
 
 	#endregion
@@ -245,7 +300,12 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 		// Lấy cả tổng và mảng thanh để hỗ trợ cả 2 kiểu Action
 		float totalForce = forceAccumulator.CurrentForce;
 		float[] forces = forceAccumulator.ConsumeAllBars();
-		if (totalForce <= 0f) return;
+		if (totalForce <= 0f)
+		{
+			// No force accumulated, mark as completed
+			MarkActionCompleted();
+			return;
+		}
 
 		// Execute các action đa-thanh trước
 		var multiActions = GetComponentsInChildren<IMultiForceAction>(true);
@@ -259,6 +319,12 @@ public abstract class ActionBase : MonoBehaviour, IFocusable, IGamePhaseAware
 		for (int i = 0; i < actions.Length; i++)
 		{
 			actions[i].Execute(totalForce);
+		}
+
+		// If no force actions were found, mark as completed
+		if (multiActions.Length == 0 && actions.Length == 0)
+		{
+			MarkActionCompleted();
 		}
 	}
 

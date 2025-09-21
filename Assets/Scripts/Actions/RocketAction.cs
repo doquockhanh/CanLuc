@@ -56,6 +56,9 @@ public class RocketAction : ActionBase, IForceAction
 		rb.AddForce(forward + upward, ForceMode2D.Impulse);
 		audioSource.Play();
 		cachedRenderer.material.color = Color.red * 2;
+		
+		// Mark action as completed immediately since rocket execution is instant
+		MarkActionCompleted();
 	}
 
 	protected override void Update()

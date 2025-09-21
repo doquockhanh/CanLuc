@@ -12,7 +12,6 @@ public class SimpleBattlePhaseUI : MonoBehaviour
     
     [Header("Animation Settings")]
     [SerializeField] private float blinkSpeed = 1.0f;
-    [SerializeField] private float fadeOutDuration = 2.0f;
     [SerializeField] private Color preparePhaseColor = Color.yellow;
     [SerializeField] private Color battlePhaseColor = Color.red;
     
@@ -21,7 +20,6 @@ public class SimpleBattlePhaseUI : MonoBehaviour
     
     private bool isBlinking = false;
     private Coroutine blinkCoroutine;
-    private Coroutine fadeOutCoroutine;
     
     private void Start()
     {
@@ -33,6 +31,16 @@ public class SimpleBattlePhaseUI : MonoBehaviour
         {
             GameManager.Instance.OnPhaseChanged += OnPhaseChanged;
             GameManager.Instance.OnBattlePhaseStarted += OnBattlePhaseStarted;
+            GameManager.Instance.OnPreparePhaseStarted += OnPreparePhaseStarted;
+        }
+        
+        // Đăng ký với PhaseManager events để theo dõi execution phases
+        if (PhaseManager.Instance != null)
+        {
+            PhaseManager.Instance.OnActionsExecutionStarted += OnActionsExecutionStarted;
+            PhaseManager.Instance.OnActionsExecutionCompleted += OnActionsExecutionCompleted;
+            PhaseManager.Instance.OnEnemiesExecutionStarted += OnEnemiesExecutionStarted;
+            PhaseManager.Instance.OnEnemiesExecutionCompleted += OnEnemiesExecutionCompleted;
         }
         
         // Đăng ký với ActionBase events để theo dõi khi có Focusable tích lực
@@ -63,6 +71,16 @@ public class SimpleBattlePhaseUI : MonoBehaviour
         {
             GameManager.Instance.OnPhaseChanged -= OnPhaseChanged;
             GameManager.Instance.OnBattlePhaseStarted -= OnBattlePhaseStarted;
+            GameManager.Instance.OnPreparePhaseStarted -= OnPreparePhaseStarted;
+        }
+        
+        // Hủy đăng ký PhaseManager events
+        if (PhaseManager.Instance != null)
+        {
+            PhaseManager.Instance.OnActionsExecutionStarted -= OnActionsExecutionStarted;
+            PhaseManager.Instance.OnActionsExecutionCompleted -= OnActionsExecutionCompleted;
+            PhaseManager.Instance.OnEnemiesExecutionStarted -= OnEnemiesExecutionStarted;
+            PhaseManager.Instance.OnEnemiesExecutionCompleted -= OnEnemiesExecutionCompleted;
         }
         
         // Hủy đăng ký ActionBase events
@@ -86,6 +104,9 @@ public class SimpleBattlePhaseUI : MonoBehaviour
         if (phaseStatusText == null || GameManager.Instance == null) return;
         
         GamePhase currentPhase = GameManager.Instance.GetCurrentPhase();
+        
+        // Ensure text is visible
+        phaseStatusText.gameObject.SetActive(true);
         
         switch (currentPhase)
         {
@@ -161,28 +182,6 @@ public class SimpleBattlePhaseUI : MonoBehaviour
         phaseStatusText.color = color;
     }
     
-    private IEnumerator FadeOutCoroutine()
-    {
-        if (phaseStatusText == null) yield break;
-        
-        Color originalColor = phaseStatusText.color;
-        float elapsed = 0f;
-        
-        while (elapsed < fadeOutDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / fadeOutDuration;
-            
-            Color color = originalColor;
-            color.a = Mathf.Lerp(1.0f, 0.0f, t);
-            phaseStatusText.color = color;
-            
-            yield return null;
-        }
-        
-        // Ẩn text hoàn toàn
-        phaseStatusText.gameObject.SetActive(false);
-    }
     
     private void OnStartBattleClicked()
     {
@@ -206,6 +205,12 @@ public class SimpleBattlePhaseUI : MonoBehaviour
     
     private void OnPhaseChanged(GamePhase newPhase)
     {
+        // Ensure phase status text is visible when phase changes
+        if (phaseStatusText != null)
+        {
+            phaseStatusText.gameObject.SetActive(true);
+        }
+        
         UpdatePhaseDisplay();
         UpdateButtonVisibility();
     }
@@ -219,12 +224,53 @@ public class SimpleBattlePhaseUI : MonoBehaviour
     
     private void OnBattlePhaseStarted()
     {
-        // Bắt đầu fade out effect
-        if (fadeOutCoroutine != null)
+        // Don't fade out completely, just update the display
+        // The phase display will be updated by OnPhaseChanged
+        UpdatePhaseDisplay();
+    }
+    
+    private void OnPreparePhaseStarted()
+    {
+        // Reset UI state when returning to prepare phase
+        UpdatePhaseDisplay();
+        UpdateButtonVisibility();
+    }
+    
+    private void OnActionsExecutionStarted()
+    {
+        if (phaseStatusText != null)
         {
-            StopCoroutine(fadeOutCoroutine);
+            phaseStatusText.text = "Thực thi hành động...";
+            phaseStatusText.color = Color.cyan;
+            StopBlinking();
         }
-        fadeOutCoroutine = StartCoroutine(FadeOutCoroutine());
+    }
+    
+    private void OnActionsExecutionCompleted()
+    {
+        if (phaseStatusText != null)
+        {
+            phaseStatusText.text = "Hành động hoàn thành";
+            phaseStatusText.color = Color.green;
+        }
+    }
+    
+    private void OnEnemiesExecutionStarted()
+    {
+        if (phaseStatusText != null)
+        {
+            phaseStatusText.text = "Kẻ thù di chuyển...";
+            phaseStatusText.color = Color.red;
+        }
+    }
+    
+    private void OnEnemiesExecutionCompleted()
+    {
+        if (phaseStatusText != null)
+        {
+            phaseStatusText.text = "Kẻ thù hoàn thành";
+            phaseStatusText.color = Color.magenta;
+        }
     }
     
     private void UpdateButtonVisibility()
@@ -234,11 +280,23 @@ public class SimpleBattlePhaseUI : MonoBehaviour
         // Button chỉ hiện khi:
         // 1. Đang ở Prepare Phase
         // 2. Có ít nhất 1 Focusable đã tích lực
+        // 3. Không đang trong quá trình execution
         bool shouldShow = GameManager.Instance != null && 
                          GameManager.Instance.IsInPreparePhase() && 
-                         CheckIfAnyFocusableHasForce();
-        
+                         CheckIfAnyFocusableHasForce() &&
+                         !IsCurrentlyExecuting();
+              
         startBattleButton.gameObject.SetActive(shouldShow);
+    }
+    
+    private bool IsCurrentlyExecuting()
+    {
+        // Check if PhaseManager is currently executing actions or enemies
+        if (PhaseManager.Instance != null)
+        {
+            return PhaseManager.Instance.IsExecutingActions() || PhaseManager.Instance.IsExecutingEnemies();
+        }
+        return false;
     }
     
     private bool CheckIfAnyFocusableHasForce()

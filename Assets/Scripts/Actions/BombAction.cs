@@ -48,6 +48,9 @@ public class BombAction : ActionBase, IForceAction
 		{
 			Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 		}
+		
+		// Mark action as completed before destruction
+		MarkActionCompleted();
 		Destroy(gameObject);
 	}
 }

@@ -30,7 +30,7 @@ public class Cannon : ActionBase, IMultiForceAction
     private Coroutine currentExecution;
     private float bulletForce = 0f; // Lưu trữ lực bắn từ thanh 1
     private float delayForce = 0f; // Lưu trữ lực delay từ thanh 2
-    
+
     // Bullet tracking
     private List<GameObject> activeBullets = new List<GameObject>();
     private Coroutine bulletTrackingCoroutine;
@@ -59,8 +59,16 @@ public class Cannon : ActionBase, IMultiForceAction
 
     public void Execute(float[] forces)
     {
-        if (forces == null || forces.Length < 2 || bullet == null || isExecuting) return;
-        if (forces[0] <= 0f && forces[1] <= 0f) return;
+        if (forces == null || forces.Length < 2 || bullet == null || isExecuting)
+        {
+            MarkActionCompleted();
+            return;
+        }
+        if (forces[0] <= 0f)
+        {
+            MarkActionCompleted();
+            return;
+        }
 
         // Lưu trữ lực từ 2 thanh
         bulletForce = forces[0];
@@ -76,6 +84,27 @@ public class Cannon : ActionBase, IMultiForceAction
         currentExecution = StartCoroutine(ExecuteCannon());
     }
 
+    public override void ResetForNewPhase()
+    {
+        base.ResetForNewPhase();
+
+        // Reset Cannon-specific variables
+        isExecuting = false;
+        isCharging = false;
+        bulletForce = 0f;
+        delayForce = 0f;
+
+        // Clear bullet tracking list
+        activeBullets.Clear();
+
+        // Stop any running coroutine
+        if (currentExecution != null)
+        {
+            StopCoroutine(currentExecution);
+            currentExecution = null;
+        }
+    }
+
     private IEnumerator ExecuteCannon()
     {
         isExecuting = true;
@@ -88,6 +117,17 @@ public class Cannon : ActionBase, IMultiForceAction
 
         // Bắt đầu firing phase với lực từ thanh 1
         yield return StartCoroutine(FiringPhase());
+
+        // Start tracking bullets for completion
+        if (activeBullets.Count > 0)
+        {
+            StartCoroutine(TrackBulletsForCompletion());
+        }
+        else
+        {
+            // No bullets fired, mark as completed immediately
+            MarkActionCompleted();
+        }
 
         isExecuting = false;
         currentExecution = null;
@@ -127,6 +167,21 @@ public class Cannon : ActionBase, IMultiForceAction
         }
     }
 
+    private IEnumerator TrackBulletsForCompletion()
+    {
+        // Wait until all bullets are destroyed
+        while (activeBullets.Count > 0)
+        {
+            // Remove null references (destroyed bullets)
+            activeBullets.RemoveAll(bullet => bullet == null);
+            
+            yield return new WaitForSeconds(0.1f); // Check every 0.1 seconds
+        }
+        
+        // All bullets destroyed, mark action as completed
+        MarkActionCompleted();
+    }
+
     private void FireBullet()
     {
         if (bullet == null) return;
@@ -135,6 +190,9 @@ public class Cannon : ActionBase, IMultiForceAction
 
         // Tạo bullet
         GameObject bulletInstance = Instantiate(bullet, firePoint.transform.position, transform.rotation);
+
+        // Add bullet to tracking list
+        activeBullets.Add(bulletInstance);
 
         // Thiết lập velocity cho bullet dựa trên lực từ thanh 1
         Rigidbody2D bulletRb = bulletInstance.GetComponent<Rigidbody2D>();

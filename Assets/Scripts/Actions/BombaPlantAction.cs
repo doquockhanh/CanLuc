@@ -39,6 +39,11 @@ public class BombaPlantAction : ActionBase, IMultiForceAction
         {
             StartCoroutine(DelayedActivate(wait));
         }
+        else
+        {
+            // If no bomb to activate, mark as completed immediately
+            MarkActionCompleted();
+        }
     }
 
     private System.Collections.IEnumerator DelayedActivate(float seconds)
@@ -48,6 +53,9 @@ public class BombaPlantAction : ActionBase, IMultiForceAction
             yield return new WaitForSeconds(seconds);
         }
         Instantiate(Bom, transform.position, transform.rotation);
+        
+        // Mark action as completed after bomb is planted
+        MarkActionCompleted();
     }
 }
 

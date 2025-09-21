@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class AircraftController : EnemyBase, IGamePhaseAware
+public class AircraftController : EnemyBase
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveDuration = 2f;
     [SerializeField] private Vector3 moveDirection = Vector3.right; // Di chuyển về phía phải (trục X)
     [SerializeField] private bool normalizeDirection = true;
 
@@ -33,24 +34,13 @@ public class AircraftController : EnemyBase, IGamePhaseAware
             normalizedMoveDirection = moveDirection;
         }
 
-        // Tự động đăng ký với GameManager
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.RegisterGamePhaseAwareComponent(this);
-        }
+        // Registration is now handled by EnemyBase.Awake()
 
         // Kiểm tra phase hiện tại và thiết lập trạng thái di chuyển
         CheckCurrentPhaseAndSetMovement();
     }
 
-    private void OnDestroy()
-    {
-        // Hủy đăng ký khi component bị destroy
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.UnregisterGamePhaseAwareComponent(this);
-        }
-    }
+    // OnDestroy is now handled by EnemyBase
 
     private void Update()
     {
@@ -83,39 +73,40 @@ public class AircraftController : EnemyBase, IGamePhaseAware
         isMoving = false;
     }
 
-    #region IGamePhaseAware Implementation
+    #region Enemy Execution Override
 
-    public virtual void OnPreparePhaseStarted()
+    protected override void OnEnemyExecuted()
     {
-
-        // Dừng di chuyển khi vào prepare phase
-        if (stopInPreparePhase)
-        {
-            StopMoving();
-        }
-    }
-
-    public virtual void OnBattlePhaseStarted()
-    {
-
-        // Bắt đầu di chuyển khi vào battle phase
+        // Start moving when enemy execution begins
         if (moveInBattlePhase)
         {
             StartMoving();
         }
+
+        // For aircraft, we consider movement as the main action
+        // Mark as completed after a certain time or distance
+        StartCoroutine(CompleteAfterMovement());
     }
 
-    public void OnPhaseChanged(GamePhase newPhase)
+    public override void ResetForNewPhase()
     {
+        base.ResetForNewPhase();
 
-        // Xử lý logic chung khi phase thay đổi
-        switch (newPhase)
+        // Reset Aircraft-specific state
+        StopMoving();
+    }
+
+    private System.Collections.IEnumerator CompleteAfterMovement()
+    {
+        yield return new WaitForSeconds(moveDuration);
+
+        // Stop moving and mark as completed
+        if (stopInPreparePhase)
         {
-            case GamePhase.Prepare:
-                break;
-            case GamePhase.Battle:
-                break;
+            StopMoving();
         }
+
+        MarkEnemyCompleted();
     }
 
     #endregion
