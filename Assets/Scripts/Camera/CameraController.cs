@@ -114,7 +114,7 @@ public class CameraController : MonoBehaviour, ICameraController, IGamePhaseAwar
 
     private void ApplyNormalCameraMode()
     {
-        // Normal mode: camera stays at normal size, no special behavior
+        // Normal mode: camera zooms in to normal size for better action setup
         currentCameraMode = CameraMode.Normal;
         if (pixelPerfectCamera != null)
         {
@@ -167,12 +167,12 @@ public class CameraController : MonoBehaviour, ICameraController, IGamePhaseAwar
 
     public void OnPreparePhaseStarted()
     {
-        ApplyCurrentCameraSettings();
+        ApplyNormalCameraMode();
     }
 
     public void OnBattlePhaseStarted()
     {
-        ApplyCurrentCameraSettings();
+       ApplyCurrentCameraSettings();
     }
 
     public void OnPhaseChanged(GamePhase newPhase)

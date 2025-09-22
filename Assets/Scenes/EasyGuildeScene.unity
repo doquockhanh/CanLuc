@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3185424269880619787, guid: 38d8a031b2dfbe943a3a0b2b53ef22da, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4052988570513347967, guid: 38d8a031b2dfbe943a3a0b2b53ef22da, type: 3}
       propertyPath: bulletsPerBurst
@@ -8041,7 +8041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3185424269880619787, guid: 38d8a031b2dfbe943a3a0b2b53ef22da, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4052988570513347967, guid: 38d8a031b2dfbe943a3a0b2b53ef22da, type: 3}
       propertyPath: bulletsPerBurst

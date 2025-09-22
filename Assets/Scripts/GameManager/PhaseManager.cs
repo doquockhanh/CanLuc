@@ -157,6 +157,16 @@ public class PhaseManager : MonoBehaviour
         if (enemy != null && !registeredEnemies.Contains(enemy))
         {
             registeredEnemies.Add(enemy);
+            
+            // If we're currently executing enemies phase, execute the newly registered enemy immediately
+            if (isExecutingEnemies)
+            {
+                Debug.Log($"[PhaseManager] New enemy registered during execution phase: {enemy.gameObject.name}");
+                if (enemy.gameObject.activeInHierarchy)
+                {
+                    enemy.ExecuteEnemy();
+                }
+            }
         }
     }
 

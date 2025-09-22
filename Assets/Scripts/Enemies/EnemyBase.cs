@@ -114,5 +114,7 @@ public enum EnemyType
     A7,
     B52,
     Balloon,
-    F4
+    F4,
+    PumpingKing,
+    MiniBom,
 }
