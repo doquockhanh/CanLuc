@@ -1,0 +1,39 @@
+# User Rules
+
+## File Creation Rules
+- KHÔNG tự động tạo file demo, test, doc, setup nếu không được yêu cầu
+- Chỉ tạo những file mà user yêu cầu cụ thể
+- Không được tự ý tạo thêm file demo, test, documentation hoặc setup scripts mà user không hỏi
+
+## Language Rules
+- Luôn trả lời bằng Tiếng Việt
+
+## Workflow Rules
+- Luôn đọc và tuân thủ các rules trong file này
+- Kiểm tra rules trước khi tạo bất kỳ file nào
+
+## Core Workflows
+
+### Plan Mode
+```mermaid
+flowchart TD
+    Start[Start] --> ReadFiles[Read Memory Bank]
+    ReadFiles --> CheckFiles{Files Complete?}
+    
+    CheckFiles -->|No| Plan[Create Plan]
+    Plan --> Document[Document in Chat]
+    
+    CheckFiles -->|Yes| Verify[Verify Context]
+    Verify --> Strategy[Develop Strategy]
+    Strategy --> Present[Present Approach]
+```
+
+### Act Mode
+```mermaid
+flowchart TD
+    Start[Start] --> Context[Check Memory Bank]
+    Context --> Update[Update Documentation]
+    Update --> Rules[Update .clinerules if needed]
+    Rules --> Execute[Execute Task]
+    Execute --> Document[Document Changes]
+```

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 8414953573888700192}
   - component: {fileID: 1122307810851904916}
   - component: {fileID: -1637131753666682939}
+  - component: {fileID: -2404977022273115006}
+  - component: {fileID: -7798045257720175271}
   m_Layer: 6
   m_Name: BiNgo
   m_TagString: Enemy
@@ -259,3 +261,35 @@ MonoBehaviour:
   smoothTime: 0.3
   hideWhenFullHealth: 1
   hideWhenDead: 1
+--- !u!114 &-2404977022273115006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719441283544168044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a793b02544a86a42a7bcefac3ce88cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  currentHealth: 0
+  isDestroyed: 0
+  enableLogging: 0
+--- !u!114 &-7798045257720175271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719441283544168044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192c97e02f935c548889a19d0ecb7ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  responses:
+  - "\u0110au \u0111\xF3 nh\xF3c"
+  - Gruuuurrrr
+  lastWarn: "Anh c\xF3 th\u1EC3 cho em gi\u1EA3ng h\xF2a kh\xF4ng"

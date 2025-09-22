@@ -26,7 +26,7 @@ public class FinishObstacle : MonoBehaviour
             var damageable = other.gameObject.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.TakeDamage(int.MaxValue, gameObject);
+                damageable.TakeDamage(int.MaxValue, null);
             }
             else
             {

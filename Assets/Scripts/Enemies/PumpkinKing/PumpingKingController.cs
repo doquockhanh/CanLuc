@@ -42,7 +42,7 @@ public class PumpingKingController : EnemyBase
     private int shieldUsesThisPhase = 0; // Số lần đã dùng shield trong phase này
     private int spawnChildUsesThisPhase = 0; // Số lần đã dùng spawn child trong phase này
     private bool isWaitingForProjectile = false; // Đang chờ projectile kết thúc
-    
+
     // Skill queue system for UI preview
     private List<int> skillQueue = new List<int>(); // Queue các skill sẽ thực hiện (để UI preview)
     private int currentSkillIndex = 0; // Index của skill hiện tại trong queue
@@ -90,11 +90,11 @@ public class PumpingKingController : EnemyBase
         isWaitingForProjectile = false; // Reset trạng thái chờ projectile
         shieldUsesThisPhase = 0; // Reset số lần dùng shield
         spawnChildUsesThisPhase = 0; // Reset số lần dùng spawn child
-        
+
         // Reset skill queue
         skillQueue.Clear();
         currentSkillIndex = 0;
-        
+
         // Không cần hồi năng lượng ở đây nữa vì đã hồi trong OnEnemyExecuted
     }
 
@@ -182,7 +182,7 @@ public class PumpingKingController : EnemyBase
                 availableSkills.Add(0);
                 weights.Add(spawnChildWeight);
             }
-            
+
             // Kỹ năng 1: Move (luôn có)
             availableSkills.Add(1);
             weights.Add(moveWeight);
@@ -405,7 +405,13 @@ public class PumpingKingController : EnemyBase
 
         // Chờ đến khi projectile kết thúc (va chạm hoặc bị hủy)
         yield return new WaitUntil(() => !isWaitingForProjectile);
-        
+
+        if (Random.Range(0, 3) <= 1)
+        {
+            if (GameWorldOpenChat.Instance != null)
+                GameWorldOpenChat.Instance.WriteChat(transform, "Anh em tao đông");
+        }
+
         Debug.Log($"[{gameObject.name}] Spawn Child Skill completed - projectile finished");
     }
 
@@ -433,6 +439,12 @@ public class PumpingKingController : EnemyBase
 
         // Di chuyển shield lên trên
         yield return StartCoroutine(MoveShieldUp(shield));
+
+        if (Random.Range(0, 3) <= 1)
+        {
+            if (GameWorldOpenChat.Instance != null)
+                GameWorldOpenChat.Instance.WriteChat(transform, "Tao có khiên");
+        }
 
         // Chờ một khoảng thời gian ngắn
         yield return new WaitForSeconds(0.3f);
@@ -491,18 +503,18 @@ public class PumpingKingController : EnemyBase
         {
             GameObject childEnemy = Instantiate(childEnemyPrefab, hitPosition + Vector3.up * 2f, Quaternion.identity);
         }
-        
+
         // Kết thúc chờ projectile
         isWaitingForProjectile = false;
     }
-    
+
     /// <summary>
     /// Được gọi khi projectile bị hủy (hết thời gian sống)
     /// </summary>
     private void OnProjectileDestroyed()
     {
         Debug.Log($"[{gameObject.name}] Projectile destroyed without hitting target");
-        
+
         // Kết thúc chờ projectile
         isWaitingForProjectile = false;
     }
