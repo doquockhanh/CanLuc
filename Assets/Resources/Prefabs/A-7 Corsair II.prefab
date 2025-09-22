@@ -127,7 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eee125873d069a4e8d35f5b87c5af92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   moveSpeed: 15
+  moveDuration: 2
   moveDirection: {x: -1, y: 0, z: 0}
   normalizeDirection: 1
   stopInPreparePhase: 1
@@ -195,8 +197,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   currentHealth: 0
+  damage: 1
   scoreValue: 100
   isDestroyed: 0
+  showHpBar: 0
   enableLogging: 0
 --- !u!114 &-4761598521971560753
 MonoBehaviour:

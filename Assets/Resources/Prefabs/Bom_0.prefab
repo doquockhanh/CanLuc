@@ -108,6 +108,7 @@ MonoBehaviour:
   damage: 1
   scoreValue: 50
   isDestroyed: 0
+  showHpBar: 0
   enableLogging: 0
 --- !u!50 &1007225146996590494
 Rigidbody2D:
@@ -150,8 +151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 5
   moveDirection: {x: -1, y: 0, z: 0}
-  moveDistance: 10
+  moveDistance: 20
   moveSpeed: 4
+  maxPhaseLive: 3
   explosionEffectPrefab: {fileID: 0}
   explosionRadius: 1.5
   explosionDelay: 0.5

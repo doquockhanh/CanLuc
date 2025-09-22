@@ -107,7 +107,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2134929741
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 6107748621462988182, guid: f882f3fa055535e4d9c40aa92259fc9f, type: 3}
   m_Color: {r: 0.8627451, g: 0.8627451, b: 0.8627451, a: 1}
   m_FlipX: 0
@@ -202,7 +202,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2134929741
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2600469233275878351, guid: f882f3fa055535e4d9c40aa92259fc9f, type: 3}
   m_Color: {r: 0.8627451, g: 0.8627451, b: 0.8627451, a: 1}
   m_FlipX: 0
@@ -351,7 +351,7 @@ MonoBehaviour:
   accumulateKey: 32
   canAccumulateForce: 1
   moveSpeed: 5
-  maxMovePower: 5
+  maxMovePower: 4
   gunBarrel: {fileID: 2291606668701755898}
   rotationSpeed: 90
   maxRotationAngle: 90

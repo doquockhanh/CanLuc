@@ -22,7 +22,7 @@ public class KillPumpkinKingMission : MissionBase
         EnemyStats enemyStats = targetPumpkinKing.GetComponent<EnemyStats>();
         if (enemyStats != null)
         {
-            enemyStats.OnDestroyed += OnPumpkinKingDestroyed;
+            enemyStats.OnDestroyedByAction += OnPumpkinKingDestroyed;
         }
     }
 

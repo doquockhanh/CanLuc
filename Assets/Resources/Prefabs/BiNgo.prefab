@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 350389017758381593}
   - component: {fileID: 8414953573888700192}
   - component: {fileID: 1122307810851904916}
+  - component: {fileID: -1637131753666682939}
   m_Layer: 6
   m_Name: BiNgo
   m_TagString: Enemy
@@ -120,10 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c56aa02e6fdb54989230be66b164d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 10
   currentHealth: 0
+  damage: 1
   scoreValue: 100
   isDestroyed: 0
+  showHpBar: 1
   enableLogging: 0
 --- !u!61 &350389017758381593
 BoxCollider2D:
@@ -214,7 +217,7 @@ MonoBehaviour:
   currentEnergy: 0
   maxEnergy: 3
   moveDirection: {x: -1, y: 0, z: 0}
-  moveDistance: 5
+  moveDistance: 10
   projectilePrefab: {fileID: 1441041449258860593, guid: ffd5fb4ae1635e048bf7d92d0bfc6487, type: 3}
   childEnemyPrefab: {fileID: 8364012910977805534, guid: fe3b229e878ee43428793642da45e8d7, type: 3}
   shieldPrefab: {fileID: 285519214278290959, guid: 3df8962f1f7cb0949a8d1def3a710fa1, type: 3}
@@ -233,3 +236,26 @@ MonoBehaviour:
   shieldWeight: 1
   shieldMaxUsesPerPhase: 1
   spawnChildMaxUsesPerPhase: 1
+--- !u!114 &-1637131753666682939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719441283544168044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93326b40c46fe3645bbd0a3a0656d0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showHpBar: 1
+  offset: {x: 0, y: 4, z: 0}
+  barWidth: 10
+  barHeight: 1
+  backgroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.8}
+  healthColor: {r: 0, g: 1, b: 0.08230424, a: 1}
+  lowHealthColor: {r: 1, g: 0.04787142, b: 0, a: 1}
+  lowHealthThreshold: 0.4
+  smoothTime: 0.3
+  hideWhenFullHealth: 1
+  hideWhenDead: 1

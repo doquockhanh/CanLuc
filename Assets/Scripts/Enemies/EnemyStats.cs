@@ -9,12 +9,16 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField] protected int scoreValue = 100; // Điểm khi bị phá hủy
     [SerializeField] protected bool isDestroyed = false;
 
+    [Header("HP Bar Settings")]
+    [SerializeField] protected bool showHpBar = false;
+    
     [Header("Debug Settings")]
     [SerializeField] protected bool enableLogging = false;
 
     // Events
     public System.Action<int, GameObject> OnDamageTaken { get; set; }
     public System.Action<GameObject> OnDestroyed { get; set; }
+    public System.Action<GameObject> OnDestroyedByAction { get; set; }
 
     // Properties
     public bool IsAlive => !isDestroyed && currentHealth > 0;
@@ -23,10 +27,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public int Damage => damage;
     public int ScoreValue => scoreValue;
     public bool IsDestroyed => isDestroyed;
+    public bool ShowHpBar => showHpBar;
 
     protected virtual void Start()
     {
         InitializeHealth();
+        InitializeHpBar();
     }
 
     protected virtual void InitializeHealth()
@@ -75,6 +81,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         // Cộng điểm cho màn chơi (trừ khi nguồn hủy là NoScoreKillSource)
         if (ShouldAwardScore(destroyer))
         {
+            OnDestroyedByAction?.Invoke(destroyer);
             EnemyType enemyType = GetComponent<EnemyBase>().GetEnemyType();
             ScoreManager.Instance.AddKillAndScore(enemyType, ScoreValue);
         }
@@ -184,6 +191,81 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         if (maxHealth <= 0) return 0f;
         return (float)currentHealth / maxHealth;
+    }
+    
+    /// <summary>
+    /// Khởi tạo HP Bar nếu được bật
+    /// </summary>
+    protected virtual void InitializeHpBar()
+    {
+        if (showHpBar)
+        {
+            // Kiểm tra xem đã có EnemyHpBarController chưa
+            var hpBarController = GetComponent(System.Type.GetType("EnemyHpBarController"));
+            if (hpBarController == null)
+            {
+                // Tự động thêm component nếu chưa có
+                hpBarController = gameObject.AddComponent(System.Type.GetType("EnemyHpBarController"));
+            }
+            
+            // Cập nhật HP Bar ngay lập tức sau khi khởi tạo
+            if (hpBarController != null)
+            {
+                var updateMethod = hpBarController.GetType().GetMethod("UpdateHpBarImmediately");
+                updateMethod?.Invoke(hpBarController, null);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Bật/tắt hiển thị HP Bar
+    /// </summary>
+    public virtual void SetShowHpBar(bool show)
+    {
+        showHpBar = show;
+        
+        var hpBarController = GetComponent(System.Type.GetType("EnemyHpBarController"));
+        if (hpBarController != null)
+        {
+            // Sử dụng reflection để gọi method
+            var method = hpBarController.GetType().GetMethod("SetShowHpBar");
+            method?.Invoke(hpBarController, new object[] { show });
+            
+            // Cập nhật HP Bar ngay lập tức
+            var updateMethod = hpBarController.GetType().GetMethod("UpdateHpBarImmediately");
+            updateMethod?.Invoke(hpBarController, null);
+        }
+        else if (show)
+        {
+            // Tự động thêm component nếu chưa có và muốn bật
+            hpBarController = gameObject.AddComponent(System.Type.GetType("EnemyHpBarController"));
+        }
+    }
+    
+    /// <summary>
+    /// Cập nhật offset vị trí HP Bar
+    /// </summary>
+    public virtual void SetHpBarOffset(Vector3 offset)
+    {
+        var hpBarController = GetComponent(System.Type.GetType("EnemyHpBarController"));
+        if (hpBarController != null)
+        {
+            var method = hpBarController.GetType().GetMethod("SetHpBarOffset");
+            method?.Invoke(hpBarController, new object[] { offset });
+        }
+    }
+    
+    /// <summary>
+    /// Cập nhật kích thước HP Bar
+    /// </summary>
+    public virtual void SetHpBarSize(float width, float height)
+    {
+        var hpBarController = GetComponent(System.Type.GetType("EnemyHpBarController"));
+        if (hpBarController != null)
+        {
+            var method = hpBarController.GetType().GetMethod("SetHpBarSize");
+            method?.Invoke(hpBarController, new object[] { width, height });
+        }
     }
 }
 
