@@ -8687,6 +8687,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 270968838}
     m_Modifications:
+    - target: {fileID: -1637131753666682939, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+      propertyPath: healthColor.b
+      value: 0.08230424
+      objectReference: {fileID: 0}
+    - target: {fileID: -1637131753666682939, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+      propertyPath: lowHealthColor.g
+      value: 0.04787142
+      objectReference: {fileID: 0}
+    - target: {fileID: -1637131753666682939, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+      propertyPath: hideWhenFullHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1637131753666682939, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+      propertyPath: lowHealthThreshold
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1122307810851904916, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+      propertyPath: maxEnergy
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1122307810851904916, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
       propertyPath: spawnChildWeight
       value: 1
@@ -8734,6 +8754,10 @@ PrefabInstance:
     - target: {fileID: 2719441283544168044, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
       propertyPath: m_Name
       value: BiNgo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7481456327582301702, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+      propertyPath: maxHealth
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

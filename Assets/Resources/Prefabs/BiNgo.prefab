@@ -231,7 +231,7 @@ MonoBehaviour:
   shieldMaxHeight: 5
   audioSource: {fileID: 0}
   skillSound: {fileID: 0}
-  spawnChildWeight: 10
+  spawnChildWeight: 1
   moveWeight: 2
   shieldWeight: 1
   shieldMaxUsesPerPhase: 1
