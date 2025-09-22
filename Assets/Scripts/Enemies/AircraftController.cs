@@ -71,6 +71,10 @@ public class AircraftController : EnemyBase
     public void StopMoving()
     {
         isMoving = false;
+        if (turnOnSound)
+        {
+            audioSource.Stop();
+        }
     }
 
     #region Enemy Execution Override

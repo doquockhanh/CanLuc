@@ -33,7 +33,6 @@ public class Cannon : ActionBase, IMultiForceAction
 
     // Bullet tracking
     private List<GameObject> activeBullets = new List<GameObject>();
-    private Coroutine bulletTrackingCoroutine;
 
     // IMultiForceAction implementation
     public int ForceBarCount => 2;
