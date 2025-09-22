@@ -58,6 +58,39 @@ public class MissionManager : MonoBehaviour
 		}
 		return true;
 	}
+
+	/// <summary>
+	/// Lấy danh sách tất cả nhiệm vụ trong scene
+	/// </summary>
+	public List<MissionBase> GetAllMissions()
+	{
+		return new List<MissionBase>(sceneMissions);
+	}
+
+	/// <summary>
+	/// Lấy số lượng nhiệm vụ đã hoàn thành
+	/// </summary>
+	public int GetCompletedMissionsCount()
+	{
+		int completed = 0;
+		for (int i = 0; i < sceneMissions.Count; i++)
+		{
+			var mission = sceneMissions[i];
+			if (mission != null && mission.IsDone())
+			{
+				completed++;
+			}
+		}
+		return completed;
+	}
+
+	/// <summary>
+	/// Lấy tổng số nhiệm vụ
+	/// </summary>
+	public int GetTotalMissionsCount()
+	{
+		return sceneMissions.Count;
+	}
 }
 
 

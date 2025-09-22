@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2844477913358608146}
   - component: {fileID: 30310829460098384}
   - component: {fileID: -5206500990067263872}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HaoNam's Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,11 +219,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d720be15358e7948bad33b7585bb55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 1
+  lifetime: 5
   damage: 1
   targetLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
 --- !u!50 &30310829460098384
 Rigidbody2D:
   serializedVersion: 5

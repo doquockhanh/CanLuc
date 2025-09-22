@@ -43,6 +43,9 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
 
         // Xử lý xoay súng S/W
         HandleGunRotation();
+        
+        // Xử lý flip Q/E (không cần movePower)
+        HandleFacing();
     }
 
     private void HandleMovement()
@@ -61,24 +64,14 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
             horizontalInput = 1f;
         }
 
-        if (horizontalInput != 0 && currentMovePower >= 1f)
+        if (horizontalInput != 0 && currentMovePower > 0f)
         {
-            // Di chuyển
+            // Di chuyển với tốc độ cố định
             transform.Translate(Vector3.right * horizontalInput * moveSpeed * Time.deltaTime);
 
-            // Tiêu hao sức mạnh (cố định = 1)
+            // Tiêu hao sức mạnh cố định
             currentMovePower -= 1f * Time.deltaTime;
             currentMovePower = Mathf.Max(0, currentMovePower);
-
-            // Flip action theo hướng di chuyển
-            if (horizontalInput > 0 && !isFacingRight)
-            {
-                FlipAction(true);
-            }
-            else if (horizontalInput < 0 && isFacingRight)
-            {
-                FlipAction(false);
-            }
         }
     }
 
@@ -106,6 +99,19 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
 
             // Áp dụng xoay cho nòng súng
             gunBarrel.rotation = Quaternion.Euler(0, 0, currentGunRotation);
+        }
+    }
+
+    private void HandleFacing()
+    {
+        // Q/E để flip hướng (không cần movePower)
+        if (Input.GetKeyDown(KeyCode.A) && isFacingRight)
+        {
+            FlipAction(false); // Quay trái
+        }
+        else if (Input.GetKeyDown(KeyCode.D) && !isFacingRight)
+        {
+            FlipAction(true); // Quay phải
         }
     }
 
@@ -160,7 +166,8 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
             {
                 float calculatedSpeed = baseBulletSpeed + (force * forceToSpeedMultiplier);
                 float randomForce = calculatedSpeed + Random.Range(-(calculatedSpeed * 10 / 100), calculatedSpeed * 10 / 100);
-                bulletRb.AddForce(bullet.transform.right * randomForce, ForceMode2D.Impulse);
+                Vector3 direction = isFacingRight ? bullet.transform.right : -bullet.transform.right;
+                bulletRb.AddForce(direction * randomForce, ForceMode2D.Impulse);
             }
         }
 

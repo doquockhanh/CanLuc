@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2728875476458266801}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2291606668701755898}
   - component: {fileID: 6286789357465707412}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2134929741
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 6107748621462988182, guid: f882f3fa055535e4d9c40aa92259fc9f, type: 3}
   m_Color: {r: 0.8627451, g: 0.8627451, b: 0.8627451, a: 1}
   m_FlipX: 0
@@ -135,7 +135,8 @@ GameObject:
   - component: {fileID: 4517888507652171308}
   - component: {fileID: 7710859201539064206}
   - component: {fileID: 3228770002807597702}
-  m_Layer: 0
+  - component: {fileID: 8692597043198212909}
+  m_Layer: 3
   m_Name: HaoNam_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +351,7 @@ MonoBehaviour:
   accumulateKey: 32
   canAccumulateForce: 1
   moveSpeed: 5
-  maxMovePower: 10
+  maxMovePower: 5
   gunBarrel: {fileID: 2291606668701755898}
   rotationSpeed: 90
   maxRotationAngle: 90
@@ -359,6 +360,22 @@ MonoBehaviour:
   - {fileID: 2728875476458266801}
   - {fileID: 2728875476458266801}
   - {fileID: 2728875476458266801}
-  bulletSpreadAngle: 7
+  bulletSpreadAngle: 15
   baseBulletSpeed: 10
   forceToSpeedMultiplier: 0.2
+--- !u!114 &8692597043198212909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219497874469006699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a793b02544a86a42a7bcefac3ce88cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  currentHealth: 0
+  isDestroyed: 0
+  enableLogging: 0

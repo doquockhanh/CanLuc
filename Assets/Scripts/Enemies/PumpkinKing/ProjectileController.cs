@@ -37,18 +37,10 @@ public class ProjectileController : MonoBehaviour
         onHitCallback = hitCallback;
         onDestroyCallback = destroyCallback;
         isInitialized = true;
-        
-        // Xoay projectile theo hướng di chuyển
-        if (direction != Vector3.zero)
-        {
-            transform.rotation = Quaternion.LookRotation(direction);
-        }
     }
     
     private void OnHitGround(Vector3 hitPosition)
-    {
-        Debug.Log($"[{gameObject.name}] Hit ground at position: {hitPosition}");
-        
+    { 
         // Gọi callback để thông báo va chạm
         onHitCallback?.Invoke(hitPosition);
         

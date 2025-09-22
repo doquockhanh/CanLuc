@@ -65,16 +65,26 @@ public class MoveBarUI : MonoBehaviour
     {
         observedMoveAction = moveAction;
         RebuildBar();
+        UpdateVisibility(observedMoveAction != null);
+    }
+    
+    private void UpdateVisibility(bool visible)
+    {
+        if (barInstance != null)
+        {
+            barInstance.SetActive(visible);
+        }
     }
     
     private void RebuildBar()
     {
-        // Clear children
-        for (int i = barContainer.childCount - 1; i >= 0; i--)
+        // Chỉ xóa thanh của riêng mình, không xóa tất cả children
+        if (barInstance != null)
         {
-            var child = barContainer.GetChild(i);
-            child?.SetParent(null);
-            Destroy(child.gameObject);
+            barInstance.transform.SetParent(null);
+            Destroy(barInstance);
+            barInstance = null;
+            barFill = null;
         }
         
         if (observedMoveAction == null || barTemplatePrefab == null || barContainer == null)

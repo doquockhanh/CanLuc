@@ -7,11 +7,13 @@ public class MiniBomController : EnemyBase
     [SerializeField] private Vector3 moveDirection = Vector3.right; // Hướng di chuyển
     [SerializeField] private float moveDistance = 2f; // Khoảng cách di chuyển
     [SerializeField] private float moveSpeed = 3f; // Tốc độ di chuyển
+    public int maxPhaseLive = 3;
+    private int phaseCount = 0;
 
     [Header("Explosion Settings")]
     [SerializeField] private GameObject explosionEffectPrefab; // Effect phát nổ
     [SerializeField] private float explosionRadius = 1.5f; // Bán kính vụ nổ
-    [SerializeField] private int explosionDamage = 1; // Sát thương vụ nổ (tạm thời)
+    [SerializeField] private float explosionDelay = 0.5f; // Delay trước khi nổ
     [SerializeField] private LayerMask actionLayerMask = 1; // Layer của Action
 
     [Header("Audio")]
@@ -21,10 +23,18 @@ public class MiniBomController : EnemyBase
     private bool hasMoved = false; // Đã di chuyển chưa
     private bool isMoving = false; // Đang di chuyển
     private Vector3 startPosition; // Vị trí bắt đầu
+    private bool isFacingRight = true;
+    private EnemyStats enemyStats; // Reference đến EnemyStats để lấy damage
 
     protected override void Awake()
     {
         base.Awake(); // Đăng ký với PhaseManager
+        Vector3 scale = transform.localScale;
+        scale.x = moveDirection == Vector3.right ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+        transform.localScale = scale;
+
+        // Lấy reference đến EnemyStats
+        enemyStats = GetComponent<EnemyStats>();
     }
 
     #region Enemy Execution Override
@@ -34,7 +44,6 @@ public class MiniBomController : EnemyBase
         // Lần đầu tiên được tạo ra: không làm gì cả
         if (!hasMoved)
         {
-            Debug.Log($"[{gameObject.name}] Child enemy spawned, waiting for next phase");
             MarkEnemyCompleted();
             return;
         }
@@ -42,9 +51,10 @@ public class MiniBomController : EnemyBase
         // Các phase tiếp theo: di chuyển
         if (!isMoving)
         {
-            StartCoroutine(MoveToTarget());
+            StartCoroutine(Move());
         }
     }
+
 
     public override void ResetForNewPhase()
     {
@@ -54,7 +64,12 @@ public class MiniBomController : EnemyBase
         if (!hasMoved)
         {
             hasMoved = true;
-            Debug.Log($"[{gameObject.name}] Child enemy ready to move in next phase");
+        }
+
+        phaseCount++;
+        if (phaseCount >= maxPhaseLive)
+        {
+            StartCoroutine(ExplodeWithDelay());
         }
     }
 
@@ -62,10 +77,7 @@ public class MiniBomController : EnemyBase
 
     #region Movement
 
-    /// <summary>
-    /// Di chuyển đến vị trí đích
-    /// </summary>
-    private IEnumerator MoveToTarget()
+    private IEnumerator Move()
     {
         isMoving = true;
         startPosition = transform.position;
@@ -77,56 +89,106 @@ public class MiniBomController : EnemyBase
         {
             transform.Translate(moveDirection.normalized * moveSpeed * Time.deltaTime);
             elapsedTime += Time.deltaTime;
+
+            // Kiểm tra Action trong tầm nổ mỗi frame
+            if (CheckForActionsInRange())
+            {
+                isMoving = false;
+                yield return StartCoroutine(ExplodeWithDelay());
+                yield break; // Dừng di chuyển và thoát
+            }
+
             yield return null;
         }
 
         isMoving = false;
-
-        Debug.Log($"[{gameObject.name}] Reached target position");
         MarkEnemyCompleted();
     }
 
     #endregion
 
-    #region Collision Detection
+    #region Explosion & Damage
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     // Kiểm tra va chạm với Action
-    //     if (IsInLayerMask(other.gameObject.layer, actionLayerMask))
-    //     {
-    //         Debug.Log($"[{gameObject.name}] Collided with Action: {other.gameObject.name}");
-    //         Explode(other.gameObject);
-    //     }
-    // }
+    private bool CheckForActionsInRange()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, actionLayerMask);
 
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     // Kiểm tra va chạm với Action (nếu sử dụng Collision thay vì Trigger)
-    //     if (IsInLayerMask(collision.gameObject.layer, actionLayerMask))
-    //     {
-    //         Debug.Log($"[{gameObject.name}] Collided with Action: {collision.gameObject.name}");
-    //         Explode(collision.gameObject);
-    //     }
-    // }
+        // Kiểm tra xem có Action nào có thể nhận sát thương không
+        foreach (Collider2D collider in colliders)
+        {
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+            if (damageable != null && damageable.IsAlive)
+            {
+                return true;
+            }
+        }
 
-    /// <summary>
-    /// Kiểm tra xem layer có trong LayerMask không
-    /// </summary>
-    // private bool IsInLayerMask(int layer, LayerMask layerMask)
-    // {
-    //     return (layerMask.value & (1 << layer)) != 0;
-    // }
+        return false;
+    }
+
+    private IEnumerator ExplodeWithDelay()
+    {
+        // Delay trước khi nổ
+        yield return new WaitForSeconds(explosionDelay);
+
+        // Nổ
+        Explode();
+        MarkEnemyCompleted();
+    }
+
+    private void Explode()
+    {
+        // Phát hiệu ứng nổ
+        PlayExplosionEffect();
+
+        // Phát âm thanh nổ
+        PlayExplosionSound();
+
+        // Tìm tất cả action trong bán kính nổ
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, actionLayerMask);
+
+        foreach (Collider2D collider in colliders)
+        {
+            DealDamageToAction(collider.gameObject);
+        }
+
+        // Tự hủy sau khi nổ
+        if (enemyStats != null)
+        {
+            enemyStats.TakeDamage(enemyStats.MaxHealth);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void DealDamageToAction(GameObject action)
+    {
+        // Kiểm tra xem action có component IDamageable không
+        IDamageable damageable = action.GetComponent<IDamageable>();
+        if (damageable != null && damageable.IsAlive)
+        {
+            int damage = enemyStats != null ? enemyStats.Damage : 1;
+            damageable.TakeDamage(damage, gameObject);
+        }
+    }
+
+    private void PlayExplosionEffect()
+    {
+        if (explosionEffectPrefab != null)
+        {
+            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
+    private void PlayExplosionSound()
+    {
+        if (audioSource != null && explosionSound != null)
+        {
+            audioSource.PlayOneShot(explosionSound);
+        }
+    }
 
     #endregion
-
-
-    // private void Explode(GameObject targetAction)
-    // {
-
-    // }
-
-    // private void DealDamageToAction(GameObject action)
-    // {
-    // }
 }

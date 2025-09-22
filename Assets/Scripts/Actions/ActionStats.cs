@@ -1,12 +1,10 @@
 using UnityEngine;
 
-public class EnemyStats : MonoBehaviour, IDamageable
+public class ActionStats : MonoBehaviour, IDamageable
 {
-    [Header("Health & Combat")]
+    [Header("Health Settings")]
     [SerializeField] protected int maxHealth = 3;
     [SerializeField] protected int currentHealth;
-    [SerializeField] protected int damage = 1; // Sát thương gây ra
-    [SerializeField] protected int scoreValue = 100; // Điểm khi bị phá hủy
     [SerializeField] protected bool isDestroyed = false;
 
     [Header("Debug Settings")]
@@ -20,8 +18,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public bool IsAlive => !isDestroyed && currentHealth > 0;
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
-    public int Damage => damage;
-    public int ScoreValue => scoreValue;
     public bool IsDestroyed => isDestroyed;
 
     protected virtual void Start()
@@ -44,7 +40,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         if (enableLogging)
         {
             string sourceName = damageSource != null ? damageSource.name : "Unknown";
-            Debug.Log($"[{gameObject.name}] Took {damage} damage from {sourceName}. Health: {currentHealth}/{maxHealth}");
+            Debug.Log($"[{gameObject.name}] Action took {damage} damage from {sourceName}. Health: {currentHealth}/{maxHealth}");
         }
 
         // Trigger damage event
@@ -53,11 +49,11 @@ public class EnemyStats : MonoBehaviour, IDamageable
         // Kiểm tra xem có bị phá hủy không
         if (currentHealth <= 0)
         {
-            DestroyEnemy(damageSource);
+            DestroyAction(damageSource);
         }
     }
 
-    protected virtual void DestroyEnemy(GameObject destroyer = null)
+    protected virtual void DestroyAction(GameObject destroyer = null)
     {
         if (isDestroyed) return;
 
@@ -66,31 +62,17 @@ public class EnemyStats : MonoBehaviour, IDamageable
         if (enableLogging)
         {
             string destroyerName = destroyer != null ? destroyer.name : "Unknown";
-            Debug.Log($"[{gameObject.name}] Enemy destroyed by {destroyerName}! Awarding {scoreValue} points");
+            Debug.Log($"[{gameObject.name}] Action destroyed by {destroyerName}!");
         }
 
         // Trigger destroyed event
         OnDestroyed?.Invoke(gameObject);
-
-        // Cộng điểm cho màn chơi (trừ khi nguồn hủy là NoScoreKillSource)
-        if (ShouldAwardScore(destroyer))
-        {
-            EnemyType enemyType = GetComponent<EnemyBase>().GetEnemyType();
-            ScoreManager.Instance.AddKillAndScore(enemyType, ScoreValue);
-        }
 
         // Phát hiệu ứng phá hủy
         PlayDestructionEffects();
 
         // Destroy GameObject sau một khoảng thời gian ngắn
         Destroy(gameObject, 0.1f);
-    }
-
-    private bool ShouldAwardScore(GameObject destroyer)
-    {
-        if (destroyer == null) return false;
-        // Không cộng điểm nếu destroyer là FinishObstacle
-        return destroyer.GetComponent<FinishObstacle>() == null;
     }
 
     protected virtual void PlayDestructionEffects()
@@ -119,7 +101,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         if (enableLogging && currentHealth != oldHealth)
         {
-            Debug.Log($"[{gameObject.name}] Healed for {currentHealth - oldHealth}. Health: {currentHealth}/{maxHealth}");
+            Debug.Log($"[{gameObject.name}] Action healed for {currentHealth - oldHealth}. Health: {currentHealth}/{maxHealth}");
         }
     }
 
@@ -131,13 +113,13 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         if (enableLogging)
         {
-            Debug.Log($"[{gameObject.name}] Health set to {currentHealth}/{maxHealth}");
+            Debug.Log($"[{gameObject.name}] Action health set to {currentHealth}/{maxHealth}");
         }
 
         // Kiểm tra xem có bị phá hủy không
         if (currentHealth <= 0)
         {
-            DestroyEnemy();
+            DestroyAction();
         }
     }
 
@@ -151,27 +133,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         if (enableLogging)
         {
-            Debug.Log($"[{gameObject.name}] Max health set to {maxHealth}, current health: {currentHealth}");
-        }
-    }
-
-    public virtual void SetScoreValue(int newScoreValue)
-    {
-        scoreValue = Mathf.Max(0, newScoreValue);
-
-        if (enableLogging)
-        {
-            Debug.Log($"[{gameObject.name}] Score value set to {scoreValue}");
-        }
-    }
-
-    public virtual void SetDamage(int newDamage)
-    {
-        damage = Mathf.Max(0, newDamage);
-
-        if (enableLogging)
-        {
-            Debug.Log($"[{gameObject.name}] Damage set to {damage}");
+            Debug.Log($"[{gameObject.name}] Action max health set to {maxHealth}, current health: {currentHealth}");
         }
     }
 
@@ -186,4 +148,3 @@ public class EnemyStats : MonoBehaviour, IDamageable
         return (float)currentHealth / maxHealth;
     }
 }
-

@@ -465,7 +465,7 @@ public class PumpingKingController : EnemyBase
     private IEnumerator MoveShieldUp(GameObject shield)
     {
         Vector3 startPosition = shield.transform.position;
-        Vector3 targetPosition = startPosition + Vector3.up * shieldMaxHeight;
+        Vector3 targetPosition = startPosition + Vector3.up * shieldMaxHeight + moveDirection * 2f;
 
         while (Vector3.Distance(shield.transform.position, targetPosition) > 0.1f)
         {

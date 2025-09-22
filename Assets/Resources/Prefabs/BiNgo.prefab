@@ -210,25 +210,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aac8d4b14bd82340b3a9e8837efb43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   currentEnergy: 0
   maxEnergy: 3
   moveDirection: {x: -1, y: 0, z: 0}
   moveDistance: 5
   projectilePrefab: {fileID: 1441041449258860593, guid: ffd5fb4ae1635e048bf7d92d0bfc6487, type: 3}
-  childEnemyPrefab: {fileID: 4445799157548160741, guid: b42ccbbd5ede06847be8dd2e1f2719d1, type: 3}
-  shieldPrefab: {fileID: 4369104710923877098, guid: f0ce41e400bf9234695519d005421158, type: 3}
+  childEnemyPrefab: {fileID: 8364012910977805534, guid: fe3b229e878ee43428793642da45e8d7, type: 3}
+  shieldPrefab: {fileID: 285519214278290959, guid: 3df8962f1f7cb0949a8d1def3a710fa1, type: 3}
   projectileSpeed: 10
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
   projectileAngle: 155
   projectileAngleVariation: 10
-  shieldMoveSpeed: 4
-  shieldMaxHeight: 10
+  shieldMoveSpeed: 10
+  shieldMaxHeight: 5
   audioSource: {fileID: 0}
   skillSound: {fileID: 0}
   spawnChildWeight: 10
-  moveWeight: 3
+  moveWeight: 2
   shieldWeight: 1
   shieldMaxUsesPerPhase: 1
+  spawnChildMaxUsesPerPhase: 1

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7146493839871315653}
   - component: {fileID: 8862678769706254034}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: nongphao_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 1898341320846614492}
   - component: {fileID: 6454548765330158850}
   - component: {fileID: 7466037778052580532}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: uPhao_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6095240303442167245}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: firePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

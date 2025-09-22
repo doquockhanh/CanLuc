@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   currentHealth: 0
+  damage: 1
   scoreValue: 50
   isDestroyed: 0
   enableLogging: 0
@@ -150,13 +151,13 @@ MonoBehaviour:
   type: 5
   moveDirection: {x: -1, y: 0, z: 0}
   moveDistance: 10
-  moveSpeed: 3
+  moveSpeed: 4
   explosionEffectPrefab: {fileID: 0}
   explosionRadius: 1.5
-  explosionDamage: 1
+  explosionDelay: 0.5
   actionLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   audioSource: {fileID: 0}
   explosionSound: {fileID: 0}
 --- !u!61 &3132459090407786327

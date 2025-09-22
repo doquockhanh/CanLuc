@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5810367931080447609}
   - component: {fileID: 8609876484258657296}
   - component: {fileID: 6397795468450967722}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Missions 1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: -4075336724727837397}
   - component: {fileID: 1306472471677597126}
   - component: {fileID: 1734129251336426298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: XePhong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
