@@ -2230,7 +2230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionName: Tieu diet Bi Ngo
-  targetPumpkinKing: {fileID: 1232711789}
+  targetStats: {fileID: 0}
 --- !u!1 &377108300
 GameObject:
   m_ObjectHideFlags: 0
@@ -7101,17 +7101,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211025135}
   m_CullTransparentMesh: 1
---- !u!114 &1232711789 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1122307810851904916, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
-  m_PrefabInstance: {fileID: 1545766569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aac8d4b14bd82340b3a9e8837efb43d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1232711795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2623644322446578590, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
@@ -10698,10 +10687,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.16614585
     y: 0
-    width: 1
-    height: 1
+    width: 0.38888893
+    height: 0.3888889
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
