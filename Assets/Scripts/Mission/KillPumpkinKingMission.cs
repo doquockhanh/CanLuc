@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class KillPumpkinKingMission : MissionBase
+public class KillTargetMission : MissionBase
 {
     [Header("Mission Settings")]
-    [SerializeField] private PumpingKingController targetPumpkinKing;
+    [SerializeField] private EnemyStats targetStats;
     private bool isDone = false;
 
     private void Start()
     {
-        if (targetPumpkinKing != null)
+        if (targetStats != null)
         {
             RegisterToPumpkinKingEvents();
         }
@@ -16,56 +16,21 @@ public class KillPumpkinKingMission : MissionBase
 
     private void RegisterToPumpkinKingEvents()
     {
-        if (targetPumpkinKing == null) return;
+        if (targetStats == null) return;
 
-        // Lấy EnemyStats component để đăng ký event
-        EnemyStats enemyStats = targetPumpkinKing.GetComponent<EnemyStats>();
-        if (enemyStats != null)
+        if (targetStats != null)
         {
-            enemyStats.OnDestroyedByAction += OnPumpkinKingDestroyed;
+            targetStats.OnDestroyedByAction += OnTargetDestroyed;
         }
     }
 
-    /// <summary>
-    /// Callback khi PumpkinKing bị tiêu diệt
-    /// </summary>
-    private void OnPumpkinKingDestroyed(GameObject destroyedPumpkinKing)
+    private void OnTargetDestroyed(GameObject target)
     {
         isDone = true;
     }
 
-    /// <summary>
-    /// Kiểm tra xem nhiệm vụ đã hoàn thành chưa
-    /// </summary>
     public override bool IsDone()
     {
         return isDone;
     }
-
-    /// <summary>
-    /// Lấy thông tin trạng thái nhiệm vụ
-    /// </summary>
-    public string GetMissionStatus()
-    {
-        if (targetPumpkinKing == null)
-        {
-            return "PumpkinKing not found";
-        }
-
-        EnemyStats enemyStats = targetPumpkinKing.GetComponent<EnemyStats>();
-        if (enemyStats != null)
-        {
-            if (enemyStats.IsAlive)
-            {
-                return $"PumpkinKing HP: {enemyStats.CurrentHealth}/{enemyStats.MaxHealth}";
-            }
-            else
-            {
-                return "PumpkinKing destroyed - Mission Complete!";
-            }
-        }
-
-        return "PumpkinKing status unknown";
-    }
-
 }

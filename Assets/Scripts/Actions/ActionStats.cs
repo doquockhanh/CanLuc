@@ -13,6 +13,7 @@ public class ActionStats : MonoBehaviour, IDamageable
     // Events
     public System.Action<int, GameObject> OnDamageTaken { get; set; }
     public System.Action<GameObject> OnDestroyed { get; set; }
+    public System.Action<int, int> OnHpChange { get; set; } // (currentHealth, maxHealth)
 
     // Properties
     public bool IsAlive => !isDestroyed && currentHealth > 0;
@@ -29,6 +30,9 @@ public class ActionStats : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         isDestroyed = false;
+        
+        // Trigger initial HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
     }
 
     public virtual void TakeDamage(int damage, GameObject damageSource = null)
@@ -45,6 +49,9 @@ public class ActionStats : MonoBehaviour, IDamageable
 
         // Trigger damage event
         OnDamageTaken?.Invoke(damage, damageSource);
+        
+        // Trigger HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
 
         // Kiểm tra xem có bị phá hủy không
         if (currentHealth <= 0)
@@ -103,6 +110,9 @@ public class ActionStats : MonoBehaviour, IDamageable
         {
             Debug.Log($"[{gameObject.name}] Action healed for {currentHealth - oldHealth}. Health: {currentHealth}/{maxHealth}");
         }
+        
+        // Trigger HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
     }
 
     public virtual void SetHealth(int newHealth)
@@ -115,6 +125,9 @@ public class ActionStats : MonoBehaviour, IDamageable
         {
             Debug.Log($"[{gameObject.name}] Action health set to {currentHealth}/{maxHealth}");
         }
+        
+        // Trigger HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
 
         // Kiểm tra xem có bị phá hủy không
         if (currentHealth <= 0)
@@ -135,6 +148,9 @@ public class ActionStats : MonoBehaviour, IDamageable
         {
             Debug.Log($"[{gameObject.name}] Action max health set to {maxHealth}, current health: {currentHealth}");
         }
+        
+        // Trigger HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
     }
 
     public virtual bool CanTakeDamage()

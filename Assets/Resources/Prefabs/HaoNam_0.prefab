@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 3228770002807597702}
   - component: {fileID: 5090763352955071210}
   - component: {fileID: 8692597043198212909}
+  - component: {fileID: 1806856041500219099}
   m_Layer: 3
   m_Name: HaoNam_0
   m_TagString: Untagged
@@ -353,6 +354,7 @@ MonoBehaviour:
   canAccumulateForce: 1
   moveSpeed: 5
   maxMovePower: 4
+  hpBarController: {fileID: 1806856041500219099}
   gunBarrel: {fileID: 2291606668701755898}
   rotationSpeed: 90
   maxRotationAngle: 90
@@ -383,7 +385,8 @@ MonoBehaviour:
   - "N\xE9 b\u1ECDn n\xF3"
   lastWarn: "B\u1ED1 m\xE0y s\u1EAFp c\xFAt r\u1ED3i, ch\u01A1i c\u1EA9n th\u1EADn
     v\xE0o"
-  firstWarn: "T\u1EEB l\xFAc sinh ra ch\u01B0a ng\xE1n ai"
+  firstWarn: "Tao s\u1EBD d\xF9ng ch\u1EE7 ngh\u0129a duy v\u1EADt ch\u1EE9ng minh
+    \u0111\xE1m ma n\xE0y kh\xF4ng t\u1ED3n t\u1EA1i."
 --- !u!114 &8692597043198212909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,7 +399,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a793b02544a86a42a7bcefac3ce88cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 5
   currentHealth: 0
   isDestroyed: 0
   enableLogging: 0
+--- !u!114 &1806856041500219099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219497874469006699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d773e65764c33e4ba60acf43bd1d377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showHpBar: 1
+  offset: {x: 0, y: 4, z: 0}
+  barWidth: 3
+  barHeight: 0.4
+  backgroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.8}
+  healthColor: {r: 0, g: 1, b: 0, a: 1}
+  lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  lowHealthThreshold: 0.3
+  smoothTime: 0.3
+  hideWhenFullHealth: 0
+  hideWhenDead: 1

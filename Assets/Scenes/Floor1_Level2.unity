@@ -425,7 +425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPhase: 0
-  phaseLoopCount: 1
   gameOverTriggered: 0
   gameOverPanel: {fileID: 1189985950}
   gameResult: 0
@@ -2231,7 +2230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionName: Tieu diet Bi Ngo
-  targetPumpkinKing: {fileID: 1232711789}
+  targetStats: {fileID: 1545766570}
 --- !u!1 &377108300
 GameObject:
   m_ObjectHideFlags: 0
@@ -7129,17 +7128,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211025135}
   m_CullTransparentMesh: 1
---- !u!114 &1232711789 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1122307810851904916, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
-  m_PrefabInstance: {fileID: 1545766569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aac8d4b14bd82340b3a9e8837efb43d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1232711795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2623644322446578590, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
@@ -8799,6 +8787,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+--- !u!114 &1545766570 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7481456327582301702, guid: 44eb151a519696742ae252d03cc9a094, type: 3}
+  m_PrefabInstance: {fileID: 1545766569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c56aa02e6fdb54989230be66b164d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1556263575
 GameObject:
   m_ObjectHideFlags: 0
@@ -10750,10 +10749,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.20156251
+    x: 0.18125
     y: 0
-    width: 0.3370371
-    height: 0.33703703
+    width: 0.35833335
+    height: 0.35833332
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

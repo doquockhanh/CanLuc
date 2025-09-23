@@ -7,8 +7,8 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float maxMovePower = 10f;
+    public ActionHpBarController hpBarController;
     private float currentMovePower;
-
 
     [Header("Gun Settings")]
     public Transform gunBarrel;
@@ -43,7 +43,7 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
 
         // Xử lý xoay súng S/W
         HandleGunRotation();
-        
+
         // Xử lý flip Q/E (không cần movePower)
         HandleFacing();
     }
@@ -123,6 +123,12 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
         Vector3 scale = transform.localScale;
         scale.x = facingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
         transform.localScale = scale;
+        if (hpBarController != null)
+        {
+            Vector3 hpBarScale = hpBarController.WorldCanvas.transform.localScale;
+            hpBarScale.x = facingRight ? -Mathf.Abs(hpBarScale.x) : Mathf.Abs(hpBarScale.x);
+            hpBarController.WorldCanvas.transform.localScale = hpBarScale;
+        }
 
         // Đảo ngược góc xoay súng nếu cần
         if (gunBarrel != null)
