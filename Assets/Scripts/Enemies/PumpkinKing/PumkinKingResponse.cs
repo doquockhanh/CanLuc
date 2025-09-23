@@ -13,8 +13,8 @@ public class PumkinKingResponse : MonoBehaviour
     {
         enemyStats = GetComponent<EnemyStats>();
         enemyStats.OnDamageTaken += OnDamageTaken;
-        if (GameWorldOpenChat.Instance != null)
-            GameWorldOpenChat.Instance.WriteChat(transform, "Hahahaha mày cản được tao không nhóc");
+        if (GameWorldChatManager.Instance != null)
+            GameWorldChatManager.Instance.SendChat("Hahahaha mày cản được tao không nhóc", transform);
     }
 
     void OnDamageTaken(int damage, GameObject damageSource)
@@ -30,15 +30,15 @@ public class PumkinKingResponse : MonoBehaviour
         if (enemyStats.CurrentHealth <= 3 && !lastWarnUsed)
         {
             lastWarnUsed = true;
-            if (GameWorldOpenChat.Instance != null)
-                GameWorldOpenChat.Instance.WriteChat(transform, lastWarn);
+            if (GameWorldChatManager.Instance != null)
+                GameWorldChatManager.Instance.SendChat(lastWarn, transform);
             yield break;
         }
 
         if (Random.Range(0, 4) <= 1)
         {
-            if (GameWorldOpenChat.Instance != null)
-                GameWorldOpenChat.Instance.WriteChat(transform, responses[Random.Range(0, responses.Length)]);
+            if (GameWorldChatManager.Instance != null)
+                GameWorldChatManager.Instance.SendChat(responses[Random.Range(0, responses.Length)], transform);
         }
     }
 }

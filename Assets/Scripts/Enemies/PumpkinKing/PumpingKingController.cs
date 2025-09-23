@@ -408,8 +408,8 @@ public class PumpingKingController : EnemyBase
 
         if (Random.Range(0, 3) <= 1)
         {
-            if (GameWorldOpenChat.Instance != null)
-                GameWorldOpenChat.Instance.WriteChat(transform, "Anh em tao đông");
+            if (GameWorldChatManager.Instance != null)
+                GameWorldChatManager.Instance.SendChat("Anh em tao đông", transform);
         }
 
         Debug.Log($"[{gameObject.name}] Spawn Child Skill completed - projectile finished");
@@ -442,8 +442,8 @@ public class PumpingKingController : EnemyBase
 
         if (Random.Range(0, 3) <= 1)
         {
-            if (GameWorldOpenChat.Instance != null)
-                GameWorldOpenChat.Instance.WriteChat(transform, "Tao có khiên");
+            if (GameWorldChatManager.Instance != null)
+                GameWorldChatManager.Instance.SendChat("Tao có khiên", transform);
         }
 
         // Chờ một khoảng thời gian ngắn

@@ -1,92 +1,147 @@
+using System.Collections;
 using UnityEngine;
+using TMPro;
+using DG.Tweening;
 
-/// <summary>
-/// Component đơn giản để đánh dấu và quản lý chat box
-/// </summary>
 public class ChatBox : MonoBehaviour
 {
-    [Header("Chat Box Settings")]
-    public float fadeInDuration = 0.3f;
-    public float fadeOutDuration = 0.3f;
+    [Header("UI References")]
+    public TextMeshProUGUI messageText;
+    public GameObject chatBoxPanel;
     
-    private CanvasGroup canvasGroup;
-    private bool isFading = false;
-
-    private void Awake()
+    [Header("Settings")]
+    public float typingSpeed = 0.05f;
+    public float animationDuration = 0.3f;
+    public float offsetY = 2f;
+    public float additionalDelay = 1f;
+    
+    private Transform targetTransform;
+    private bool shouldFollow = false;
+    private Coroutine typingCoroutine;
+    private Coroutine lifetimeCoroutine;
+    
+    public System.Action OnDestroyed;
+    
+    void Start()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
+        // Animation xuất hiện
+        chatBoxPanel.transform.localScale = Vector3.zero;
+        chatBoxPanel.transform.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack);
+    }
+    
+    void Update()
+    {
+        if (shouldFollow && targetTransform != null)
         {
-            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            // Follow transform với offset dựa trên sprite height
+            float spriteHeight = GetSpriteHeight(targetTransform);
+            float totalOffset = spriteHeight + offsetY;
+            Vector3 worldPos = targetTransform.position + Vector3.up * totalOffset;
+            transform.position = worldPos;
         }
     }
-
-    private void Start()
+    
+    public void Initialize(string message, Transform target, bool follow, float lifetime)
     {
-        // Fade in khi bắt đầu
-        FadeIn();
-    }
-
-    public void FadeIn()
-    {
-        if (isFading) return;
+        targetTransform = target;
+        shouldFollow = follow;
         
-        StartCoroutine(FadeCoroutine(0f, 1f, fadeInDuration));
-    }
-
-    public void FadeOut()
-    {
-        if (isFading) return;
+        // Tính offset dựa trên sprite height
+        float spriteHeight = GetSpriteHeight(target);
+        float totalOffset = spriteHeight + offsetY;
         
-        StartCoroutine(FadeCoroutine(1f, 0f, fadeOutDuration, true));
-    }
-
-    private System.Collections.IEnumerator FadeCoroutine(float from, float to, float duration, bool destroyAfter = false)
-    {
-        isFading = true;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
+        // Đặt vị trí ban đầu
+        if (!follow)
         {
-            elapsed += Time.deltaTime;
-            float alpha = Mathf.Lerp(from, to, elapsed / duration);
-            canvasGroup.alpha = alpha;
-            yield return null;
+            transform.position = target.position + Vector3.up * totalOffset;
         }
-
-        canvasGroup.alpha = to;
-        isFading = false;
-
-        if (destroyAfter)
-        {
-            Destroy(gameObject);
-        }
+        
+        // Bắt đầu typing animation
+        StartTyping(message);
     }
-
-    /// <summary>
-    /// Cập nhật vị trí chat box theo Transform
-    /// </summary>
-    public void UpdatePosition(Transform targetTransform, Vector3 offset)
+    
+    public void UpdateMessage(string newMessage)
     {
-        if (targetTransform == null) return;
-
-        Canvas canvas = GetComponentInParent<Canvas>();
-        if (canvas == null) return;
-
-        RectTransform rectTransform = GetComponent<RectTransform>();
+        // Dừng typing cũ
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
         
-        // Chuyển đổi world position sang screen position
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(targetTransform.position + offset);
+        // Bắt đầu typing mới
+        StartTyping(newMessage);
         
-        // Chuyển đổi screen position sang local position của Canvas
-        Vector2 localPos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            screenPos,
-            canvas.worldCamera,
-            out localPos
-        );
-
-        rectTransform.localPosition = localPos;
+        // Reset lifetime dựa trên thời gian typing
+        if (lifetimeCoroutine != null)
+        {
+            StopCoroutine(lifetimeCoroutine);
+        }
+        float typingTime = newMessage.Length * typingSpeed;
+        lifetimeCoroutine = StartCoroutine(AutoDestroy(typingTime + additionalDelay));
+    }
+    
+    private void StartTyping(string message)
+    {
+        typingCoroutine = StartCoroutine(TypeText(message));
+    }
+    
+    private IEnumerator TypeText(string text)
+    {
+        messageText.text = "";
+        
+        for (int i = 0; i <= text.Length; i++)
+        {
+            messageText.text = text.Substring(0, i);
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        
+        // Bắt đầu auto destroy sau khi typing xong
+        float typingTime = text.Length * typingSpeed;
+        lifetimeCoroutine = StartCoroutine(AutoDestroy(typingTime + additionalDelay));
+    }
+    
+    private IEnumerator AutoDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        DestroyChatBox();
+    }
+    
+    private void DestroyChatBox()
+    {
+        // Animation ẩn
+        chatBoxPanel.transform.DOScale(Vector3.zero, animationDuration).SetEase(Ease.InBack)
+            .OnComplete(() => {
+                OnDestroyed?.Invoke();
+                Destroy(gameObject);
+            });
+    }
+    
+    private float GetSpriteHeight(Transform target)
+    {
+        // Tìm SpriteRenderer hoặc Image component
+        SpriteRenderer spriteRenderer = target.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null && spriteRenderer.sprite != null)
+        {
+            return spriteRenderer.bounds.size.y;
+        }
+        
+        // Fallback: tìm trong children
+        SpriteRenderer childSprite = target.GetComponentInChildren<SpriteRenderer>();
+        if (childSprite != null && childSprite.sprite != null)
+        {
+            return childSprite.bounds.size.y;
+        }
+        
+        // Default height nếu không tìm thấy sprite
+        return 1f;
+    }
+    
+    void OnDestroy()
+    {
+        // Cleanup coroutines
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+        if (lifetimeCoroutine != null)
+            StopCoroutine(lifetimeCoroutine);
     }
 }

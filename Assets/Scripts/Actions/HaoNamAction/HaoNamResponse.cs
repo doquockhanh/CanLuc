@@ -12,8 +12,8 @@ public class HaoNamResponse : MonoBehaviour
     {
         actionStats = GetComponent<ActionStats>();
         actionStats.OnDamageTaken += OnDamageTaken;
-        if (GameWorldOpenChat.Instance != null)
-            GameWorldOpenChat.Instance.WriteChat(transform, firstWarn);
+        if (GameWorldChatManager.Instance != null)
+            GameWorldChatManager.Instance.SendChat(firstWarn, transform);
     }
 
     void OnDamageTaken(int damage, GameObject damageSource)
@@ -25,7 +25,7 @@ public class HaoNamResponse : MonoBehaviour
             response = lastWarn;
         }
         
-        if (GameWorldOpenChat.Instance != null)
-            GameWorldOpenChat.Instance.WriteChat(transform, response);
+        if (GameWorldChatManager.Instance != null)
+            GameWorldChatManager.Instance.SendChat(response, transform);
     }
 }

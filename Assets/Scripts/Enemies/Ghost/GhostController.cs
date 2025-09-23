@@ -273,8 +273,8 @@ public class GhostController : EnemyBase
         // Chat với tỉ lệ 1/2
         if (Random.Range(0, 2) == 0)
         {
-            if (GameWorldOpenChat.Instance != null)
-                GameWorldOpenChat.Instance.WriteChat(transform, "Đố anh bắt được em");
+            if (GameWorldChatManager.Instance != null)
+                GameWorldChatManager.Instance.SendChat("Đố anh bắt được em", transform);
         }
 
         yield return null; // Thêm yield để method trả về IEnumerator
@@ -329,8 +329,8 @@ public class GhostController : EnemyBase
             hasAttackedThisPhase = true;
             if (Random.Range(0, 2) == 0)
             {
-                if (GameWorldOpenChat.Instance != null)
-                    GameWorldOpenChat.Instance.WriteChat(transform, "Tao đánh mày nè");
+                if (GameWorldChatManager.Instance != null)
+                    GameWorldChatManager.Instance.SendChat("Tao đánh mày nè", transform);
             }
         }
 
