@@ -204,7 +204,7 @@ MonoBehaviour:
   maxDelayTime: 5
   bulletsPerBurst: 2
   timeBetweenBullets: 0.5
-  baseBulletSpeed: 10
+  baseBulletSpeed: 5
   forceToSpeedMultiplier: 0.5
   audioSource: {fileID: 7466037778052580532}
   shootingSound: {fileID: 8300000, guid: 901b22d903f1b43409a499944f7fc9fc, type: 3}

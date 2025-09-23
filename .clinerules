@@ -1,9 +1,13 @@
 # User Rules
 
 ## File Creation Rules
-- KHÔNG tự động tạo file demo, test, doc, setup nếu không được yêu cầu
-- Chỉ tạo những file mà user yêu cầu cụ thể
-- Không được tự ý tạo thêm file demo, test, documentation hoặc setup scripts mà user không hỏi
+- Code ngắn gọn, clean, dễ đọc.
+- Tên biến, tên hàm rõ ràng, không cần comment trừ khi thật sự bắt buộc.
+- Không tạo thêm file hoặc module phụ (như demo, test, doc, editor) nếu không được yêu cầu rõ ràng.
+- Không over-engineer: chỉ giải quyết đúng yêu cầu, không thêm tính năng phụ.
+- Không lặp lại giải thích dài dòng: chỉ cung cấp code + mô tả ngắn gọn nếu cần.
+- Nếu có nhiều cách giải quyết → ưu tiên cách đơn giản, dễ maintain.
+- Nếu cần mở rộng, hãy gợi ý ngắn gọn ở cuối, nhưng không tự triển khai thêm.
 
 ## Language Rules
 - Luôn trả lời bằng Tiếng Việt
@@ -11,29 +15,3 @@
 ## Workflow Rules
 - Luôn đọc và tuân thủ các rules trong file này
 - Kiểm tra rules trước khi tạo bất kỳ file nào
-
-## Core Workflows
-
-### Plan Mode
-```mermaid
-flowchart TD
-    Start[Start] --> ReadFiles[Read Memory Bank]
-    ReadFiles --> CheckFiles{Files Complete?}
-    
-    CheckFiles -->|No| Plan[Create Plan]
-    Plan --> Document[Document in Chat]
-    
-    CheckFiles -->|Yes| Verify[Verify Context]
-    Verify --> Strategy[Develop Strategy]
-    Strategy --> Present[Present Approach]
-```
-
-### Act Mode
-```mermaid
-flowchart TD
-    Start[Start] --> Context[Check Memory Bank]
-    Context --> Update[Update Documentation]
-    Update --> Rules[Update .clinerules if needed]
-    Rules --> Execute[Execute Task]
-    Execute --> Document[Document Changes]
-```

@@ -117,4 +117,5 @@ public enum EnemyType
     F4,
     PumpingKing,
     MiniBom,
+    Ghost,
 }

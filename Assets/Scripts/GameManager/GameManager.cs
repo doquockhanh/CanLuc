@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,9 +9,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State")]
     [SerializeField] private GamePhase currentPhase = GamePhase.Prepare;
-    [Description("How many time back to prepare phase. -1 is infinity")]
-    [SerializeField] private int phaseLoopCount = 1;
-
     [Header("Game Over")]
     [SerializeField] private bool gameOverTriggered = false;
     [SerializeField] private GameObject gameOverPanel;
@@ -23,8 +21,11 @@ public class GameManager : MonoBehaviour
     public System.Action<GameResult> OnGameOver; // GameResult.Pass / GameResult.Fail
 
     private List<IGamePhaseAware> gamePhaseAwareComponents = new List<IGamePhaseAware>();
-
     private readonly HashSet<EnemyStats> trackedEnemies = new HashSet<EnemyStats>();
+    private EnemyBase[] enemies;
+    private ActionBase[] actions;
+    public EnemyBase[] Enemies => enemies;
+    public ActionBase[] Actions => actions;
 
     private void Awake()
     {
@@ -44,17 +45,25 @@ public class GameManager : MonoBehaviour
         RegisterAllGamePhaseAwareComponents();
 
         InitializeEnemyTracking();
+
+        StartCoroutine(CheckSceneManuallyToEndGame());
     }
 
-    private void Update()
+    IEnumerator CheckSceneManuallyToEndGame()
     {
-        // Phòng hờ: nếu vì lý do nào đó event không bắn, kiểm tra rỗng tag "Enemy"
-        if (!gameOverTriggered && IsInBattlePhase())
+        while (true)
         {
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+            if (gameOverTriggered)
+                yield break;
+
+            enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
+            actions = FindObjectsByType<ActionBase>(FindObjectsSortMode.None);
+            if (enemies.Length == 0 || actions.Length == 0)
             {
                 TriggerGameOver();
             }
+
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -140,11 +149,6 @@ public class GameManager : MonoBehaviour
             int currentLevelId = GameProgressManager.Instance.GetCurrentLevelId();
             GameProgressManager.Instance.MarkLevelPassed(currentFloorId, currentLevelId);
         }
-    }
-
-    public void ResetToPreparePhase()
-    {
-        StartPreparePhase();
     }
 
     public void RegisterGamePhaseAwareComponent(IGamePhaseAware component)

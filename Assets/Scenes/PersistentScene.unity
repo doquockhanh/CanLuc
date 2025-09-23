@@ -213,7 +213,7 @@ MonoBehaviour:
   worldCanvas: {fileID: 0}
   typingSpeed: 0.05
   chatDuration: 3
-  offsetFromTransform: {x: 0, y: 2, z: 0}
+  offsetFromTransform: {x: 0, y: 3.3, z: 0}
   audioSource: {fileID: 0}
   typingSound: {fileID: 0}
 --- !u!82 &1241812316

@@ -19,6 +19,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public System.Action<int, GameObject> OnDamageTaken { get; set; }
     public System.Action<GameObject> OnDestroyed { get; set; }
     public System.Action<GameObject> OnDestroyedByAction { get; set; }
+    public System.Action<int, int> OnHpChange { get; set; } // (currentHealth, maxHealth)
 
     // Properties
     public bool IsAlive => !isDestroyed && currentHealth > 0;
@@ -39,6 +40,9 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         isDestroyed = false;
+        
+        // Trigger initial HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
     }
 
     public virtual void TakeDamage(int damage, GameObject damageSource = null)
@@ -55,6 +59,9 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         // Trigger damage event
         OnDamageTaken?.Invoke(damage, damageSource);
+        
+        // Trigger HP change event
+        OnHpChange?.Invoke(currentHealth, maxHealth);
 
         // Kiểm tra xem có bị phá hủy không
         if (currentHealth <= 0)
@@ -128,17 +135,30 @@ public class EnemyStats : MonoBehaviour, IDamageable
         {
             Debug.Log($"[{gameObject.name}] Healed for {currentHealth - oldHealth}. Health: {currentHealth}/{maxHealth}");
         }
+        
+        // Trigger HP change event if health actually changed
+        if (currentHealth != oldHealth)
+        {
+            OnHpChange?.Invoke(currentHealth, maxHealth);
+        }
     }
 
     public virtual void SetHealth(int newHealth)
     {
         if (isDestroyed) return;
 
+        int oldHealth = currentHealth;
         currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
 
         if (enableLogging)
         {
             Debug.Log($"[{gameObject.name}] Health set to {currentHealth}/{maxHealth}");
+        }
+        
+        // Trigger HP change event if health actually changed
+        if (currentHealth != oldHealth)
+        {
+            OnHpChange?.Invoke(currentHealth, maxHealth);
         }
 
         // Kiểm tra xem có bị phá hủy không
@@ -153,12 +173,19 @@ public class EnemyStats : MonoBehaviour, IDamageable
         if (newMaxHealth <= 0) return;
 
         float healthPercentage = (float)currentHealth / maxHealth;
+        int oldMaxHealth = maxHealth;
         maxHealth = newMaxHealth;
         currentHealth = Mathf.RoundToInt(maxHealth * healthPercentage);
 
         if (enableLogging)
         {
             Debug.Log($"[{gameObject.name}] Max health set to {maxHealth}, current health: {currentHealth}");
+        }
+        
+        // Trigger HP change event if max health changed
+        if (maxHealth != oldMaxHealth)
+        {
+            OnHpChange?.Invoke(currentHealth, maxHealth);
         }
     }
 

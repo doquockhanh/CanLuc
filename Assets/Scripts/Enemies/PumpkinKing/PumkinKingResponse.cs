@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(ActionStats))]
+[RequireComponent(typeof(EnemyStats))]
 public class PumkinKingResponse : MonoBehaviour
 {
     public string[] responses = { "Đau đó nhóc", "Gruuuurrrr" };

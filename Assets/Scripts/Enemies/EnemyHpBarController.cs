@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Controller quản lý HP Bar cho Enemy
-/// </summary>
 public class EnemyHpBarController : MonoBehaviour
 {
     [Header("HP Bar Settings")]
@@ -27,6 +24,7 @@ public class EnemyHpBarController : MonoBehaviour
     private EnemyStats enemyStats;
     private Canvas worldCanvas;
     private Image backgroundImage;
+    public GameObject BackgroundImage => backgroundImage.gameObject;
     private Image healthFillImage;
     private RectTransform healthFillRect;
 
@@ -71,8 +69,18 @@ public class EnemyHpBarController : MonoBehaviour
         CreateWorldCanvas();
         CreateHpBarUI();
 
-        currentHealthPercentage = enemyStats.GetHealthPercentage();
-        targetHealthPercentage = currentHealthPercentage;
+        // Sử dụng event OnHpChange để đảm bảo HP bar được cập nhật chính xác
+        // Điều này đảm bảo rằng HP bar được khởi tạo sau khi EnemyStats đã sẵn sàng
+        if (enemyStats != null)
+        {
+            currentHealthPercentage = enemyStats.GetHealthPercentage();
+            targetHealthPercentage = currentHealthPercentage;
+        }
+        else
+        {
+            currentHealthPercentage = 1f;
+            targetHealthPercentage = 1f;
+        }
 
         ApplyHealthFill(currentHealthPercentage);
         UpdateHealthColor();
@@ -137,21 +145,21 @@ public class EnemyHpBarController : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        enemyStats.OnDamageTaken += OnEnemyDamaged;
         enemyStats.OnDestroyed += OnEnemyDestroyed;
+        enemyStats.OnHpChange += OnHpChanged;
     }
 
     private void UnsubscribeFromEvents()
     {
-        enemyStats.OnDamageTaken -= OnEnemyDamaged;
         enemyStats.OnDestroyed -= OnEnemyDestroyed;
+        enemyStats.OnHpChange -= OnHpChanged;
     }
 
-    private void OnEnemyDamaged(int damage, GameObject damageSource)
+    private void OnHpChanged(int currentHealth, int maxHealth)
     {
         if (!isInitialized) return;
 
-        targetHealthPercentage = enemyStats.GetHealthPercentage();
+        targetHealthPercentage = (float)currentHealth / maxHealth;
         UpdateHealthColor();
 
         if (hideWhenFullHealth && !isVisible)
