@@ -2282,7 +2282,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 372541778}
-  - component: {fileID: 372541777}
   - component: {fileID: 372541779}
   m_Layer: 0
   m_Name: Mission
@@ -2291,20 +2290,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &372541777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 372541776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63fb3521bd1b51242b8dafc458bfbcea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  missionName: Dat 150 diem
-  requiredScore: 150
 --- !u!4 &372541778
 Transform:
   m_ObjectHideFlags: 0
@@ -6342,7 +6327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneMissions:
-  - {fileID: 372541777}
+  - {fileID: 0}
 --- !u!1 &1076483897
 GameObject:
   m_ObjectHideFlags: 0

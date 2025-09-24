@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private ActionBase[] actions;
     public EnemyBase[] Enemies => enemies;
     public ActionBase[] Actions => actions;
+    private float delayResultPanel;
+    public float DelayResultPanel { get => delayResultPanel; set => delayResultPanel = value; }
 
     private void Awake()
     {
@@ -136,9 +138,20 @@ public class GameManager : MonoBehaviour
         gameResult = finalResult;
         Debug.Log($"Game Over -> {finalResult}");
         MarkLevelIfPassed(gameResult);
-        gameOverPanel.SetActive(true);
+        
+        // Gọi OnGameOver trước để các listener có thể xử lý
         OnGameOver?.Invoke(finalResult);
-
+        
+        // Delay 1 giây trước khi hiển thị game over panel
+        StartCoroutine(ShowGameOverPanelAfterDelay());
+    }
+    
+    private IEnumerator ShowGameOverPanelAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(delayResultPanel);
+        gameOverPanel.SetActive(true);
+        delayResultPanel = 0f;
     }
 
     private void MarkLevelIfPassed(GameResult result)

@@ -10,6 +10,7 @@ public class L1_1Conversation : MonoBehaviour
 
     void Start()
     {
+        if (UIChatManager.Instance == null) return;
         if (PlayerPrefs.GetInt("Scene1TutorialShown", 0) == 0)
         {
             StartConversationForFirstTime();
