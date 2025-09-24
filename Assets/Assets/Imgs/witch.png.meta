@@ -55,7 +55,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -93,7 +93,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -131,37 +131,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: witch_0
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 310
-        width: 627
-        height: 483
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8889b33baca7f7aa0800000000000000
-      internalID: -6161070754210539384
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: witch_1
       rect:
         serializedVersion: 2
-        x: 259
-        y: 576
-        width: 763
-        height: 443
+        x: 62
+        y: 64
+        width: 919
+        height: 908
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -174,121 +152,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: witch_2
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 8
-        width: 393
-        height: 331
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b1c7e48a107811410800000000000000
-      internalID: 1446085396551072795
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: witch_3
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 161
-        width: 327
-        height: 396
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2c36581280c600ee0800000000000000
-      internalID: -1296917910504774718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: witch_4
-      rect:
-        serializedVersion: 2
-        x: 407
-        y: 24
-        width: 107
-        height: 169
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ede009851d5fb1170800000000000000
-      internalID: 8150378230139850462
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: witch_5
-      rect:
-        serializedVersion: 2
-        x: 539
-        y: 64
-        width: 107
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 16c7b20940e693040800000000000000
-      internalID: 4627851057977588833
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: witch_6
-      rect:
-        serializedVersion: 2
-        x: 703
-        y: 32
-        width: 319
-        height: 523
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2d1507707dd725770800000000000000
-      internalID: 8598073001099940306
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9fea16177c1acb648ac75e99708d85c0
     internalID: 0
     vertices: []
     indices: 
@@ -297,7 +165,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      witch_0: -6161070754210539384
+      witch_1: -4793536089062914485
+      witch_2: 1446085396551072795
+      witch_3: -1296917910504774718
+      witch_4: 8150378230139850462
+      witch_5: 4627851057977588833
+      witch_6: 8598073001099940306
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

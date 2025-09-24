@@ -161,6 +161,26 @@ public class CameraController : MonoBehaviour, ICameraController, IGamePhaseAwar
         }
     }
 
+    //TÔi muốn thêm phương thức để shake camera trong một duration
+    public IEnumerator ShakeCamera(float duration, float magnitude)
+    {
+        Vector3 originalPos = worldCamera.transform.localPosition;
+        float elapsed = 0.0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            worldCamera.transform.localPosition = originalPos + new Vector3(x, y, 0);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        worldCamera.transform.localPosition = originalPos;
+    }
+
     #endregion
 
     #region IGamePhaseAware Implementation
@@ -172,7 +192,7 @@ public class CameraController : MonoBehaviour, ICameraController, IGamePhaseAwar
 
     public void OnBattlePhaseStarted()
     {
-       ApplyCurrentCameraSettings();
+        ApplyCurrentCameraSettings();
     }
 
     public void OnPhaseChanged(GamePhase newPhase)

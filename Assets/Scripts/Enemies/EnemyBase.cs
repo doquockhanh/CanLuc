@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-    [SerializeField] protected EnemyType type;
+    [SerializeField] public EnemyType type;
 
     // Enemy execution state
     protected bool isEnemyExecuting = false;
@@ -118,4 +118,5 @@ public enum EnemyType
     PumpingKing,
     MiniBom,
     Ghost,
+    PhuThuyToiThuong
 }

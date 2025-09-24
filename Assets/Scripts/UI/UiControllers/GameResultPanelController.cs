@@ -65,7 +65,7 @@ public class GameResultPanelController : MonoBehaviour
                             TextMeshProUGUI scoreText = newIcon.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
                             EnemyType type = kv.Key;
-                            img.sprite = Resources.Load<Sprite>($"Enemy/Sprites/{type}");
+                            img.sprite = Resources.Load<Sprite>($"ProfileSprite/{type}");
                             countText.text = " x " + kv.Value.ToString();
 
                             int tempScore = 0;
