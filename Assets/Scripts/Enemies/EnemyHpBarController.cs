@@ -100,6 +100,7 @@ public class EnemyHpBarController : MonoBehaviour
         worldCanvas = canvasObject.AddComponent<Canvas>();
         worldCanvas.renderMode = RenderMode.WorldSpace;
         worldCanvas.sortingOrder = 10;
+        worldCanvas.sortingLayerName = "object";
 
         var scaler = canvasObject.AddComponent<CanvasScaler>();
         scaler.dynamicPixelsPerUnit = 10f;

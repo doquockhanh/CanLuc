@@ -101,6 +101,7 @@ public class ActionHpBarController : MonoBehaviour
 
         worldCanvas = canvasObject.AddComponent<Canvas>();
         worldCanvas.renderMode = RenderMode.WorldSpace;
+        worldCanvas.sortingLayerName = "object";
         worldCanvas.sortingOrder = 10;
 
         var scaler = canvasObject.AddComponent<CanvasScaler>();

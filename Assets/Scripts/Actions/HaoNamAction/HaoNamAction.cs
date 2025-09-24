@@ -126,7 +126,7 @@ public class HaoNamAction : ActionBase, IForceAction, IMoveAction
         if (hpBarController != null)
         {
             Vector3 hpBarScale = hpBarController.WorldCanvas.transform.localScale;
-            hpBarScale.x = facingRight ? -Mathf.Abs(hpBarScale.x) : Mathf.Abs(hpBarScale.x);
+            hpBarScale.x = facingRight ? Mathf.Abs(hpBarScale.x) : -Mathf.Abs(hpBarScale.x);
             hpBarController.WorldCanvas.transform.localScale = hpBarScale;
         }
 

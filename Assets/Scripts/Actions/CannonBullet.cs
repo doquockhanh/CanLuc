@@ -34,6 +34,6 @@ public class CannonBullet : MonoBehaviour
 
     void OnDestroy()
     {
-        ParticleManager.Instance.PlayParticleSystem("basicExplosion", transform.position);
+        ParticleManager.Instance.PlayParticleSystem("basicExplosion", transform.position + Vector3.up);
     }
 }

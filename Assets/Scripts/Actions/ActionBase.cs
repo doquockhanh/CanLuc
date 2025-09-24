@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public abstract class ActionBase : MonoBehaviour, IFocusable
 {
+	[SerializeField] public ActionType type;
 	[Header("Focus Visuals")]
 	[SerializeField] protected static Color focusColor = new Color(0, 1, 0.92f, 1);
 	[SerializeField] protected static Color normalColor = new Color(0, 0.6f, 0.2f, 1);
@@ -348,4 +349,8 @@ public abstract class ActionBase : MonoBehaviour, IFocusable
 	#endregion
 }
 
+public enum ActionType
+{
+	HaoNam,
+}
 
