@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
@@ -21,13 +20,13 @@ public class GameManager : MonoBehaviour
     public System.Action<GameResult> OnGameOver; // GameResult.Pass / GameResult.Fail
 
     private List<IGamePhaseAware> gamePhaseAwareComponents = new List<IGamePhaseAware>();
-    private readonly HashSet<EnemyStats> trackedEnemies = new HashSet<EnemyStats>();
     private EnemyBase[] enemies;
     private ActionBase[] actions;
     public EnemyBase[] Enemies => enemies;
     public ActionBase[] Actions => actions;
     private float delayResultPanel;
     public float DelayResultPanel { get => delayResultPanel; set => delayResultPanel = value; }
+    public GamePhase CurrentPhase  => currentPhase;
 
     private void Awake()
     {
@@ -46,8 +45,6 @@ public class GameManager : MonoBehaviour
     {
         RegisterAllGamePhaseAwareComponents();
 
-        InitializeEnemyTracking();
-
         StartCoroutine(CheckSceneManuallyToEndGame());
     }
 
@@ -62,7 +59,11 @@ public class GameManager : MonoBehaviour
             actions = FindObjectsByType<ActionBase>(FindObjectsSortMode.None);
             if (enemies.Length == 0 || actions.Length == 0)
             {
-                TriggerGameOver();
+                // Kiểm tra điều kiện ActiveCondition trước khi end game
+                if (CanEndGameWithActiveConditions())
+                {
+                    TriggerGameOver();
+                }
             }
 
             yield return new WaitForSeconds(1f);
@@ -108,6 +109,20 @@ public class GameManager : MonoBehaviour
     public GamePhase GetCurrentPhase()
     {
         return currentPhase;
+    }
+    
+    public int GetCurrentGamePhase()
+    {
+        return (int)currentPhase;
+    }
+    
+    public int GetCurrentScore()
+    {
+        if (ScoreManager.Instance != null)
+        {
+            return ScoreManager.Instance.CurrentScore;
+        }
+        return 0;
     }
 
     public bool IsInPreparePhase()
@@ -191,69 +206,27 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    private void InitializeEnemyTracking()
+    
+    private bool CanEndGameWithActiveConditions()
     {
-        trackedEnemies.Clear();
-
-        var enemies = FindObjectsByType<EnemyStats>(FindObjectsSortMode.None);
-        foreach (var enemy in enemies)
+        // Tìm tất cả MonoBehaviour trong scene
+        var allMonoBehaviours = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
+        
+        foreach (var mb in allMonoBehaviours)
         {
-            RegisterEnemy(enemy);
+            if (mb != null && mb.GetType().Name == "ActiveConditionManager")
+            {
+                // Gọi method CanEndGame thông qua reflection
+                var canEndGameMethod = mb.GetType().GetMethod("CanEndGame");
+                if (canEndGameMethod != null)
+                {
+                    return (bool)canEndGameMethod.Invoke(mb, null);
+                }
+            }
         }
-
-        // Nếu đang ở battle phase và không có enemy nào -> Game Over (Pass)
-        if (IsInBattlePhase() && trackedEnemies.Count == 0)
-        {
-            TriggerGameOver();
-        }
-    }
-
-    public void RegisterEnemy(EnemyStats enemy)
-    {
-        if (enemy == null || trackedEnemies.Contains(enemy)) return;
-        if (!enemy.gameObject.CompareTag("Enemy")) return;
-
-        trackedEnemies.Add(enemy);
-        enemy.OnDestroyed += HandleEnemyDestroyed;
-    }
-
-    public void UnregisterEnemy(EnemyStats enemy)
-    {
-        if (enemy == null) return;
-        if (trackedEnemies.Remove(enemy))
-        {
-            enemy.OnDestroyed -= HandleEnemyDestroyed;
-            CheckAllEnemiesCleared();
-        }
-    }
-
-    private void HandleEnemyDestroyed(GameObject enemyGo)
-    {
-        EnemyStats stats = null;
-        if (enemyGo != null)
-        {
-            stats = enemyGo.GetComponent<EnemyStats>();
-        }
-
-        if (stats != null)
-        {
-            UnregisterEnemy(stats);
-        }
-        else
-        {
-            CheckAllEnemiesCleared();
-        }
-    }
-
-    private void CheckAllEnemiesCleared()
-    {
-        if (gameOverTriggered) return;
-
-        if (trackedEnemies.Count == 0 && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
-        {
-            TriggerGameOver();
-        }
+        
+        // Nếu không tìm thấy ActiveConditionManager, cho phép end game
+        return true;
     }
 
     private void NotifyAllGamePhaseAwareComponents()

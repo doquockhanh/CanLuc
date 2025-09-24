@@ -17,14 +17,13 @@ public class PhaseManager : MonoBehaviour
 
     // Collections for tracking
     private readonly List<ActionBase> registeredActions = new List<ActionBase>();
-    private readonly List<EnemyBase> registeredEnemies = new List<EnemyBase>();
+    public readonly List<EnemyBase> registeredEnemies = new List<EnemyBase>();
 
     // Events
     public System.Action OnActionsExecutionStarted;
     public System.Action OnActionsExecutionCompleted;
     public System.Action OnEnemiesExecutionStarted;
     public System.Action OnEnemiesExecutionCompleted;
-    public System.Action OnPhaseExecutionCompleted;
 
     private void Awake()
     {
@@ -62,9 +61,6 @@ public class PhaseManager : MonoBehaviour
         
         // Step 3: Reset all actions for next phase
         ResetAllActionsForNewPhase();
-        
-        // Step 4: Complete phase and transition back to Prepare
-        OnPhaseExecutionCompleted?.Invoke();
         
         // Notify GameManager to transition back to Prepare phase
         if (GameManager.Instance != null)

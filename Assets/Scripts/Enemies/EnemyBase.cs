@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
@@ -26,7 +27,8 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    public EnemyType GetEnemyType() {
+    public EnemyType GetEnemyType()
+    {
         return type;
     }
 
@@ -38,10 +40,10 @@ public class EnemyBase : MonoBehaviour
     public virtual void ExecuteEnemy()
     {
         if (isEnemyExecuting || isEnemyCompleted) return;
-        
+
         isEnemyExecuting = true;
         isEnemyCompleted = false;
-        
+
         // Call derived class implementation
         OnEnemyExecuted();
     }
@@ -62,10 +64,10 @@ public class EnemyBase : MonoBehaviour
     protected virtual void MarkEnemyCompleted()
     {
         if (isEnemyCompleted) return;
-        
+
         isEnemyCompleted = true;
         isEnemyExecuting = false;
-        
+
         if (PhaseManager.Instance != null)
         {
             PhaseManager.Instance.OnEnemyCompleted(this);

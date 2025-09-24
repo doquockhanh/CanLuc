@@ -8925,7 +8925,7 @@ MonoBehaviour:
   freeMoveSpeed: 30
   cameraMovementLocked: 0
   normalAssetsPPU: 32
-  zoomOutAssetsPPU: 16
+  zoomOutAssetsPPU: 24
 --- !u!1 &1562256200
 GameObject:
   m_ObjectHideFlags: 0

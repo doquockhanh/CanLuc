@@ -257,7 +257,7 @@ public class GhostController : EnemyBase
             yield return StartCoroutine(AttackTarget(nearestAction));
 
             // Nếu tấn công thành công, bay ra xa (hit and run)
-            if (hasAttackedThisPhase)
+            if (hasAttackedThisPhase && nearestAction != null)
             {
                 yield return StartCoroutine(RetreatFromTarget(nearestAction.transform.position));
             }
