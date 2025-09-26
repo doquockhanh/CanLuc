@@ -314,7 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2340c6e5f3fe14aa53d348670e3622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstScene: MainMenu
+  instanceLoadScene: MainMenu
+  isLoadInstance: 1
 --- !u!4 &790576261
 Transform:
   m_ObjectHideFlags: 0
@@ -586,6 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugLogs: 1
+  checkInterval: 0.1
 --- !u!4 &1225513153
 Transform:
   m_ObjectHideFlags: 0
@@ -826,7 +828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1641446003
 RectTransform:
   m_ObjectHideFlags: 0

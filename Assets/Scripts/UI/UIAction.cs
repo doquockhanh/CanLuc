@@ -39,4 +39,8 @@ public class UIAction : MonoBehaviour
     {
         SettingsPanel.SetActive(false);
     }
+
+    public void ExitGame() {
+        Application.Quit();
+    }
 }

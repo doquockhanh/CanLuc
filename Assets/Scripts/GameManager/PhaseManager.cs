@@ -18,6 +18,7 @@ public class PhaseManager : MonoBehaviour
     // Collections for tracking
     private readonly List<ActionBase> registeredActions = new List<ActionBase>();
     public readonly List<EnemyBase> registeredEnemies = new List<EnemyBase>();
+    private readonly List<EnemyBase> executedEnemies = new List<EnemyBase>();
 
     // Events
     public System.Action OnActionsExecutionStarted;
@@ -43,9 +44,6 @@ public class PhaseManager : MonoBehaviour
         RegisterAllActionsAndEnemies();
     }
 
-    /// <summary>
-    /// Called by GameManager when transitioning from Prepare to Battle phase
-    /// </summary>
     public void StartBattlePhaseExecution()
     {
         StartCoroutine(ExecuteBattlePhaseSequence());
@@ -100,6 +98,7 @@ public class PhaseManager : MonoBehaviour
     {
         isExecutingEnemies = true;
         allEnemiesCompleted = false;
+        executedEnemies.Clear(); // Reset danh sách enemies đã execute
         
         OnEnemiesExecutionStarted?.Invoke();
         
@@ -109,8 +108,12 @@ public class PhaseManager : MonoBehaviour
             if (enemy != null && enemy.gameObject.activeInHierarchy)
             {
                 enemy.ExecuteEnemy();
+                executedEnemies.Add(enemy); // Track enemy đã execute
             }
         }
+        
+        yield return new WaitForSeconds(0.1f); // Cho phép thời gian để enemies mới được register
+        CheckAndExecutePendingEnemies();
         
         // Wait for all enemies to complete
         yield return new WaitUntil(() => allEnemiesCompleted);
@@ -154,21 +157,24 @@ public class PhaseManager : MonoBehaviour
         {
             registeredEnemies.Add(enemy);
             
-            // If we're currently executing enemies phase, execute the newly registered enemy immediately
+            // Kiểm tra phase hiện tại và quyết định có execute hay không
             if (isExecutingEnemies)
             {
-                Debug.Log($"[PhaseManager] New enemy registered during execution phase: {enemy.gameObject.name}");
                 if (enemy.gameObject.activeInHierarchy)
                 {
                     enemy.ExecuteEnemy();
+                    executedEnemies.Add(enemy); // Track enemy đã execute
                 }
+            }
+            else if (GameManager.Instance != null && GameManager.Instance.IsInBattlePhase())
+            {
+                // Nếu đang trong Battle Phase nhưng chưa execute enemies, 
+                // có thể là đang trong Actions phase hoặc đã hoàn thành
+                Debug.Log($"[PhaseManager] New enemy registered during Battle Phase but not executing: {enemy.gameObject.name}");
             }
         }
     }
 
-    /// <summary>
-    /// Unregister an enemy
-    /// </summary>
     public void UnregisterEnemy(EnemyBase enemy)
     {
         if (enemy != null && registeredEnemies.Remove(enemy))
@@ -177,9 +183,6 @@ public class PhaseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Called by ActionBase when an action completes
-    /// </summary>
     public void OnActionCompleted(ActionBase action)
     {
         if (isExecutingActions)
@@ -188,9 +191,6 @@ public class PhaseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Called by EnemyBase when an enemy completes
-    /// </summary>
     public void OnEnemyCompleted(EnemyBase enemy)
     {
         if (isExecutingEnemies)
@@ -238,6 +238,30 @@ public class PhaseManager : MonoBehaviour
             allEnemiesCompleted = true;
         }
     }
+    
+    private void CheckAndExecutePendingEnemies()
+    {
+        if (!isExecutingEnemies) return;
+        
+        foreach (var enemy in registeredEnemies)
+        {
+            if (enemy != null && enemy.gameObject.activeInHierarchy)
+            {
+                // Kiểm tra xem enemy đã được execute chưa
+                if (!HasEnemyBeenExecuted(enemy))
+                {
+                    Debug.Log($"[PhaseManager] Executing pending enemy: {enemy.gameObject.name}");
+                    enemy.ExecuteEnemy();
+                    executedEnemies.Add(enemy); // Track enemy đã execute
+                }
+            }
+        }
+    }
+
+    private bool HasEnemyBeenExecuted(EnemyBase enemy)
+    {
+        return executedEnemies.Contains(enemy);
+    }
 
     private void RegisterAllActionsAndEnemies()
     {
@@ -256,41 +280,16 @@ public class PhaseManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Check if currently executing actions phase
-    /// </summary>
     public bool IsExecutingActions()
     {
         return isExecutingActions;
     }
 
-    /// <summary>
-    /// Check if currently executing enemies phase
-    /// </summary>
     public bool IsExecutingEnemies()
     {
         return isExecutingEnemies;
     }
 
-    /// <summary>
-    /// Get count of registered actions
-    /// </summary>
-    public int GetActionCount()
-    {
-        return registeredActions.Count;
-    }
-
-    /// <summary>
-    /// Get count of registered enemies
-    /// </summary>
-    public int GetEnemyCount()
-    {
-        return registeredEnemies.Count;
-    }
-
-    /// <summary>
-    /// Reset all actions and enemies for the next phase cycle
-    /// </summary>
     private void ResetAllActionsForNewPhase()
     {   
         // Reset all actions

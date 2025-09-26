@@ -3,14 +3,18 @@ using UnityEngine.SceneManagement;
 
 public class RedirectToScene : MonoBehaviour
 {
-    [SerializeField] private string firstScene = "HomePage";
+    [Header("Instance Loaind Scene")]
+    [SerializeField] private string instanceLoadScene = "MainMenu";
+    [SerializeField] private bool isLoadInstance = true;
 
     private void Start()
     {
-        // Đảm bảo managers đã tồn tại
-        Debug.Log("Persistent Scene loaded, managers are ready.");
+        if (isLoadInstance) {
+            SceneManager.LoadScene(instanceLoadScene, LoadSceneMode.Single);
+        }
+    }
 
-        // Load HomePage additive, để PersistentScene vẫn giữ lại
-        SceneManager.LoadScene(firstScene, LoadSceneMode.Single);
+    public void GoToScene(string sceneName) {
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }

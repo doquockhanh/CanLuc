@@ -8,8 +8,18 @@ public class ActiveConditionManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = true;
     
+    [Header("Check Settings")]
+    [SerializeField] private float checkInterval = 0.1f; // Giảm tần suất kiểm tra
+    
     private List<ActiveConditionBase> allConditions = new List<ActiveConditionBase>();
     private List<ActiveConditionBase> mustBeActiveConditions = new List<ActiveConditionBase>();
+    
+    // Phân loại conditions theo loại component
+    private List<ActiveConditionBase> enemyConditions = new List<ActiveConditionBase>();
+    private List<ActiveConditionBase> actionConditions = new List<ActiveConditionBase>();
+    private List<ActiveConditionBase> otherConditions = new List<ActiveConditionBase>();
+    
+    private float lastCheckTime;
     
     public System.Action<GameObject> OnObjectActivated;
     
@@ -27,9 +37,40 @@ public class ActiveConditionManager : MonoBehaviour
     }
     
     private void Update()
+    {   
+        // Giảm tần suất kiểm tra
+        if (Time.time - lastCheckTime < checkInterval) return;
+        lastCheckTime = Time.time;
+        
+        // Kiểm tra conditions theo phase hiện tại
+        CheckConditionsByPhase();
+    }
+    
+    private void CheckConditionsByPhase()
     {
-        // Kiểm tra tất cả conditions chưa được kích hoạt
-        foreach (var condition in allConditions)
+        // Lấy phase hiện tại
+        bool isBattlePhase = GameManager.Instance != null && GameManager.Instance.IsInBattlePhase();
+        bool isPreparePhase = GameManager.Instance != null && GameManager.Instance.IsInPreparePhase();
+        
+        // Kiểm tra enemy conditions chỉ từ khi OnEnemiesExecutionStarted đến hết Battle Phase
+        if (isBattlePhase && PhaseManager.Instance != null && PhaseManager.Instance.IsExecutingEnemies())
+        {
+            CheckConditionsList(enemyConditions);
+        }
+        
+        // Kiểm tra action conditions chỉ ở Prepare Phase
+        if (isPreparePhase)
+        {
+            CheckConditionsList(actionConditions);
+        }
+        
+        // Kiểm tra other conditions ở cả hai phase
+        CheckConditionsList(otherConditions);
+    }
+    
+    private void CheckConditionsList(List<ActiveConditionBase> conditions)
+    {
+        foreach (var condition in conditions)
         {
             if (condition != null && !condition.HasBeenActivated)
             {
@@ -75,6 +116,9 @@ public class ActiveConditionManager : MonoBehaviour
         {
             allConditions.Add(condition);
             
+            // Phân loại condition theo loại component
+            CategorizeCondition(condition);
+            
             if (condition.mustBeActive)
             {
                 mustBeActiveConditions.Add(condition);
@@ -91,12 +135,39 @@ public class ActiveConditionManager : MonoBehaviour
         }
     }
     
+    private void CategorizeCondition(ActiveConditionBase condition)
+    {
+        // Kiểm tra xem condition có chứa EnemyBase không
+        var enemies = condition.GetComponentsInChildren<EnemyBase>();
+        if (enemies.Length > 0)
+        {
+            enemyConditions.Add(condition);
+            return;
+        }
+        
+        // Kiểm tra xem condition có chứa ActionBase không
+        var actions = condition.GetComponentsInChildren<ActionBase>();
+        if (actions.Length > 0)
+        {
+            actionConditions.Add(condition);
+            return;
+        }
+        
+        // Các condition khác
+        otherConditions.Add(condition);
+    }
+    
     public void UnregisterCondition(ActiveConditionBase condition)
     {
         if (condition == null) return;
         
         allConditions.Remove(condition);
         mustBeActiveConditions.Remove(condition);
+        
+        // Xóa khỏi các danh sách phân loại
+        enemyConditions.Remove(condition);
+        actionConditions.Remove(condition);
+        otherConditions.Remove(condition);
         
         if (showDebugLogs)
         {
