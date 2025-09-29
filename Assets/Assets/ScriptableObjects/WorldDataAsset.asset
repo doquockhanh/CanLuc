@@ -19,15 +19,15 @@ MonoBehaviour:
       levels:
       - levelId: 1
         isUnlocked: 1
-        isPassed: 1
+        isPassed: 0
         isKeyLevel: 0
       - levelId: 2
-        isUnlocked: 1
-        isPassed: 1
+        isUnlocked: 0
+        isPassed: 0
         isKeyLevel: 0
       - levelId: 3
-        isUnlocked: 1
-        isPassed: 1
+        isUnlocked: 0
+        isPassed: 0
         isKeyLevel: 1
     - floorId: 2
       isUnlocked: 0

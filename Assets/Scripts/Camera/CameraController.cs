@@ -180,6 +180,31 @@ public class CameraController : MonoBehaviour, ICameraController, IGamePhaseAwar
 
         worldCamera.transform.localPosition = originalPos;
     }
+    
+    // Focus camera vào một GameObject cụ thể
+    public IEnumerator FocusOnTarget(Transform target, float duration = 1f)
+    {
+        if (target == null || worldCamera == null) yield break;
+        
+        Vector3 targetPosition = target.position;
+        targetPosition.z = worldCamera.transform.position.z; // Giữ nguyên Z để không thay đổi depth
+        
+        Vector3 startPosition = worldCamera.transform.position;
+        float elapsed = 0f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            t = Mathf.SmoothStep(0f, 1f, t); // Smooth interpolation
+            
+            worldCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            yield return null;
+        }
+        
+        // Đảm bảo camera ở đúng vị trí cuối
+        worldCamera.transform.position = targetPosition;
+    }
 
     #endregion
 

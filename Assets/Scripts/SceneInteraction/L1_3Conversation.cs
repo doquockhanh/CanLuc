@@ -31,13 +31,14 @@ public class L1_3Conversation : MonoBehaviour
             GameManager.Instance.DelayResultPanel = 6f;
             string chat = "Nhóc hư đốn biết thua chưa.";
             UIChatManager.Instance.SendChat(chat, bingo.type.ToString(), ChatPosition.Right);
-            chat = "Cười người hôm trước hôm sau cười người OK. Lần sau gặp anh cụp cái pha xuống";
+            chat = "Hahahaha";
             UIChatManager.Instance.SendChat(chat, bingo.type.ToString(), ChatPosition.Right);
         }
     }
 
     void OnDestroy()
     {
+        UIChatManager.Instance.SkipAllChats();
         GameManager.Instance.OnGameOver -= OnGameOver;
     }
 }

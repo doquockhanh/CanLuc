@@ -62,7 +62,6 @@ public class UIChatManager : MonoBehaviour
         public string characterName;
         public ChatPosition position;
         public Transform targetTransform;
-        public float delay;
         public System.Action onComplete;
     }
 
@@ -112,7 +111,7 @@ public class UIChatManager : MonoBehaviour
         }
     }
 
-    public void SendChat(string message, string characterName, ChatPosition position = ChatPosition.Left, Transform targetTransform = null, float delay = 0f, System.Action onComplete = null)
+    public void SendChat(string message, string characterName, ChatPosition position = ChatPosition.Left, Transform targetTransform = null, System.Action onComplete = null)
     {
         ChatData newChat = new ChatData
         {
@@ -120,7 +119,6 @@ public class UIChatManager : MonoBehaviour
             characterName = characterName,
             position = position,
             targetTransform = targetTransform,
-            delay = delay,
             onComplete = onComplete
         };
 
@@ -178,12 +176,6 @@ public class UIChatManager : MonoBehaviour
         // Di chuyển image frame
         Vector3 targetPosition = GetImageFramePosition(chatData.position);
         imageFrame.DOLocalMoveX(targetPosition.x, imageMoveDuration).SetEase(Ease.OutQuad);
-
-        // Delay trước khi typing
-        if (chatData.delay > 0f)
-        {
-            yield return new WaitForSeconds(chatData.delay);
-        }
 
         // Typing animation
         if (currentTypingCoroutine != null)
@@ -325,5 +317,39 @@ public class UIChatManager : MonoBehaviour
             default:
                 return Vector3.zero;
         }
+    }
+
+    public void SkipAllChats()
+    {
+        // Dừng typing animation hiện tại
+        if (currentTypingCoroutine != null)
+        {
+            StopCoroutine(currentTypingCoroutine);
+            currentTypingCoroutine = null;
+        }
+
+        // Dừng audio
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
+        // Xóa tất cả chat trong queue
+        chatQueue.Clear();
+
+        // Ẩn panel ngay lập tức
+        if (mainPanel != null && mainPanel.activeInHierarchy)
+        {
+            messageText.text = "";
+            mainPanel.transform.DOMoveY(panelStartY, panelAnimationDuration).SetEase(Ease.InBack);
+            mainPanel.transform.DOScale(Vector3.zero, panelAnimationDuration).SetEase(Ease.InBack)
+                .OnComplete(() => mainPanel.SetActive(false));
+        }
+
+        // Reset trạng thái
+        isDisplaying = false;
+
+        // Fire event khi skip hoàn thành
+        OnAllChatsCompleted?.Invoke();
     }
 }

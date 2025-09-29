@@ -58,6 +58,13 @@ public class ChatBox : MonoBehaviour
         
         // Bắt đầu typing animation
         StartTyping(message);
+        
+        // Chỉ bắt đầu auto destroy nếu lifetime > 0 và < 999 (không phải lifetime vô hạn)
+        if (lifetime > 0 && lifetime < 999f)
+        {
+            float typingTime = message.Length * typingSpeed;
+            lifetimeCoroutine = StartCoroutine(AutoDestroy(typingTime + additionalDelay));
+        }
     }
     
     public void UpdateMessage(string newMessage)
@@ -95,9 +102,7 @@ public class ChatBox : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
         
-        // Bắt đầu auto destroy sau khi typing xong
-        float typingTime = text.Length * typingSpeed;
-        lifetimeCoroutine = StartCoroutine(AutoDestroy(typingTime + additionalDelay));
+        // Không tự động bắt đầu auto destroy - để GameWorldChatManager kiểm soát
     }
     
     private IEnumerator AutoDestroy(float delay)

@@ -26,6 +26,7 @@ public abstract class ActionBase : MonoBehaviour, IFocusable
 	public static ActionBase Current { get; private set; }
 	public static GameObject CurrentGameObject => Current != null ? Current.gameObject : null;
 	public static System.Action<ActionBase, ActionBase> OnFocusChanged; // (previous, current)
+	public bool IsFocused => isFocused;
 
 	protected virtual void Awake()
 	{

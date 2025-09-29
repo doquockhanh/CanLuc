@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32386bc50c384bd4d9362642e8f36763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   accumulateKey: 32
   canAccumulateForce: 1
   moveSpeed: 5
@@ -382,11 +383,7 @@ MonoBehaviour:
   - "\xC1 h\u1EF1"
   - '*_*'
   - "\u0110au qu\xE1"
-  - "N\xE9 b\u1ECDn n\xF3"
-  lastWarn: "B\u1ED1 m\xE0y s\u1EAFp c\xFAt r\u1ED3i, ch\u01A1i c\u1EA9n th\u1EADn
-    v\xE0o"
-  firstWarn: "Tao s\u1EBD d\xF9ng ch\u1EE7 ngh\u0129a duy v\u1EADt ch\u1EE9ng minh
-    \u0111\xE1m ma n\xE0y kh\xF4ng t\u1ED3n t\u1EA1i."
+  lastWarn: "T\xF4i s\u1EAFp \u0111i r\u1ED3i ;-;"
 --- !u!114 &8692597043198212909
 MonoBehaviour:
   m_ObjectHideFlags: 0
