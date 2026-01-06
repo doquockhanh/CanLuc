@@ -290,6 +290,11 @@ public class PhaseManager : MonoBehaviour
         return isExecutingEnemies;
     }
 
+    public List<ActionBase> GetRegisteredActions()
+    {
+        return new List<ActionBase>(registeredActions);
+    }
+
     private void ResetAllActionsForNewPhase()
     {   
         // Reset all actions

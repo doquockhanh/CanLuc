@@ -1,4 +1,5 @@
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public class LevelSelectUIManager : MonoBehaviour
 					int lId = level.levelId;
 					btn.onClick.AddListener(() => GameProgressManager.Instance.LoadLevel(fId, lId));
 				}
-				var text = btnGO.GetComponentInChildren<UnityEngine.UI.Text>(true);
+				var text = btnGO.GetComponentInChildren<TextMeshProUGUI>(true);
 				if (text != null)
 				{
 					text.text = $"{floor.floorId}-{level.levelId}";

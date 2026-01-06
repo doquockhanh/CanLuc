@@ -270,13 +270,6 @@ public class GhostController : EnemyBase
         // Trở nên tàng hình hoàn toàn
         BecomeInvisible();
 
-        // Chat với tỉ lệ 1/2
-        if (Random.Range(0, 2) == 0)
-        {
-            if (GameWorldChatManager.Instance != null)
-                GameWorldChatManager.Instance.SendChat("Đố anh bắt được em", transform);
-        }
-
         yield return null; // Thêm yield để method trả về IEnumerator
     }
 
@@ -327,11 +320,6 @@ public class GhostController : EnemyBase
         {
             actionStats.TakeDamage(enemyStats.Damage, gameObject);
             hasAttackedThisPhase = true;
-            if (Random.Range(0, 2) == 0)
-            {
-                if (GameWorldChatManager.Instance != null)
-                    GameWorldChatManager.Instance.SendChat("Tao đánh mày nè", transform);
-            }
         }
 
         yield return new WaitForSeconds(0.5f);

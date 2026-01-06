@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,6 +47,15 @@ public class GameManager : MonoBehaviour
         RegisterAllGamePhaseAwareComponents();
 
         StartCoroutine(CheckSceneManuallyToEndGame());
+    }
+
+    private void Update()
+    {
+        // Xử lý Tab để focus action tiếp theo
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            HandleTabFocus();
+        }
     }
 
     IEnumerator CheckSceneManuallyToEndGame()
@@ -248,6 +258,72 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    #region Tab Focus System
+
+    /// <summary>
+    /// Xử lý Tab để focus action tiếp theo
+    /// </summary>
+    private void HandleTabFocus()
+    {
+        // Chỉ xử lý khi đang ở Prepare phase
+        if (!IsInPreparePhase()) return;
+
+        ActionBase nextAction = GetNextFocusableAction();
+        if (nextAction != null)
+        {
+            ActionBase.SetFocus(nextAction.gameObject);
+            FocusCameraOnAction(nextAction);
+        }
+    }
+
+    /// <summary>
+    /// Tìm action tiếp theo có thể focus được
+    /// </summary>
+    private ActionBase GetNextFocusableAction()
+    {
+        // Sử dụng PhaseManager để lấy danh sách action đã đăng ký
+        if (PhaseManager.Instance == null) return null;
+        
+        var registeredActions = PhaseManager.Instance.GetRegisteredActions();
+        if (registeredActions == null || registeredActions.Count < 1) return null;
+
+        // Tìm vị trí của action hiện tại đang được focus
+        ActionBase currentAction = ActionBase.Current;
+        int currentIndex = -1;
+        
+        if (currentAction != null)
+        {
+            for (int i = 0; i < registeredActions.Count; i++)
+            {
+                if (registeredActions[i] == currentAction)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+        }
+
+        // Tìm action tiếp theo (wrap around nếu cần)
+        int nextIndex = (currentIndex + 1) % registeredActions.Count;
+        return registeredActions[nextIndex];
+    }
+
+    /// <summary>
+    /// Focus camera vào action được chọn
+    /// </summary>
+    private void FocusCameraOnAction(ActionBase targetAction)
+    {
+        if (targetAction == null) return;
+
+        // Sử dụng CameraController để focus
+        if (CameraController.Instance != null)
+        {
+            StartCoroutine(CameraController.Instance.FocusOnTarget(targetAction.transform, 0.5f));
+        }
+    }
+
+    #endregion
 }
 
 public enum GamePhase

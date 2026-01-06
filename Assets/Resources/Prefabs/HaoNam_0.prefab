@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 4517888507652171308}
   - component: {fileID: 7710859201539064206}
   - component: {fileID: 3228770002807597702}
-  - component: {fileID: 5090763352955071210}
   - component: {fileID: 8692597043198212909}
   - component: {fileID: 1806856041500219099}
   m_Layer: 3
@@ -367,23 +366,6 @@ MonoBehaviour:
   bulletSpreadAngle: 15
   baseBulletSpeed: 5
   forceToSpeedMultiplier: 0.5
---- !u!114 &5090763352955071210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7219497874469006699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9fa19c15a6ed442bb3fdc5d4f7e503, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  responses:
-  - "\xC1 h\u1EF1"
-  - '*_*'
-  - "\u0110au qu\xE1"
-  lastWarn: "T\xF4i s\u1EAFp \u0111i r\u1ED3i ;-;"
 --- !u!114 &8692597043198212909
 MonoBehaviour:
   m_ObjectHideFlags: 0
